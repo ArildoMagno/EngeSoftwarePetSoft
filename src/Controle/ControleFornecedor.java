@@ -34,20 +34,20 @@ public class ControleFornecedor {
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             conexao.closeConnection();
         }
     }
-    
-    public ArrayList<Fornecedor> ListaFornecedor(){
+
+    public ArrayList<Fornecedor> ListaFornecedor() {
         Conexao conexao = new Conexao();
         ArrayList<Fornecedor> listaFornecedor = new ArrayList<>();
         Fornecedor fornecedor = new Fornecedor();
-        try{
+        try {
             String query = "SELECT * FROM Fornecedor";
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
-            while(rs.next()){
+            while (rs.next()) {
                 fornecedor.setId(rs.getInt("id"));
                 fornecedor.setCNPJ(rs.getString("CNPJ"));
                 fornecedor.setEndereco(rs.getString("endereco"));
@@ -58,9 +58,46 @@ public class ControleFornecedor {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             conexao.closeConnection();
         }
         return listaFornecedor;
+    }
+
+    public void InativaFornecedor(int id) {
+        Conexao conexao = new Conexao();
+        
+        try{
+            String  query = "update Fornecedor set ativo = 0 where id=?";
+              PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+              ps.setInt(1, id);
+              ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexao.closeConnection();
+        }
+    }
+    
+    public void AlteraFornecedor(Fornecedor fornecedor){
+        Conexao conexao = new Conexao();
+        
+        try{
+            String query = "update Fornecedor "
+                    + "set nomeFantasia = ?, razaoSocial = ?, endereco = ?, "
+                    + "telefone = ? where id = ?";
+           PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+           ps.setString(1, fornecedor.getNomeFantasia());
+           ps.setString(2, fornecedor.getRazaoSocial());
+           ps.setString(3, fornecedor.getEndereco());
+           ps.setString(4, fornecedor.getTelefone());
+           ps.setInt(5, fornecedor.getId());
+           ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexao.closeConnection();
+        }
+        
     }
 }
