@@ -234,4 +234,6 @@ CHANGE COLUMN `razaoSocial` `razaoSocial` VARCHAR(200) NOT NULL ,
 CHANGE COLUMN `endereco` `endereco` VARCHAR(500) NOT NULL ,
 CHANGE COLUMN `telefone` `telefone` VARCHAR(12) NOT NULL ,
 ADD UNIQUE INDEX `CNPJ_UNIQUE` (`CNPJ` ASC);
-;
+
+ALTER TABLE `mydb`.`pedidocompraproduto` 
+ADD COLUMN `valor` FLOAT NOT NULL AFTER `quantidade`;
