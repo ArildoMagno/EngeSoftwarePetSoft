@@ -51,15 +51,16 @@ public class Conexao {
          * acordo com seu BD. Aconselhamos carregar estes dados de um arquivo.
          */
         // "jdbc: mysql:/localhost:3306/meu_bd";
-        hostName = "localhost";
+        hostName = "127.0.0.1";
         userName = "root";
         password = "root";
-        jdbcDriver = "org.gjt.mm.mysql.Driver";
+        jdbcDriver = "com.mysql.jdbc.Driver";
         dataBaseName = "mydb";
-        dataBasePrefix = "jdbc: mysql:/";
+        dataBasePrefix = "jdbc:mysql://";
         dabaBasePort = "3306";
 
-        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName + "/";
+        
+        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName;
 
         /**
          * Exemplo de um URL completo para MySQL: a concatenação acima deve
