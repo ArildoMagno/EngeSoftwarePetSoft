@@ -237,3 +237,5 @@ ADD UNIQUE INDEX `CNPJ_UNIQUE` (`CNPJ` ASC);
 
 ALTER TABLE `mydb`.`pedidocompraproduto` 
 ADD COLUMN `valor` FLOAT NOT NULL AFTER `quantidade`;
+ALTER TABLE `mydb`.`agenda` 
+ADD COLUMN `concluido` TINYINT NOT NULL AFTER `idCliente`;
