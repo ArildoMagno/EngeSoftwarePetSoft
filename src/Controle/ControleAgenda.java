@@ -10,17 +10,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ControleAgenda {
-    
+
     public void InsereAgenda(Agenda agenda) {
         Conexao conexao = new Conexao();
         try {
-            String query = "INSERT INTO Agenda (data,horario,valor,tipo,idUsuario,idCliente)"
+            String query = "INSERT INTO Agenda (data,horario,valor,tipo,idUsuario,idCliente,concluido)"
                     + "VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-            ps.setDate(1, agenda.getData());
+            ps.setString(1, agenda.getData());
             ps.setString(2, agenda.getHora());
             ps.setFloat(3, agenda.getValor());
-            ps.setInt(4, agenda.getTipo());
+            ps.setString(4, String.valueOf(agenda.getTipo()));
             ps.setInt(5, agenda.getIdUsuario());
             ps.setInt(6, agenda.getIdCliente());
             ps.setBoolean(7, false);
@@ -31,7 +31,7 @@ public class ControleAgenda {
             conexao.closeConnection();
         }
     }
-    
+
     public ArrayList<Agenda> ListaAgendas() {
         Agenda agenda = new Agenda();
         Conexao conexao = new Conexao();
@@ -42,11 +42,12 @@ public class ControleAgenda {
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 agenda.setId(rs.getInt("id"));
-                agenda.setData(rs.getDate("data"));
+                agenda.setData(rs.getString("data"));
                 agenda.setHora(rs.getString("hora"));
                 agenda.setIdCliente(rs.getInt("idCliente"));
                 agenda.setIdUsuario(rs.getInt("idUsuario"));
-                agenda.setTipo(rs.getInt("tipo"));
+                String aux = rs.getString("tipo");
+                agenda.setTipo(aux.charAt(0));
                 agenda.setValor(rs.getFloat("valor"));
                 agenda.setConcluido(rs.getBoolean("concluido"));
                 listaAgenda.add(agenda);
@@ -59,7 +60,7 @@ public class ControleAgenda {
         }
         return listaAgenda;
     }
-    
+
     public void ConcluiAgenda(int id) {
         Conexao conexao = new Conexao();
         try {
@@ -76,7 +77,7 @@ public class ControleAgenda {
             conexao.closeConnection();
         }
     }
-    
+
     public void AlteraAgenda(Agenda agenda) {
         Conexao conexao = new Conexao();
         try {
@@ -84,7 +85,7 @@ public class ControleAgenda {
                     + "data = ?, horario = ?, valor = ?,"
                     + "WHERE id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-            ps.setDate(1, agenda.getData());
+            ps.setString(1, agenda.getData());
             ps.setString(2, agenda.getHora());
             ps.setFloat(3, agenda.getValor());
             ps.setInt(4, agenda.getId());

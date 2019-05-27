@@ -239,3 +239,19 @@ ALTER TABLE `mydb`.`pedidocompraproduto`
 ADD COLUMN `valor` FLOAT NOT NULL AFTER `quantidade`;
 ALTER TABLE `mydb`.`agenda` 
 ADD COLUMN `concluido` TINYINT NOT NULL AFTER `idCliente`;
+ALTER TABLE `mydb`.`agenda` 
+CHANGE COLUMN `data` `data` VARCHAR(11) NOT NULL ;
+ALTER TABLE `mydb`.`pedidocompra` 
+CHANGE COLUMN `dataEmissao` `dataEmissao` VARCHAR(11) NOT NULL ,
+CHANGE COLUMN `dataPrevisao` `dataPrevisao` VARCHAR(11) NOT NULL ,
+CHANGE COLUMN `valorTotal` `valorTotal` VARCHAR(45) NOT NULL ;
+ALTER TABLE `mydb`.`pedidovenda` 
+CHANGE COLUMN `dataEmissao` `dataEmissao` VARCHAR(11) NOT NULL ;
+ALTER TABLE `mydb`.`produto` 
+CHANGE COLUMN `dataCadastramento` `dataCadastramento` VARCHAR(11) NOT NULL ;
+ALTER TABLE `mydb`.`cliente` 
+CHANGE COLUMN `CPF/CNPJ` `CPFCNPJ` VARCHAR(200) NOT NULL ;
+ALTER TABLE `mydb`.`pedidocompra` 
+CHANGE COLUMN `valorTotal` `valorTotal` FLOAT NOT NULL ;
+ALTER TABLE `mydb`.`agenda` 
+CHANGE COLUMN `tipo` `tipo` VARCHAR(1) NOT NULL ;

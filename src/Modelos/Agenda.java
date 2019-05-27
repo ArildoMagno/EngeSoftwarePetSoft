@@ -1,14 +1,12 @@
 package Modelos;
 
-import java.sql.Date;
-
 public class Agenda {
 
     private int id;
-    private Date data;
+    private String data;
     private String hora;
     private float valor;
-    private int tipo;
+    private char tipo;
     private int idUsuario;
     private int idCliente;
     private boolean concluido;
@@ -32,11 +30,11 @@ public class Agenda {
         this.id = id;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -56,11 +54,11 @@ public class Agenda {
         this.valor = valor;
     }
 
-    public int getTipo() {
+    public char getTipo() {
         return tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(char tipo) {
         this.tipo = tipo;
     }
 
