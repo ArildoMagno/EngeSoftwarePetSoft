@@ -9,19 +9,18 @@ package Modelos;
  *
  * @author Atlas
  */
-public class Caixa {
+public class ContasReceber {
 
-    private float saldo;
+    //vai ser string cliente ou clienteID?
+    private String cliente;
     private float contasReceber;
-    private float contasPagar;
 
-    
-    public float getSaldo() {
-        return saldo;
+    public String getCliente() {
+        return cliente;
     }
 
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
     public float getContasReceber() {
@@ -30,14 +29,6 @@ public class Caixa {
 
     public void setContasReceber(float contasReceber) {
         this.contasReceber = contasReceber;
-    }
-
-    public float getContasPagar() {
-        return contasPagar;
-    }
-
-    public void setContasPagar(float contasPagar) {
-        this.contasPagar = contasPagar;
     }
 
 }

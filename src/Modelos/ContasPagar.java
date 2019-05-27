@@ -9,27 +9,18 @@ package Modelos;
  *
  * @author Atlas
  */
-public class Caixa {
+public class ContasPagar {
 
-    private float saldo;
-    private float contasReceber;
+    //vai ser string fornecedor ou fornecedorID?
+    private String fornecedor;
     private float contasPagar;
 
-    
-    public float getSaldo() {
-        return saldo;
+    public String getFornecedor() {
+        return fornecedor;
     }
 
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
-    }
-
-    public float getContasReceber() {
-        return contasReceber;
-    }
-
-    public void setContasReceber(float contasReceber) {
-        this.contasReceber = contasReceber;
+    public void setFornecedor(String fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     public float getContasPagar() {
