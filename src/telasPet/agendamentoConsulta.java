@@ -5,10 +5,14 @@
  */
 package telasPet;
 
+import Controle.Conexao;
 import Controle.ControleAgenda;
 import Modelos.Agenda;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -57,10 +61,22 @@ public class agendamentoConsulta extends javax.swing.JFrame {
                 valor = valor.replace(".", "");
                 valor = valor.replace(",", ".");
                 agenda.setValor(Float.parseFloat(valor));
-//select cpf de cliente
+                Conexao conexao = new Conexao();
+                String query = "select id from cliente where cnpjcpf=?";
+                try {
+                    PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                    ps.setString(1, textCPF.getText());
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        agenda.setIdCliente(rs.getInt("id"));
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(agendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    conexao.closeConnection();
+                }
                 agenda.setConcluido(false);
                 agenda.setTipo('C');
-                agenda.setIdCliente(1);
                 agenda.setIdUsuario(1);
                 controleAgenda.InsereAgenda(agenda);
 
