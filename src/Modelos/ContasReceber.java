@@ -11,24 +11,32 @@ package Modelos;
  */
 public class ContasReceber {
 
-    //vai ser string cliente ou clienteID?
-    private String cliente;
-    private float contasReceber;
+    private int idCliente;
+    private int id;
+    private float valor;
 
-    public String getCliente() {
-        return cliente;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public float getContasReceber() {
-        return contasReceber;
+    public int getId() {
+        return id;
     }
 
-    public void setContasReceber(float contasReceber) {
-        this.contasReceber = contasReceber;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public float getValor() {
+        return valor;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 
 }

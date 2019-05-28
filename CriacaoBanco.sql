@@ -255,3 +255,27 @@ ALTER TABLE `mydb`.`pedidocompra`
 CHANGE COLUMN `valorTotal` `valorTotal` FLOAT NOT NULL ;
 ALTER TABLE `mydb`.`agenda` 
 CHANGE COLUMN `tipo` `tipo` VARCHAR(1) NOT NULL ;
+
+CREATE TABLE `mydb`.`contasreceber` (
+  `id` INT NOT NULL,
+  `idCliente` INT NOT NULL,
+  `valor` FLOAT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `idCliente_idx` (`idCliente` ASC) VISIBLE,
+  CONSTRAINT `idCliente`
+    FOREIGN KEY (`idCliente`)
+    REFERENCES `mydb`.`cliente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE `mydb`.`contaspagar` (
+  `id` INT NOT NULL,
+  `idFornecedor` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `idFornecedor_idx` (`idFornecedor` ASC) VISIBLE,
+  CONSTRAINT `idFornecedor`
+    FOREIGN KEY (`idFornecedor`)
+    REFERENCES `mydb`.`fornecedor` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

@@ -11,24 +11,32 @@ package Modelos;
  */
 public class ContasPagar {
 
-    //vai ser string fornecedor ou fornecedorID?
-    private String fornecedor;
-    private float contasPagar;
+    private int idFornecedor;
+    private int id;
+    private float valor;
 
-    public String getFornecedor() {
-        return fornecedor;
+    public int getIdFornecedor() {
+        return idFornecedor;
     }
 
-    public void setFornecedor(String fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setIdFornecedor(int idFornecedor) {
+        this.idFornecedor = idFornecedor;
     }
 
-    public float getContasPagar() {
-        return contasPagar;
+    public int getId() {
+        return id;
     }
 
-    public void setContasPagar(float contasPagar) {
-        this.contasPagar = contasPagar;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public float getValor() {
+        return valor;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 
 }
