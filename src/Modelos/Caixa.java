@@ -11,60 +11,33 @@ package Modelos;
  */
 public class Caixa {
 
-    private String cliente;
-    private String fornecedor;
-    private String item;
-    private float valorCaixaTotal;
-    private float valorCaixaPagar;
-    private float valorCaixaReceber;
+    private float saldo;
+    private float contasReceber;
+    private float contasPagar;
 
-    //SETS & GETS
-    public float getValorCaixaTotal() {
-        return valorCaixaTotal;
+    
+    public float getSaldo() {
+        return saldo;
     }
 
-    public void setValorCaixaTotal(float valorCaixaTotal) {
-        this.valorCaixaTotal = valorCaixaTotal;
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
     }
 
-    public float getValorCaixaPagar() {
-        return valorCaixaPagar;
+    public float getContasReceber() {
+        return contasReceber;
     }
 
-    public void setValorCaixaPagar(float valorCaixaPagar) {
-        this.valorCaixaPagar = valorCaixaPagar;
+    public void setContasReceber(float contasReceber) {
+        this.contasReceber = contasReceber;
     }
 
-    public float getValorCaixaReceber() {
-        return valorCaixaReceber;
+    public float getContasPagar() {
+        return contasPagar;
     }
 
-    public void setValorCaixaReceber(float valorCaixaReceber) {
-        this.valorCaixaReceber = valorCaixaReceber;
-    }
-
-    public String getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(String fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
+    public void setContasPagar(float contasPagar) {
+        this.contasPagar = contasPagar;
     }
 
 }
