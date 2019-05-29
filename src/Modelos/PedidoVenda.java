@@ -1,6 +1,10 @@
 
 package Modelos;
 
+/**
+ *
+ * @author Lucas Oliveira
+ */
 
 public class PedidoVenda {
     private int id;
@@ -8,6 +12,7 @@ public class PedidoVenda {
     private float valorTotal;
     private int cliente;
     private float quantidade;
+    private char status;
 
     public int getId() {
         return id;
@@ -48,4 +53,13 @@ public class PedidoVenda {
     public void setQuantidade(float quantidade) {
         this.quantidade = quantidade;
     }
+
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
+    }
+    
 }

@@ -279,3 +279,17 @@ CREATE TABLE `mydb`.`contaspagar` (
     REFERENCES `mydb`.`fornecedor` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+ALTER TABLE `mydb`.`pedidocompra` 
+DROP FOREIGN KEY `fk_PedidoCompra_Fornecedor1`;
+ALTER TABLE `mydb`.`pedidocompra` 
+CHANGE COLUMN `Fornecedor_id` `idFornecedor` INT(11) NOT NULL ;
+ALTER TABLE `mydb`.`pedidocompra` 
+ADD CONSTRAINT `fk_PedidoCompra_Fornecedor1`
+  FOREIGN KEY (`idFornecedor`)
+  REFERENCES `mydb`.`fornecedor` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+ALTER TABLE `mydb`.`pedidocompra` 
+ADD COLUMN `status` VARCHAR(1) NOT NULL AFTER `idFornecedor`;
+ALTER TABLE `mydb`.`pedidovenda` 
+ADD COLUMN `status` VARCHAR(1) NOT NULL AFTER `idCliente`;

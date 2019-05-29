@@ -9,12 +9,14 @@ package Modelos;
  *
  * @author Lucas Oliveira
  */
+
 public class PedidoCompra {
     private int id;
     private String dataEmissao;
     private String dataPrevisao;
     private float valorTotal;
-    private int Fornecedor_id;
+    private int idFornecedor;
+    private char status;
 
     public int getId() {
         return id;
@@ -48,12 +50,19 @@ public class PedidoCompra {
         this.valorTotal = valorTotal;
     }
 
-    public int getFornecedor_id() {
-        return Fornecedor_id;
+    public int getIdFornecedor() {
+        return idFornecedor;
     }
 
-    public void setFornecedor_id(int Fornecedor_id) {
-        this.Fornecedor_id = Fornecedor_id;
+    public void setIdFornecedor(int idFornecedor) {
+        this.idFornecedor = idFornecedor;
     }
-    
+
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
+    }
 }
