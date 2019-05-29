@@ -15,21 +15,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Lucas  Oliveira
+ * @author Lucas Oliveira
  */
 
 public class ControlePedidoVenda {
     public void InserirPedidoVenda(PedidoVenda pedido){
                 Conexao conexao = new Conexao();
         try {
-            String query = "INSERT INTO Fornecedor  (dataEmissao,valorTotal,cliente,quantidade)"
+            String query = "INSERT INTO PedidoVenda (dataEmissao,valorTotal,cliente,quantidade,status)"
                     + "VALUES(?,?,?,?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, pedido.getDataEmissao());
             ps.setFloat(2, pedido.getValorTotal());
             ps.setInt(3, pedido.getCliente());
             ps.setFloat(4, pedido.getQuantidade());
+            ps.setString(5, String.valueOf(pedido.getStatus()));
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControlePedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
@@ -38,12 +38,12 @@ public class ControlePedidoVenda {
         }
     }
 
-    public ArrayList<PedidoVenda> ListaPedidos() {
+    public ArrayList<PedidoVenda> ListaPedidos(String queryAux) {
         Conexao conexao = new Conexao();
         PedidoVenda pedido = new PedidoVenda();
         ArrayList<PedidoVenda> listaPedidos = new ArrayList<>();
         try {
-            String query = "SELECT * FROM PedidoVenda";
+            String query = "SELECT * FROM PedidoVenda" + queryAux;
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
@@ -80,6 +80,38 @@ public class ControlePedidoVenda {
         }finally{
             conexao.closeConnection();
         }
+    }
+    
+    public void ConcluiPedidoVenda(PedidoVenda pedido){
+        Conexao conexao = new Conexao();
         
+        try{
+            String query = "update PedidoVenda "
+                    + "set status = ?"
+                    + "where id = ?";
+           PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+           ps.setString(1, String.valueOf(pedido.getStatus()));
+           ps.setInt(2, pedido.getId());
+           ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexao.closeConnection();
+        }
+    }
+    
+    public void ExcluiPedidoVenda(int id){
+        Conexao conexao = new Conexao();
+        
+        try{
+            String query = "DELETE FROM PedidoVenda where id = ?";
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            conexao.closeConnection();
+        }
     }
 }
