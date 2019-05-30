@@ -81,7 +81,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
                 }
                 agenda.setIdUsuario(1);
                 controleAgenda.InsereAgenda(agenda);
-
+                dispose();
             }
         });
 
@@ -109,7 +109,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
         String aux = String.valueOf(agenda.getValor());
         aux = aux.replace(".", ",");
         textValor.setText(aux);
-        
+
         ControleAgenda controleAgenda = new ControleAgenda();
 
         botaoOk.addActionListener(new ActionListener() {
@@ -139,6 +139,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
                 }
                 agenda.setIdUsuario(1);
                 controleAgenda.AlteraAgenda(agenda);
+                dispose();
 
             }
         });

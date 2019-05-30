@@ -59,16 +59,18 @@ public class AgendamentoConsultaAlterarDados extends javax.swing.JFrame {
                 int col = table.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
                     int opcao = JOptionPane.showConfirmDialog(painel,
-                            "Deseja alterar a agenda de "+
-                                    listaAgenda.get(row-1).getIdCliente()
-                            , "Sim ou não?", JOptionPane.YES_NO_OPTION);
+                            "Deseja alterar a agenda de "
+                            + listaAgenda.get(row - 1).getIdCliente(),
+                             "Sim ou não?", JOptionPane.YES_NO_OPTION);
                     boolean flag;
                     flag = opcao == JOptionPane.YES_OPTION;
                     if (flag) {
                         //   listaAgenda.get(row - 1).setConcluido(true);
-                        if(listaAgenda.get(row-1).getTipo()=='B'){
-                            new AgendamentoBanho(listaAgenda.get(row-1)).setVisible(true);
-                            dispose();
+                        if (listaAgenda.get(row - 1).getTipo() == 'B') {
+                            new AgendamentoBanho(listaAgenda.get(row - 1)).setVisible(true);
+
+                        } else {
+                            new AgendamentoConsulta(listaAgenda.get(row - 1)).setVisible(true);
                         }
                         dispose();
                     }
