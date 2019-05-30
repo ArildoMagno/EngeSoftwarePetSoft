@@ -33,23 +33,54 @@ public class ControleAgenda {
     }
 
     public ArrayList<Agenda> ListaAgendas() {
-        Agenda agenda = new Agenda();
+
         Conexao conexao = new Conexao();
         ArrayList<Agenda> listaAgenda = new ArrayList<>();
         try {
-            String query = "SELECT * FROM Agenda";
+            String query = "SELECT * FROM Agenda ";
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                agenda.setId(rs.getInt("id"));
-                agenda.setData(rs.getString("data"));
-                agenda.setHora(rs.getString("hora"));
-                agenda.setIdCliente(rs.getInt("idCliente"));
-                agenda.setIdUsuario(rs.getInt("idUsuario"));
+
+                int id = (rs.getInt("id"));
+                String data = (rs.getString("data"));
+                String hora = (rs.getString("horario"));
+                int idCliente = (rs.getInt("idCliente"));
+                int idUsuario = (rs.getInt("idUsuario"));
                 String aux = rs.getString("tipo");
-                agenda.setTipo(aux.charAt(0));
-                agenda.setValor(rs.getFloat("valor"));
-                agenda.setConcluido(rs.getBoolean("concluido"));
+                float valor = (rs.getFloat("valor"));
+                boolean concluido = (rs.getBoolean("concluido"));
+                Agenda agenda = new Agenda(id, data, hora, valor, aux.charAt(0), idUsuario, idCliente, concluido);
+                listaAgenda.add(agenda);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } finally {
+            conexao.closeConnection();
+        }
+        return listaAgenda;
+    }
+
+    public ArrayList<Agenda> ListaAgendas(String queryAux) {
+
+        Conexao conexao = new Conexao();
+        ArrayList<Agenda> listaAgenda = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Agenda " + queryAux;
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+
+                int id = (rs.getInt("id"));
+                String data = (rs.getString("data"));
+                String hora = (rs.getString("horario"));
+                int idCliente = (rs.getInt("idCliente"));
+                int idUsuario = (rs.getInt("idUsuario"));
+                String aux = rs.getString("tipo");
+                float valor = (rs.getFloat("valor"));
+                boolean concluido = (rs.getBoolean("concluido"));
+                Agenda agenda = new Agenda(id, data, hora, valor, aux.charAt(0), idUsuario, idCliente, concluido);
                 listaAgenda.add(agenda);
             }
         } catch (SQLException ex) {
@@ -64,9 +95,8 @@ public class ControleAgenda {
     public void ConcluiAgenda(int id) {
         Conexao conexao = new Conexao();
         try {
-            String query = "UPDATE Agenda SET"
-                    + "concluido = ? WHERE"
-                    + "id = ?";
+            String query = "UPDATE agenda SET"
+                    + " concluido = ? WHERE id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setBoolean(1, true);
             ps.setInt(2, id);
