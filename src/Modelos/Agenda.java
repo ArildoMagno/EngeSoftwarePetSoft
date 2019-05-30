@@ -11,6 +11,17 @@ public class Agenda {
     private int idCliente;
     private boolean concluido;
 
+    public Agenda(int id,String data, String hora, float valor, char tipo, int idUsuario, int idCliente, boolean concluido) {
+       this.id = id;
+        this.data = data;
+        this.hora = hora;
+        this.valor = valor;
+        this.tipo = tipo;
+        this.idUsuario = idUsuario;
+        this.idCliente = idCliente;
+        this.concluido = concluido;
+    }
+
     public boolean isConcluido() {
         return concluido;
     }

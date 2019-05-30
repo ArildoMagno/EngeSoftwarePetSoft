@@ -43,7 +43,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
             MaskFormatter maskHora = new MaskFormatter("##:##");
             maskHora.install(textHora);
 
-            MaskFormatter maskCPF = new MaskFormatter("###.###.##-##");
+            MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
             maskCPF.install(textCPF);
 
             DecimalFormat dFormat = new DecimalFormat("#,###,###.00");
@@ -66,7 +66,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
                 agenda.setConcluido(false);
                 agenda.setTipo('B');
                 Conexao conexao = new Conexao();
-                String query = "select id from cliente where cnpjcpf=?";
+                String query = "select id from cliente where cpfcnpj=?";
                 try {
                     PreparedStatement ps = conexao.getConnection().prepareStatement(query);
                     ps.setString(1, textCPF.getText());
@@ -81,6 +81,64 @@ public class AgendamentoBanho extends javax.swing.JFrame {
                 }
                 agenda.setIdUsuario(1);
                 controleAgenda.InsereAgenda(agenda);
+
+            }
+        });
+
+    }
+
+    public AgendamentoBanho(Agenda agenda) {
+        initComponents();
+        try {
+            MaskFormatter maskData = new MaskFormatter("##/##/####");
+            maskData.install(textData);
+
+            MaskFormatter maskHora = new MaskFormatter("##:##");
+            maskHora.install(textHora);
+
+            MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
+            maskCPF.install(textCPF);
+        } catch (ParseException ex) {
+            Logger.getLogger(AgendamentoBanho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        textCliente.setText(agenda.getIdCliente() + "");
+        textAnimal.setText(agenda.getIdCliente() + "");
+        textCPF.setText(agenda.getIdCliente() + "");
+        textData.setText(agenda.getData());
+        textHora.setText(agenda.getHora());
+        String aux = String.valueOf(agenda.getValor());
+        aux = aux.replace(".", ",");
+        textValor.setText(aux);
+        
+        ControleAgenda controleAgenda = new ControleAgenda();
+
+        botaoOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                agenda.setData(textData.getText());
+                agenda.setHora(textHora.getText());
+                String valor = textValor.getText();
+                valor = valor.replace(".", "");
+                valor = valor.replace(",", ".");
+                agenda.setValor(Float.parseFloat(valor));
+                agenda.setConcluido(false);
+                agenda.setTipo('B');
+                Conexao conexao = new Conexao();
+                String query = "select id from cliente where cpfcnpj=?";
+                try {
+                    PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                    ps.setString(1, textCPF.getText());
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        agenda.setIdCliente(rs.getInt("id"));
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    conexao.closeConnection();
+                }
+                agenda.setIdUsuario(1);
+                controleAgenda.AlteraAgenda(agenda);
 
             }
         });

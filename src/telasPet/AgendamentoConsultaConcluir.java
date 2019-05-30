@@ -5,6 +5,15 @@
  */
 package telasPet;
 
+import Controle.ControleAgenda;
+import Modelos.Agenda;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Atlas
@@ -16,6 +25,58 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
      */
     public AgendamentoConsultaConcluir() {
         initComponents();
+
+        ControleAgenda controle = new ControleAgenda();
+        ArrayList<Agenda> listaAgenda = controle.ListaAgendas("where concluido = false");
+        String[] tblHead = {"Tipo", "Cliente", "Animal", "Data", "Hora", "Valor", "Concluído"};
+        DefaultTableModel dtm = new DefaultTableModel(tblHead, 0) {
+            public boolean isCellEditable(int row, int column) {
+                return false;//This causes all cells to be not editable
+            }
+        };
+        dtm.addRow(tblHead);
+        String concluido = "", tipo = "";
+        for (int i = 0; i < listaAgenda.size(); i++) {
+            if (listaAgenda.get(i).isConcluido()) {
+                concluido = "Sim";
+            } else {
+                concluido = "Não";
+            }
+            if (listaAgenda.get(i).getTipo() == 'B') {
+                tipo = "Banho";
+            } else {
+                tipo = "Consulta";
+            }
+            dtm.addRow(new String[]{tipo,
+                String.valueOf(listaAgenda.get(i).getIdCliente()),
+                String.valueOf(listaAgenda.get(i).getIdCliente()),
+                listaAgenda.get(i).getData(), listaAgenda.get(i).getHora(),
+                String.valueOf(listaAgenda.get(i).getValor()), concluido});
+        }
+        JTable table = new JTable(dtm);
+        painel.add(table);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                    int opcao = JOptionPane.showConfirmDialog(painel,
+                            "Deseja alterar a agenda de ?"
+                            + listaAgenda.get(row - 1).getIdCliente(),
+                            "Sim ou não?", JOptionPane.YES_NO_OPTION);
+                    boolean flag;
+                    flag = opcao == JOptionPane.YES_OPTION;
+                    if (flag) {
+                        //   listaAgenda.get(row - 1).setConcluido(true);
+                        controle.ConcluiAgenda(listaAgenda.get(row - 1).getId());
+                        dispose();
+                        new AgendamentoConsultaConcluir().setVisible(true);
+                    }
+                }
+            }
+        });
+
     }
 
     /**
@@ -29,54 +90,34 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        painel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Concluir Agendas");
 
-        jTextField1.setText("Data: 05/04/2020          Horário: 10:00          Cliente: Joao Lima          Tipo: Banho");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("OK");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        painel.setLayout(new java.awt.CardLayout());
+        jScrollPane2.setViewportView(painel);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(102, 102, 102)
-                        .addComponent(jButton1)
-                        .addGap(23, 23, 23))))
+                .addGap(214, 214, 214)
+                .addComponent(jLabel2)
+                .addContainerGap(231, Short.MAX_VALUE))
+            .addComponent(jScrollPane2)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1))
-                .addGap(30, 30, 30)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,14 +134,6 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,9 +171,9 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }
