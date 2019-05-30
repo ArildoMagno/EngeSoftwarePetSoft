@@ -5,6 +5,13 @@
  */
 package telasPet;
 
+import Controle.ControleAgenda;
+import Modelos.Agenda;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Atlas
@@ -16,6 +23,58 @@ public class AgendamentoConsultaAlterarDados extends javax.swing.JFrame {
      */
     public AgendamentoConsultaAlterarDados() {
         initComponents();
+        ControleAgenda controle = new ControleAgenda();
+        ArrayList<Agenda> listaAgenda = controle.ListaAgendas("where concluido = false");
+        String[] tblHead = {"Tipo", "Cliente", "Animal", "Data", "Hora", "Valor", "Concluído"};
+        DefaultTableModel dtm = new DefaultTableModel(tblHead, 0) {
+            public boolean isCellEditable(int row, int column) {
+                return false;//This causes all cells to be not editable
+            }
+        };
+        dtm.addRow(tblHead);
+        String concluido = "", tipo = "";
+        for (int i = 0; i < listaAgenda.size(); i++) {
+            if (listaAgenda.get(i).isConcluido()) {
+                concluido = "Sim";
+            } else {
+                concluido = "Não";
+            }
+            if (listaAgenda.get(i).getTipo() == 'B') {
+                tipo = "Banho";
+            } else {
+                tipo = "Consulta";
+            }
+            dtm.addRow(new String[]{tipo,
+                String.valueOf(listaAgenda.get(i).getIdCliente()),
+                String.valueOf(listaAgenda.get(i).getIdCliente()),
+                listaAgenda.get(i).getData(), listaAgenda.get(i).getHora(),
+                String.valueOf(listaAgenda.get(i).getValor()), concluido});
+        }
+        JTable table = new JTable(dtm);
+        painel.add(table);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                    int opcao = JOptionPane.showConfirmDialog(painel,
+                            "Deseja alterar a agenda de "+
+                                    listaAgenda.get(row-1).getIdCliente()
+                            , "Sim ou não?", JOptionPane.YES_NO_OPTION);
+                    boolean flag;
+                    flag = opcao == JOptionPane.YES_OPTION;
+                    if (flag) {
+                        //   listaAgenda.get(row - 1).setConcluido(true);
+                        if(listaAgenda.get(row-1).getTipo()=='B'){
+                            new AgendamentoBanho(listaAgenda.get(row-1)).setVisible(true);
+                            dispose();
+                        }
+                        dispose();
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -29,42 +88,35 @@ public class AgendamentoConsultaAlterarDados extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        painel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Alterar Agenda");
 
-        jTextField1.setText("Data: 05/04/2020          Horário: 10:00          Cliente: Joao Lima          Tipo: Banho");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        painel.setLayout(new java.awt.CardLayout());
+        jScrollPane1.setViewportView(painel);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(221, 221, 221))))
+                .addGap(225, 225, 225)
+                .addComponent(jLabel2)
+                .addContainerGap(244, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(37, 37, 37)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -81,10 +133,6 @@ public class AgendamentoConsultaAlterarDados extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -124,6 +172,7 @@ public class AgendamentoConsultaAlterarDados extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }

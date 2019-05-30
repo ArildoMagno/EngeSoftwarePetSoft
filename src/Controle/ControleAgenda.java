@@ -112,7 +112,7 @@ public class ControleAgenda {
         Conexao conexao = new Conexao();
         try {
             String query = "UPDATE Agenda SET"
-                    + "data = ?, horario = ?, valor = ?,"
+                    + " data = ?, horario = ?, valor = ? "
                     + "WHERE id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, agenda.getData());
