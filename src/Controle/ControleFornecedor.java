@@ -23,14 +23,16 @@ public class ControleFornecedor {
     public void InserirFornecedor(Fornecedor fornecedor) {
         Conexao conexao = new Conexao();
         try {
-            String query = "INSERT INTO Fornecedor  (razaoSocial, CNPJ, nomeFantasia,endereco,telefone)"
-                    + "VALUES(?,?,?,?,?)";
+            String query = "INSERT INTO Fornecedor  (razaoSocial, CNPJ, nomeFantasia,endereco,telefone,"
+                    + "ativo)"
+                    + "VALUES(?,?,?,?,?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, fornecedor.getRazaoSocial());
             ps.setString(2, fornecedor.getCNPJ());
             ps.setString(3, fornecedor.getNomeFantasia());
             ps.setString(4, fornecedor.getEndereco());
             ps.setString(5, fornecedor.getTelefone());
+            ps.setInt(6,fornecedor.getAtivo());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);

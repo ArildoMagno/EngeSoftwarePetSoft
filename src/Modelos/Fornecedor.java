@@ -9,6 +9,15 @@ public class Fornecedor {
   private String endereco;
   private String telefone;
   private String CNPJ;
+  private int ativo;
+
+    public int getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(int ativo) {
+        this.ativo = ativo;
+    }
 
     public String getCNPJ() {
         return CNPJ;
