@@ -35,13 +35,14 @@ public class AgendamentoMain extends javax.swing.JFrame {
         botaoConsulta = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Agendamentos");
 
-        jButton1.setText("Agenda");
+        jButton1.setText("Horarios");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -62,7 +63,7 @@ public class AgendamentoMain extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Alterar Dados Agenda");
+        jButton2.setText("Alterar  Agenda");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -76,47 +77,48 @@ public class AgendamentoMain extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Remover Agenda");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout botaoAgendaLayout = new javax.swing.GroupLayout(botaoAgenda);
         botaoAgenda.setLayout(botaoAgendaLayout);
         botaoAgendaLayout.setHorizontalGroup(
             botaoAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(botaoAgendaLayout.createSequentialGroup()
-                .addContainerGap(277, Short.MAX_VALUE)
-                .addGroup(botaoAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botaoAgendaLayout.createSequentialGroup()
-                        .addGroup(botaoAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botaoConsulta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botaoAgendaLayout.createSequentialGroup()
-                                .addGroup(botaoAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addComponent(botaoBanho))
-                                .addGap(7, 7, 7)))
-                        .addGap(238, 238, 238))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botaoAgendaLayout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(207, 207, 207))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botaoAgendaLayout.createSequentialGroup()
-                        .addGroup(botaoAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3)
-                            .addComponent(jLabel2))
-                        .addGap(216, 216, 216))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botaoAgendaLayout.createSequentialGroup()
+                .addGap(0, 251, Short.MAX_VALUE)
+                .addGroup(botaoAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(botaoAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                        .addComponent(botaoBanho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addGap(242, 242, 242))
         );
         botaoAgendaLayout.setVerticalGroup(
             botaoAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(botaoAgendaLayout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
                 .addComponent(botaoConsulta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoBanho)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(68, 68, 68)
                 .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -176,6 +178,10 @@ public class AgendamentoMain extends javax.swing.JFrame {
         new AgendamentoConsultaConcluir().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -219,6 +225,7 @@ public class AgendamentoMain extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

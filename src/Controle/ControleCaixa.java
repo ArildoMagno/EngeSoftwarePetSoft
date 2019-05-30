@@ -6,11 +6,8 @@
 package Controle;
 
 import Modelos.Caixa;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +18,7 @@ import java.util.logging.Logger;
 public class ControleCaixa {
 
     //banco
-    public void caixaTotal(Caixa caixa) throws MessagingException {
+    public void caixaTotal(Caixa caixa) {
         Conexao conexao = new Conexao();
 
         try {

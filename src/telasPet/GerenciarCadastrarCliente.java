@@ -5,19 +5,16 @@
  */
 package telasPet;
 
-import Controle.ControleFornecedor;
-import Modelos.Fornecedor;
-
 /**
  *
  * @author Atlas
  */
-public class CadastrarFornecedor extends javax.swing.JFrame {
+public class GerenciarCadastrarCliente extends javax.swing.JFrame {
 
     /**
-     * Creates new form cadastrarFornecedor
+     * Creates new form GerenciarCadastrarCliente
      */
-    public CadastrarFornecedor() {
+    public GerenciarCadastrarCliente() {
         initComponents();
     }
 
@@ -49,7 +46,7 @@ public class CadastrarFornecedor extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setText("Cadastrar Fornecedor");
+        jLabel2.setText("Cadastrar Cliente");
 
         botaoLimpar.setText("Limpar");
         botaoLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +63,7 @@ public class CadastrarFornecedor extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setText("CNPJ:");
+        jLabel4.setText("CPF:");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Razao Social:");
@@ -89,7 +86,7 @@ public class CadastrarFornecedor extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(botaoCadastrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -157,9 +154,7 @@ public class CadastrarFornecedor extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,9 +167,7 @@ public class CadastrarFornecedor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,29 +178,15 @@ public class CadastrarFornecedor extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
     private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
-       
-        
-        
+
     }//GEN-LAST:event_botaoLimparActionPerformed
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNomeFantasia(textNome.getText());
-        fornecedor.setCNPJ(textCNPJ.getText());
-        fornecedor.setRazaoSocial(textRazaoSocial.getText());
-        fornecedor.setEndereco(textEndereco.getText());
-        fornecedor.setTelefone(textTelefone.getText());
-        fornecedor.setAtivo(1);
-        
-        ControleFornecedor controle = new ControleFornecedor();
-        controle.InserirFornecedor(fornecedor);
-        
-               
+       
+
     }//GEN-LAST:event_botaoCadastrarActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -225,21 +204,20 @@ public class CadastrarFornecedor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastrarFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerenciarCadastrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastrarFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerenciarCadastrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastrarFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerenciarCadastrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastrarFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerenciarCadastrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastrarFornecedor().setVisible(true);
+                new GerenciarCadastrarCliente().setVisible(true);
             }
         });
     }

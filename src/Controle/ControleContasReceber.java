@@ -7,7 +7,6 @@ package Controle;
 
 
 import Modelos.ContasReceber;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
