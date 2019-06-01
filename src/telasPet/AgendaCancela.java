@@ -18,12 +18,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Atlas
  */
-public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
+public class AgendaCancela extends javax.swing.JFrame {
 
     /**
      * Creates new form AgendamentoConsultaConcluir
      */
-    public AgendamentoConsultaConcluir() {
+    public AgendaCancela() {
         initComponents();
 
         ControleAgenda controle = new ControleAgenda();
@@ -62,16 +62,16 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
                 int col = table.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
                     int opcao = JOptionPane.showConfirmDialog(painel,
-                            "Deseja concluir a agenda de ?"
+                            "Deseja cancelar a agenda de ?"
                             + listaAgenda.get(row - 1).getIdCliente(),
                             "Sim ou não?", JOptionPane.YES_NO_OPTION);
                     boolean flag;
                     flag = opcao == JOptionPane.YES_OPTION;
                     if (flag) {
                         //   listaAgenda.get(row - 1).setConcluido(true);
-                        controle.ConcluiAgenda(listaAgenda.get(row - 1).getId());
+                        controle.DeletaAgenda(listaAgenda.get(row - 1).getId());
                         dispose();
-                        new AgendamentoConsultaConcluir().setVisible(true);
+                        new AgendaCancela().setVisible(true);
                     }
                 }
             }
@@ -96,7 +96,7 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Concluir Agendas");
+        jLabel2.setText("Cancelar Agendas");
 
         painel.setLayout(new java.awt.CardLayout());
         jScrollPane2.setViewportView(painel);
@@ -108,7 +108,7 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(214, 214, 214)
                 .addComponent(jLabel2)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(227, Short.MAX_VALUE))
             .addComponent(jScrollPane2)
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,20 +152,21 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgendamentoConsultaConcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgendaCancela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgendamentoConsultaConcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgendaCancela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgendamentoConsultaConcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgendaCancela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgendamentoConsultaConcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgendaCancela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgendamentoConsultaConcluir().setVisible(true);
+                new AgendaCancela().setVisible(true);
             }
         });
     }
