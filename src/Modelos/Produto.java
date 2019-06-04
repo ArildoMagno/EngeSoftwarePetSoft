@@ -1,6 +1,9 @@
 package Modelos;
 
+;
+
 public class Produto {
+
     private int id;
     private int idFornecedor;
     private int estoque;
@@ -103,6 +106,5 @@ public class Produto {
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
-    
 
 }

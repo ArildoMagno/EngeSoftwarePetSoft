@@ -9,11 +9,10 @@ package Modelos;
  *
  * @author Lucas Oliveira
  */
-
 public class PedidoCompra {
+
     private int id;
     private String dataEmissao;
-    private String dataPrevisao;
     private float valorTotal;
     private int idFornecedor;
     private char status;
@@ -32,14 +31,6 @@ public class PedidoCompra {
 
     public void setDataEmissao(String dataEmissao) {
         this.dataEmissao = dataEmissao;
-    }
-
-    public String getDataPrevisao() {
-        return dataPrevisao;
-    }
-
-    public void setDataPrevisao(String dataPrevisao) {
-        this.dataPrevisao = dataPrevisao;
     }
 
     public float getValorTotal() {

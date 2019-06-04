@@ -1,15 +1,27 @@
-
 package Modelos;
 
-
 public class Fornecedor {
-  private int id;
-  private String nomeFantasia;
-  private String razaoSocial;
-  private String endereco;
-  private String telefone;
-  private String CNPJ;
-  private int ativo;
+
+    private int id;
+    private String nomeFantasia;
+    private String razaoSocial;
+    private String endereco;
+    private String telefone;
+    private String CNPJ;
+    private int ativo;
+
+    public Fornecedor() {
+    }
+
+    public Fornecedor(int id, String nomeFantasia, String razaoSocial, String endereco, String telefone, String CNPJ, int ativo) {
+        this.id = id;
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.CNPJ = CNPJ;
+        this.ativo = ativo;
+    }
 
     public int getAtivo() {
         return ativo;
@@ -26,7 +38,6 @@ public class Fornecedor {
     public void setCNPJ(String CNPJ) {
         this.CNPJ = CNPJ;
     }
-  
 
     public int getId() {
         return id;
@@ -67,6 +78,5 @@ public class Fornecedor {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-  
-    
+
 }

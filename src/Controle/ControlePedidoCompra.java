@@ -18,20 +18,19 @@ import java.util.logging.Logger;
  *
  * @author Lucas Oliveira
  */
-
 public class ControlePedidoCompra {
-    public void InserirPedidoCompra(PedidoCompra pedido){
-                Conexao conexao = new Conexao();
+
+    public void InserirPedidoCompra(PedidoCompra pedido) {
+        Conexao conexao = new Conexao();
         try {
-            String query = "INSERT INTO PedidoCompra (id,dataEmissao,dataPrevisao,valorTotal,idFornecedor,status)"
-                    + "VALUES(?,?,?,?,?,?)";
+            String query = "INSERT INTO PedidoCompra (id,dataEmissao,valorTotal,idFornecedor,status)"
+                    + "VALUES(?,?,?,?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setInt(1, pedido.getId());
             ps.setString(2, pedido.getDataEmissao());
-            ps.setString(3, pedido.getDataPrevisao());
-            ps.setFloat(4, pedido.getValorTotal());
-            ps.setInt(5, pedido.getIdFornecedor());
-            ps.setString(6, String.valueOf(pedido.getStatus()));
+            ps.setFloat(3, pedido.getValorTotal());
+            ps.setInt(4, pedido.getIdFornecedor());
+            ps.setString(5, String.valueOf(pedido.getStatus()));
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControlePedidoCompra.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,7 +50,6 @@ public class ControlePedidoCompra {
             while (rs.next()) {
                 pedido.setId(rs.getInt("id"));
                 pedido.setDataEmissao(rs.getString("dataEmissao"));
-                pedido.setDataPrevisao(rs.getString("dataPrevisao"));
                 pedido.setValorTotal(rs.getFloat("valorTotal"));
                 pedido.setIdFornecedor(rs.getInt("idFornecedor"));
                 listaPedidos.add(pedido);
@@ -63,58 +61,75 @@ public class ControlePedidoCompra {
         }
         return listaPedidos;
     }
-    
-    public void AlteraPedidoCompra(PedidoCompra pedido){
+
+    public void AlteraPedidoCompra(PedidoCompra pedido) {
         Conexao conexao = new Conexao();
-        
-        try{
+
+        try {
             String query = "update PedidoCompra "
-                    + "set dataEmissao = ?, dataPrevisao = ?, valorTotal = ?, idFornecedor = ?"
+                    + "set dataEmissao = ?, valorTotal = ?, idFornecedor = ?"
                     + "where id = ?";
-           PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-           ps.setString(1, pedido.getDataEmissao());
-           ps.setString(2, pedido.getDataPrevisao());
-           ps.setFloat(3, pedido.getValorTotal());
-           ps.setInt(4, pedido.getIdFornecedor());
-           ps.setInt(5, pedido.getId());
-           ps.executeUpdate();
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, pedido.getDataEmissao());
+            ps.setFloat(2, pedido.getValorTotal());
+            ps.setInt(3, pedido.getIdFornecedor());
+            ps.setInt(4, pedido.getId());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControlePedidoCompra.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            conexao.closeConnection();
-        } 
-    }
-    
-    public void ConcluiPedidoCompra(PedidoCompra pedido){
-        Conexao conexao = new Conexao();
-        
-        try{
-            String query = "update PedidoCompra "
-                    + "set status = ?"
-                    + "where id = ?";
-           PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-           ps.setString(1, String.valueOf(pedido.getStatus()));
-           ps.setInt(2, pedido.getId());
-           ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(ControlePedidoCompra.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             conexao.closeConnection();
         }
     }
-    
-    public void ExcluiPedidoCompra(int id){
+
+    public void ConcluiPedidoCompra(PedidoCompra pedido) {
         Conexao conexao = new Conexao();
-        
-        try{
+
+        try {
+            String query = "update PedidoCompra "
+                    + "set status = ?"
+                    + "where id = ?";
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, String.valueOf(pedido.getStatus()));
+            ps.setInt(2, pedido.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePedidoCompra.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+    }
+
+    public void ExcluiPedidoCompra(int id) {
+        Conexao conexao = new Conexao();
+
+        try {
             String query = "DELETE FROM PedidoCompra where id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControlePedidoCompra.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             conexao.closeConnection();
         }
+    }
+
+    public int ContadorPedido() {
+        int id = 0;
+        Conexao conexao = new Conexao();
+        try {
+            String query = "SELECT id FROM PedidoCompra ORDER BY id desc LIMIT 1";
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePedidoCompra.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+        return id;
     }
 }

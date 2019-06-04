@@ -10,9 +10,11 @@ package Modelos;
  * @author l_oli
  */
 public class PedidoCompraProduto {
+
     private int idPedidoCompra;
     private int idProduto;
     private float quantidade;
+    private float valorUnitario;
 
     public int getIdPedidoCompra() {
         return idPedidoCompra;
@@ -37,5 +39,13 @@ public class PedidoCompraProduto {
     public void setQuantidade(float quantidade) {
         this.quantidade = quantidade;
     }
-    
+
+    public float getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public void setValorUnitario(float valorUnitario) {
+        this.valorUnitario = valorUnitario;
+    }
+
 }

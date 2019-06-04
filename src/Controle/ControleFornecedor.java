@@ -44,12 +44,13 @@ public class ControleFornecedor {
     public ArrayList<Fornecedor> ListaFornecedor() {
         Conexao conexao = new Conexao();
         ArrayList<Fornecedor> listaFornecedor = new ArrayList<>();
-        Fornecedor fornecedor = new Fornecedor();
+
         try {
             String query = "SELECT * FROM Fornecedor";
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
+                Fornecedor fornecedor = new Fornecedor();
                 fornecedor.setId(rs.getInt("id"));
                 fornecedor.setCNPJ(rs.getString("CNPJ"));
                 fornecedor.setEndereco(rs.getString("endereco"));

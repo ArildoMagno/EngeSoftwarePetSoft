@@ -33,13 +33,13 @@ public class ControleProduto {
     public ArrayList<Produto> ListaProduto() {
         Conexao conexao = new Conexao();
         ArrayList<Produto> listaProduto = new ArrayList<>();
-        Produto produto = new Produto();
 
         try {
             String query = "SELECT * FROM Produto";
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
+                Produto produto = new Produto();
                 produto.setId(rs.getInt("id"));
                 produto.setIdFornecedor(rs.getInt("idFornecedor"));
                 produto.setDescricao(rs.getString("descricao"));
@@ -51,7 +51,39 @@ public class ControleProduto {
                 produto.setDataCadastramento(rs.getString("dataCadastramento"));
                 produto.setAliquota(rs.getFloat("aliquota"));
                 produto.setUnidade(rs.getString("unidade"));
+                listaProduto.add(produto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleProduto.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+        return listaProduto;
+    }
 
+    public ArrayList<Produto> ListaProduto(String queryAux) {
+        Conexao conexao = new Conexao();
+        ArrayList<Produto> listaProduto = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM Produto " + queryAux;
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Produto produto = new Produto();
+
+                produto.setId(rs.getInt("id"));
+                produto.setIdFornecedor(rs.getInt("idFornecedor"));
+                produto.setDescricao(rs.getString("descricao"));
+                produto.setEstoque(rs.getInt("estoque"));
+                produto.setEstoqueMinimo(rs.getInt("estoqueMinimo"));
+                produto.setPrecoVenda(rs.getFloat("precoVenda"));
+                produto.setPrecoCompra(rs.getFloat("precoCompra"));
+                produto.setModelo(rs.getString("modelo"));
+                produto.setDataCadastramento(rs.getString("dataCadastramento"));
+                produto.setAliquota(rs.getFloat("aliquota"));
+                produto.setUnidade(rs.getString("unidade"));
+                listaProduto.add(produto);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ControleProduto.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,36 +103,34 @@ public class ControleProduto {
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleProduto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
+        } finally {
             conexao.closeConnection();
         }
     }
-    
-    public void AlteraProduto(Produto produto){
+
+    public void AlteraProduto(Produto produto) {
         Conexao conexao = new Conexao();
-        
-        try{
+
+        try {
             String query = "update Produto"
                     + "set descricao = ?, estoque = ?, estoqueMinimo = ?, precoVenda = ?, precoCompra = ?,"
                     + "modelo = ?, aliquota = ?, unidade = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-            ps.setString(1,produto.getDescricao());
-            ps.setInt(2,produto.getEstoque());
-            ps.setInt(3,produto.getEstoqueMinimo());
-            ps.setFloat(4,produto.getPrecoVenda());
-            ps.setFloat(5,produto.getPrecoCompra());
-            ps.setString(6,produto.getModelo());
-            ps.setFloat(7,produto.getAliquota());
-            ps.setString(8,produto.getUnidade());
-                    
+            ps.setString(1, produto.getDescricao());
+            ps.setInt(2, produto.getEstoque());
+            ps.setInt(3, produto.getEstoqueMinimo());
+            ps.setFloat(4, produto.getPrecoVenda());
+            ps.setFloat(5, produto.getPrecoCompra());
+            ps.setString(6, produto.getModelo());
+            ps.setFloat(7, produto.getAliquota());
+            ps.setString(8, produto.getUnidade());
+
         } catch (SQLException ex) {
             Logger.getLogger(ControleProduto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
+        } finally {
             conexao.closeConnection();
         }
-        
+
     }
 
 }
