@@ -51,7 +51,8 @@ public class ControleContasReceber {
                 int id = rs.getInt("id");
                 int idCliente = rs.getInt("idCliente");
                 float valor = rs.getFloat("valor");
-                ContasReceber contas = new ContasReceber(idCliente, id, valor);
+                boolean concluido = (rs.getBoolean("concluido"));
+                ContasReceber contas = new ContasReceber(idCliente, id, valor, concluido);
                 listaConta.add(contas);
             }
 
@@ -64,4 +65,46 @@ public class ControleContasReceber {
         return listaConta;
     }
 
+    public ArrayList<ContasReceber> ListarContasReceber(String queryAux) {
+        ArrayList<ContasReceber> listaConta = new ArrayList<>();
+        Conexao conexao = new Conexao();
+
+        try {
+            String query = "SELECT * FROM ContasReceber";
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int idCliente = rs.getInt("idCliente");
+                float valor = rs.getFloat("valor");
+                boolean concluido = (rs.getBoolean("concluido"));
+                ContasReceber contas = new ContasReceber(idCliente, id, valor, concluido);
+                listaConta.add(contas);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+
+        return listaConta;
+    }
+
+    public void ConcluirContasReceber(int id) {
+        Conexao conexao = new Conexao();
+        try {
+            String query = "UPDATE contasreceber SET"
+                    + " concluido = ? WHERE id = ?";
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+            ps.setBoolean(1, true);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleAgenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+
+    }
 }

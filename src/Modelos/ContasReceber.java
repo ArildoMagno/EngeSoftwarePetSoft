@@ -14,11 +14,13 @@ public class ContasReceber {
     private int idCliente;
     private int id;
     private float valor;
+    private boolean concluido;
 
-    public ContasReceber(int idCliente, int id, float valor) {
+    public ContasReceber(int idCliente, int id, float valor, boolean concluido) {
         this.idCliente = idCliente;
         this.id = id;
         this.valor = valor;
+        this.concluido = concluido;
     }
 
     public ContasReceber() {
@@ -46,6 +48,14 @@ public class ContasReceber {
 
     public void setValor(float valor) {
         this.valor = valor;
+    }
+
+    public boolean isConcluido() {
+        return concluido;
+    }
+
+    public void setConcluido(boolean concluido) {
+        this.concluido = concluido;
     }
 
 }

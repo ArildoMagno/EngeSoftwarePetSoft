@@ -50,7 +50,8 @@ public class ControleContasPagar {
                 int id = rs.getInt("id");
                 int idFornecedor = rs.getInt("idFornecedor");
                 float valor = rs.getFloat("valor");
-                ContasPagar contas = new ContasPagar(idFornecedor, id, valor);
+                boolean concluido = (rs.getBoolean("concluido"));
+                ContasPagar contas = new ContasPagar(idFornecedor, id, valor, concluido);
                 listaConta.add(contas);
             }
 
@@ -63,6 +64,46 @@ public class ControleContasPagar {
         return listaConta;
     }
 
-    
-    
+    public ArrayList<ContasPagar> ListarContasPagar(String queryAux) {
+        ArrayList<ContasPagar> listaConta = new ArrayList<>();
+        Conexao conexao = new Conexao();
+
+        try {
+            String query = "SELECT * FROM ContasPagar";
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int idFornecedor = rs.getInt("idFornecedor");
+                float valor = rs.getFloat("valor");
+                boolean concluido = (rs.getBoolean("concluido"));
+                ContasPagar contas = new ContasPagar(idFornecedor, id, valor, concluido);
+                listaConta.add(contas);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+
+        return listaConta;
+    }
+
+    public void ConcluirContasPagar(int id) {
+        Conexao conexao = new Conexao();
+        try {
+            String query = "UPDATE contaspagar SET"
+                    + " concluido = ? WHERE id = ?";
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+            ps.setBoolean(1, true);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleAgenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+    }
+
 }

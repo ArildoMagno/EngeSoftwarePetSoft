@@ -14,14 +14,24 @@ public class ContasPagar {
     private int idFornecedor;
     private int id;
     private float valor;
+    private boolean concluido;
 
-    public ContasPagar(int idFornecedor, int id, float valor) {
+    public ContasPagar(int idFornecedor, int id, float valor, boolean concluido) {
         this.idFornecedor = idFornecedor;
         this.id = id;
         this.valor = valor;
+        this.concluido = concluido;
     }
 
     public ContasPagar() {
+    }
+
+    public boolean isConcluido() {
+        return concluido;
+    }
+
+    public void setConcluido(boolean concluido) {
+        this.concluido = concluido;
     }
 
     public int getIdFornecedor() {

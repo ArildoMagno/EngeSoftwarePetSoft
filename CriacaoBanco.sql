@@ -322,3 +322,10 @@ CREATE TABLE `mydb`.`contasreceber` (
 	ALTER TABLE `mydb`.`contasreceber` 
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 
+
+ALTER TABLE `mydb`.`contaspagar` 
+ADD COLUMN `concluido` TINYINT(4) NOT NULL AFTER `valor`;
+
+ALTER TABLE `mydb`.`contasreceber` 
+ADD COLUMN `concluido` TINYINT(4) NOT NULL AFTER `valor`;
+

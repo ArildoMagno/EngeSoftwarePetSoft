@@ -28,50 +28,50 @@ public class ContasMain extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        concluirContasReceber = new javax.swing.JButton();
+        concluirContasPagar = new javax.swing.JButton();
+        relatorioCompras = new javax.swing.JButton();
+        relatorioVendas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        saldo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton2.setText("Receber");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        concluirContasReceber.setText("Concluir ContasReceber");
+        concluirContasReceber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                concluirContasReceberActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Pagar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        concluirContasPagar.setText("Concluir ContasPagar");
+        concluirContasPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                concluirContasPagarActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Relatorio Compras");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        relatorioCompras.setText("Relatorio Compras");
+        relatorioCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                relatorioComprasActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Relatorio Vendas");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        relatorioVendas.setText("Relatorio Vendas");
+        relatorioVendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                relatorioVendasActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Contas");
 
-        jButton3.setText("Saldo");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        saldo.setText("Saldo");
+        saldo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                saldoActionPerformed(evt);
             }
         });
 
@@ -79,45 +79,49 @@ public class ContasMain extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(261, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(relatorioCompras, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                    .addComponent(relatorioVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(254, 254, 254))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(250, 250, 250))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(235, 235, 235)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addComponent(saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(265, 265, 265))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(concluirContasPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(245, 245, 245))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(253, 253, 253)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
-                    .addGap(248, 248, 248)))
+                    .addComponent(concluirContasReceber)
+                    .addContainerGap(248, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addGap(65, 65, 65)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addComponent(concluirContasPagar)
+                .addGap(31, 31, 31)
+                .addComponent(saldo)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(relatorioCompras)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(relatorioVendas)
                 .addGap(90, 90, 90))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(143, 143, 143)
-                    .addComponent(jButton2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton1)
-                    .addContainerGap(237, Short.MAX_VALUE)))
+                    .addComponent(concluirContasReceber)
+                    .addContainerGap(275, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,30 +139,30 @@ public class ContasMain extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void concluirContasReceberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirContasReceberActionPerformed
         // TODO add your handling code here:
-        new TelaContasReceber().setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        new ContasConcluirReceber().setVisible(true);
+    }//GEN-LAST:event_concluirContasReceberActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void concluirContasPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirContasPagarActionPerformed
         // TODO add your handling code here:
-        new TelaContasPagar().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        new ContasConcluirPagar().setVisible(true);
+    }//GEN-LAST:event_concluirContasPagarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void relatorioComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioComprasActionPerformed
         // TODO add your handling code here:
         new ContasRelatorioPagar().setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_relatorioComprasActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void relatorioVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioVendasActionPerformed
         // TODO add your handling code here:
         new ContasRelatorioVendas().setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_relatorioVendasActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void saldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saldoActionPerformed
         // TODO add your handling code here:
         new ContasSaldo().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_saldoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,12 +201,12 @@ public class ContasMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton concluirContasPagar;
+    private javax.swing.JButton concluirContasReceber;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton relatorioCompras;
+    private javax.swing.JButton relatorioVendas;
+    private javax.swing.JButton saldo;
     // End of variables declaration//GEN-END:variables
 }
