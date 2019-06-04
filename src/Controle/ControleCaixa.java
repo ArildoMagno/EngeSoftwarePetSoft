@@ -39,4 +39,39 @@ public class ControleCaixa {
 
     }
 
+    public void UpdateContasPagar(Caixa caixa) {
+        Conexao conexao = new Conexao();
+
+        try {
+            String query = "UPDATE Caixa SET saldo=?, contasPagar=?";
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+
+            ps.setFloat(1, caixa.getSaldo());
+            ps.setFloat(2, caixa.getContasPagar());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            conexao.closeConnection();
+        }
+
+    }
+
+    public void UpdateContasReceber(Caixa caixa) {
+        Conexao conexao = new Conexao();
+
+        try {
+            String query = "UPDATE Caixa SET saldo=?, contasReceber=?";
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+
+            ps.setFloat(1, caixa.getSaldo());
+            ps.setFloat(2, caixa.getContasReceber());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            conexao.closeConnection();
+        }
+    }
+
 }

@@ -32,7 +32,7 @@ public class ControleFornecedor {
             ps.setString(3, fornecedor.getNomeFantasia());
             ps.setString(4, fornecedor.getEndereco());
             ps.setString(5, fornecedor.getTelefone());
-            ps.setInt(6,fornecedor.getAtivo());
+            ps.setInt(6, fornecedor.getAtivo());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,40 +66,65 @@ public class ControleFornecedor {
         return listaFornecedor;
     }
 
-    public void InativaFornecedor(int id) {
+    public ArrayList<Fornecedor> ListaFornecedor(String queryAux) {
         Conexao conexao = new Conexao();
-        
-        try{
-            String  query = "update Fornecedor set ativo = 0 where id=?";
-              PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-              ps.setInt(1, id);
-              ps.executeUpdate();
+        ArrayList<Fornecedor> listaFornecedor = new ArrayList<>();
+        Fornecedor fornecedor = new Fornecedor();
+        try {
+            String query = "SELECT * FROM Fornecedor " + queryAux;
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                fornecedor.setId(rs.getInt("id"));
+                fornecedor.setCNPJ(rs.getString("CNPJ"));
+                fornecedor.setEndereco(rs.getString("endereco"));
+                fornecedor.setNomeFantasia(rs.getString("nomeFantasia"));
+                fornecedor.setRazaoSocial(rs.getString("razaoSocial"));
+                fornecedor.setTelefone(rs.getString("telefone"));
+                listaFornecedor.add(fornecedor);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
+            conexao.closeConnection();
+        }
+        return listaFornecedor;
+    }
+
+    public void InativaFornecedor(int id) {
+        Conexao conexao = new Conexao();
+
+        try {
+            String query = "update Fornecedor set ativo = 0 where id=?";
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             conexao.closeConnection();
         }
     }
-    
-    public void AlteraFornecedor(Fornecedor fornecedor){
+
+    public void AlteraFornecedor(Fornecedor fornecedor) {
         Conexao conexao = new Conexao();
-        
-        try{
+
+        try {
             String query = "update Fornecedor "
                     + "set nomeFantasia = ?, razaoSocial = ?, endereco = ?, "
                     + "telefone = ? where id = ?";
-           PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-           ps.setString(1, fornecedor.getNomeFantasia());
-           ps.setString(2, fornecedor.getRazaoSocial());
-           ps.setString(3, fornecedor.getEndereco());
-           ps.setString(4, fornecedor.getTelefone());
-           ps.setInt(5, fornecedor.getId());
-           ps.executeUpdate();
+            PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, fornecedor.getNomeFantasia());
+            ps.setString(2, fornecedor.getRazaoSocial());
+            ps.setString(3, fornecedor.getEndereco());
+            ps.setString(4, fornecedor.getTelefone());
+            ps.setInt(5, fornecedor.getId());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             conexao.closeConnection();
         }
-        
+
     }
 }

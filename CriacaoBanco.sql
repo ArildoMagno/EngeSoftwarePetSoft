@@ -293,3 +293,32 @@ ALTER TABLE `mydb`.`pedidocompra`
 ADD COLUMN `status` VARCHAR(1) NOT NULL AFTER `idFornecedor`;
 ALTER TABLE `mydb`.`pedidovenda` 
 ADD COLUMN `status` VARCHAR(1) NOT NULL AFTER `idCliente`;
+
+CREATE TABLE `mydb`.`contaspagar` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idFornecedor` INT NOT NULL,
+  `valor` FLOAT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `idFornecedor_idx` (`idFornecedor` ASC) VISIBLE,
+  CONSTRAINT `idFornecedor`
+    FOREIGN KEY (`idFornecedor`)
+    REFERENCES `mydb`.`fornecedor` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE `mydb`.`contasreceber` (
+  `id` INT NOT NULL,
+  `idCliente` INT NOT NULL,
+  `valor` FLOAT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `idCliente_idx` (`idCliente` ASC) VISIBLE,
+  CONSTRAINT `idCliente`
+    FOREIGN KEY (`idCliente`)
+    REFERENCES `mydb`.`cliente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+	
+	ALTER TABLE `mydb`.`contasreceber` 
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+

@@ -5,10 +5,13 @@
  */
 package Controle;
 
-
+import Modelos.ContasPagar;
 import Modelos.ContasReceber;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,11 +25,9 @@ public class ControleContasReceber {
         Conexao conexao = new Conexao();
 
         try {
-
             String query = "INSERT INTO ContasReceber  (idCliente,valor)"
                     + "VALUES(?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-
             ps.setInt(1, contasReceber.getIdCliente());
             ps.setFloat(2, contasReceber.getValor());
             ps.executeUpdate();
@@ -37,4 +38,30 @@ public class ControleContasReceber {
         }
 
     }
+
+    public ArrayList<ContasReceber> ListarContasReceber() {
+        ArrayList<ContasReceber> listaConta = new ArrayList<>();
+        Conexao conexao = new Conexao();
+
+        try {
+            String query = "SELECT * FROM ContasReceber";
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int idCliente = rs.getInt("idCliente");
+                float valor = rs.getFloat("valor");
+                ContasReceber contas = new ContasReceber(idCliente, id, valor);
+                listaConta.add(contas);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+
+        return listaConta;
+    }
+
 }

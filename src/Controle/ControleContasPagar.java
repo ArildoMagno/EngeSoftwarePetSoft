@@ -7,7 +7,10 @@ package Controle;
 
 import Modelos.ContasPagar;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class ControleContasPagar {
 
-    public void InserirContasReceber(ContasPagar contasPagar) {
+    public void InserirContasPagar(ContasPagar contasPagar) {
         Conexao conexao = new Conexao();
 
         try {
@@ -28,10 +31,38 @@ public class ControleContasPagar {
             ps.setFloat(2, contasPagar.getValor());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(ControleContasReceber.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControleContasPagar.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             conexao.closeConnection();
         }
 
     }
+
+    public ArrayList<ContasPagar> ListarContasPagar() {
+        ArrayList<ContasPagar> listaConta = new ArrayList<>();
+        Conexao conexao = new Conexao();
+
+        try {
+            String query = "SELECT * FROM ContasPagar";
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int idFornecedor = rs.getInt("idFornecedor");
+                float valor = rs.getFloat("valor");
+                ContasPagar contas = new ContasPagar(idFornecedor, id, valor);
+                listaConta.add(contas);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+
+        return listaConta;
+    }
+
+    
+    
 }

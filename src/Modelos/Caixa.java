@@ -21,7 +21,7 @@ public class Caixa {
     }
 
     public void setSaldo(float saldo) {
-        this.saldo = saldo;
+        this.saldo += saldo;
     }
 
     public float getContasReceber() {
@@ -29,7 +29,7 @@ public class Caixa {
     }
 
     public void setContasReceber(float contasReceber) {
-        this.contasReceber = contasReceber;
+        this.contasReceber += contasReceber;
     }
 
     public float getContasPagar() {
@@ -37,7 +37,7 @@ public class Caixa {
     }
 
     public void setContasPagar(float contasPagar) {
-        this.contasPagar = contasPagar;
+        this.contasPagar += contasPagar;
     }
 
 }

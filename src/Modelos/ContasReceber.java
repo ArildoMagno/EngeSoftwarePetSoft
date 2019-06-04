@@ -15,6 +15,15 @@ public class ContasReceber {
     private int id;
     private float valor;
 
+    public ContasReceber(int idCliente, int id, float valor) {
+        this.idCliente = idCliente;
+        this.id = id;
+        this.valor = valor;
+    }
+
+    public ContasReceber() {
+    }
+
     public int getIdCliente() {
         return idCliente;
     }

@@ -15,6 +15,15 @@ public class ContasPagar {
     private int id;
     private float valor;
 
+    public ContasPagar(int idFornecedor, int id, float valor) {
+        this.idFornecedor = idFornecedor;
+        this.id = id;
+        this.valor = valor;
+    }
+
+    public ContasPagar() {
+    }
+
     public int getIdFornecedor() {
         return idFornecedor;
     }
