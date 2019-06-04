@@ -87,7 +87,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
 
     }
 
-    public AgendamentoBanho(Agenda agenda) {
+    public AgendamentoBanho(Agenda agenda,String nome,String nomePet, String cpf) {
         initComponents();
         try {
             MaskFormatter maskData = new MaskFormatter("##/##/####");
@@ -101,9 +101,9 @@ public class AgendamentoBanho extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoBanho.class.getName()).log(Level.SEVERE, null, ex);
         }
-        textCliente.setText(agenda.getIdCliente() + "");
-        textAnimal.setText(agenda.getIdCliente() + "");
-        textCPF.setText(agenda.getIdCliente() + "");
+        textCliente.setText(nome);
+        textAnimal.setText(nomePet);
+        textCPF.setText(cpf);
         textData.setText(agenda.getData());
         textHora.setText(agenda.getHora());
         String aux = String.valueOf(agenda.getValor());

@@ -5,9 +5,15 @@
  */
 package telasPet;
 
+import Controle.Conexao;
 import Controle.ControleAgenda;
 import Modelos.Agenda;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -19,10 +25,13 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
      */
     public AgendamentoConsultaConcluir() {
         initComponents();
-
+        Conexao conexao = new Conexao();
+        String cpfCnpj = "";
+        String animal = "";
+        String nome = "";
         ControleAgenda controle = new ControleAgenda();
         ArrayList<Agenda> listaAgenda = controle.ListaAgendas("where concluido = false");
-        String[] tblHead = {"Tipo", "Cliente", "Animal", "Data", "Hora", "Valor", "Concluído"};
+        String[] tblHead = {"Tipo", "Cliente", "CPF", "Animal", "Data", "Hora", "Valor", "Concluído"};
         DefaultTableModel dtm = new DefaultTableModel(tblHead, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;//This causes all cells to be not editable
@@ -41,10 +50,36 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
             } else {
                 tipo = "Consulta";
             }
-            dtm.addRow(new String[]{tipo,
-                String.valueOf(listaAgenda.get(i).getIdCliente()),
-                String.valueOf(listaAgenda.get(i).getIdCliente()),
-                listaAgenda.get(i).getData(), listaAgenda.get(i).getHora(),
+            String query = "select nomeFantasia,cpfcnpj from cliente where id=?";
+            try {
+                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                ps.setInt(1, listaAgenda.get(i).getIdCliente());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    nome = rs.getString("nomeFantasia");
+                    cpfCnpj = rs.getString("cpfcnpj");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                conexao.closeConnection();
+            }
+            query = "select nome from pet where idCliente = ?";
+            try {
+                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                ps.setInt(1, listaAgenda.get(i).getIdCliente());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    animal = rs.getString("nome");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                conexao.closeConnection();
+            }
+            dtm.addRow(new String[]{tipo, nome,cpfCnpj, animal,
+                listaAgenda.get(i).getData(),
+                listaAgenda.get(i).getHora(),
                 String.valueOf(listaAgenda.get(i).getValor()), concluido});
         }
         JTable table = new JTable(dtm);
@@ -56,8 +91,7 @@ public class AgendamentoConsultaConcluir extends javax.swing.JFrame {
                 int col = table.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
                     int opcao = JOptionPane.showConfirmDialog(painel,
-                            "Deseja concluir a agenda de ?"
-                            + listaAgenda.get(row - 1).getIdCliente(),
+                            "Deseja concluir a agenda ?",
                             "Sim ou não?", JOptionPane.YES_NO_OPTION);
                     boolean flag;
                     flag = opcao == JOptionPane.YES_OPTION;
