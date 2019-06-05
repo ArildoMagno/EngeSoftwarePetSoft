@@ -5,6 +5,18 @@
  */
 package telasPet;
 
+import Controle.Conexao;
+import Controle.ControlePedidoCompra;
+import Modelos.PedidoCompra;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Atlas
@@ -16,6 +28,44 @@ public class PedidosCompraListar extends javax.swing.JFrame {
      */
     public PedidosCompraListar() {
         initComponents();
+        ControlePedidoCompra pedidoCompra = new ControlePedidoCompra();
+        ArrayList<PedidoCompra> listaPedido = pedidoCompra.ListaPedidos();
+        String[] cabecaTabela = {"idPedido", "nome fornecedor", "valor total", "data emissão", "status"};
+        DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
+            public boolean isCellEditable(int row, int column) {
+                return false;//This causes all cells to be not editable
+            }
+        };
+        dtm.addRow(cabecaTabela);
+        for (int i = 0; i < listaPedido.size(); i++) {
+            String status = "teste: ", nomeFantasia = "";
+            
+            if (listaPedido.get(i).getStatus() == 'P') {
+                status = "Pendente";
+            } else {
+                status = "Concluído";
+            }
+            Conexao conexao = new Conexao();
+            try {
+                String query = "SELECT nomeFantasia FROM Fornecedor where id =?";
+                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                ps.setInt(1, listaPedido.get(i).getIdFornecedor());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    nomeFantasia = rs.getString("nomeFantasia");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PedidosCompraListar.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                conexao.closeConnection();
+            }
+
+            dtm.addRow(new String[]{String.valueOf(listaPedido.get(i).getId()),
+                nomeFantasia, String.valueOf(listaPedido.get(i).getValorTotal()),
+                listaPedido.get(i).getDataEmissao(), status});
+        }
+        JTable table = new JTable(dtm);
+        painel.add(table);
     }
 
     /**
@@ -28,33 +78,17 @@ public class PedidosCompraListar extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
-        PainelPedidoCompraAlterar = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        painel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        PainelPedidoCompraAlterar.setLayout(new javax.swing.BoxLayout(PainelPedidoCompraAlterar, javax.swing.BoxLayout.LINE_AXIS));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PainelPedidoCompraAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PainelPedidoCompraAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        jScrollPane1.setViewportView(jPanel3);
-
-        jButton2.setText("Ok");
-
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Pedido Compra Listar");
+
+        painel.setLayout(new java.awt.GridLayout());
+        jScrollPane2.setViewportView(painel);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -66,23 +100,18 @@ public class PedidosCompraListar extends javax.swing.JFrame {
                         .addGap(196, 196, 196)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jButton2)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                        .addGap(66, 66, 66)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jButton2)
-                .addGap(25, 25, 25))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -136,11 +165,9 @@ public class PedidosCompraListar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PainelPedidoCompraAlterar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }

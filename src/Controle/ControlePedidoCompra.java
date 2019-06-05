@@ -39,19 +39,47 @@ public class ControlePedidoCompra {
         }
     }
 
-    public ArrayList<PedidoCompra> ListaPedidos(String queryAux) {
+    public ArrayList<PedidoCompra> ListaPedidos() {
         Conexao conexao = new Conexao();
-        PedidoCompra pedido = new PedidoCompra();
+
         ArrayList<PedidoCompra> listaPedidos = new ArrayList<>();
         try {
-            String query = "SELECT * FROM PedidoCompra" + queryAux;
+            String query = "SELECT * FROM PedidoCompra";
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
+                PedidoCompra pedido = new PedidoCompra();
                 pedido.setId(rs.getInt("id"));
                 pedido.setDataEmissao(rs.getString("dataEmissao"));
                 pedido.setValorTotal(rs.getFloat("valorTotal"));
                 pedido.setIdFornecedor(rs.getInt("idFornecedor"));
+                pedido.setStatus(rs.getString("status").charAt(0));
+                listaPedidos.add(pedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePedidoCompra.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+        return listaPedidos;
+
+    }
+
+    public ArrayList<PedidoCompra> ListaPedidos(String queryAux) {
+        Conexao conexao = new Conexao();
+
+        ArrayList<PedidoCompra> listaPedidos = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM PedidoCompra " + queryAux;
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                PedidoCompra pedido = new PedidoCompra();
+                pedido.setId(rs.getInt("id"));
+                pedido.setDataEmissao(rs.getString("dataEmissao"));
+                pedido.setValorTotal(rs.getFloat("valorTotal"));
+                pedido.setIdFornecedor(rs.getInt("idFornecedor"));
+                pedido.setStatus(rs.getString("status").charAt(0));
                 listaPedidos.add(pedido);
             }
         } catch (SQLException ex) {
@@ -102,7 +130,8 @@ public class ControlePedidoCompra {
 
     public void ExcluiPedidoCompra(int id) {
         Conexao conexao = new Conexao();
-
+        ControlePedidoCompraProduto controle = new ControlePedidoCompraProduto();
+        controle.DeletarPedido(id);
         try {
             String query = "DELETE FROM PedidoCompra where id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);

@@ -5,6 +5,7 @@
  */
 package telasPet;
 
+import Controle.Conexao;
 import Controle.ControleContasPagar;
 import Controle.ControleFornecedor;
 import Controle.ControlePedidoCompra;
@@ -17,9 +18,14 @@ import Modelos.PedidoCompraProduto;
 import Modelos.Produto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Atlas
  */
 public class PedidosCompraInserir extends javax.swing.JFrame {
-    
+
     JTable table;
     ControleProduto controleP = new ControleProduto();
     ArrayList<Produto> listaProduto;
@@ -54,9 +60,57 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
         dtm.addRow(cabecaTabela);
         table = new JTable(dtm);
         painel.add(table);
-        
+
     }
-    
+
+    public PedidosCompraInserir(PedidoCompra pedido) {
+        initComponents();
+        ControleFornecedor controle = new ControleFornecedor();
+        String descricao = "";
+        listaFornecedor = controle.ListaFornecedor();
+        for (int i = 0; i < listaFornecedor.size(); i++) {
+            comboFornecedor.addItem(listaFornecedor.get(i).getNomeFantasia());
+        }
+        for (int i = 0; i < listaFornecedor.size(); i++) {
+            if(listaFornecedor.get(i).getId()==pedido.getIdFornecedor()){
+                comboFornecedor.setSelectedIndex(i);
+            }
+        }
+        String[] cabecaTabela = {"id", "descricao", "quantidade", "valor unitário", "valor total"};
+        dtm = new DefaultTableModel(cabecaTabela, 0) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        dtm.addRow(cabecaTabela);
+        ControlePedidoCompraProduto controlePCP = new ControlePedidoCompraProduto();
+        ArrayList<PedidoCompraProduto> lista = controlePCP.ListaProdutos(pedido.getId());
+        for (int i = 0; i < lista.size(); i++) {
+            Conexao conexao = new Conexao();
+            try {
+                String query = "SELECT descricao FROM Produto where id = ?";
+                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                ps.setInt(1, pedido.getId());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    descricao = rs.getString("descricao");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PedidosCompraInserir.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                conexao.closeConnection();
+            }
+            float valorTotal = lista.get(i).getValorUnitario() * lista.get(i).getQuantidade();
+            dtm.addRow(new String[]{String.valueOf(lista.get(i).getIdProduto()),
+                descricao,
+                String.valueOf(lista.get(i).getQuantidade()),
+                String.valueOf(lista.get(i).getValorUnitario()),
+                String.valueOf(valorTotal)});
+        }
+        table = new JTable(dtm);
+        painel.add(table);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -256,7 +310,7 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
         pedido.setDataEmissao(formatarDate.format(data).toString());
         controlePedido.InserirPedidoCompra(pedido);
         pedido.setId(controlePedido.ContadorPedido());
-        
+
         PedidoCompraProduto pedidoProduto = new PedidoCompraProduto();
         pedidoProduto.setIdPedidoCompra(pedido.getId());
         ControlePedidoCompraProduto controlePedidoProduto = new ControlePedidoCompraProduto();
@@ -266,10 +320,10 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
             pedidoProduto.setValorUnitario(Float.parseFloat(dtm.getValueAt(i, 2).toString()));
             controlePedidoProduto.InserirProduto(pedidoProduto);
         }
-        
+
         ContasPagar contas = new ContasPagar();
         ControleContasPagar controle = new ControleContasPagar();
-        
+
         contas.setIdFornecedor(pedido.getIdFornecedor());
         contas.setValor(valor);
         controle.InserirContasPagar(contas);
