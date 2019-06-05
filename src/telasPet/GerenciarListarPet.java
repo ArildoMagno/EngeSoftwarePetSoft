@@ -23,12 +23,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Atlas
  */
-public class PetListar extends javax.swing.JFrame {
+public class GerenciarListarPet extends javax.swing.JFrame {
 
     /**
      * Creates new form agendamentosHorarios
      */
-    public PetListar() {
+    public GerenciarListarPet() {
         initComponents();
         Conexao conexao = new Conexao();
         String nome = "";
@@ -83,7 +83,7 @@ public class PetListar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Agenda");
+        jLabel2.setText("Listar Pet");
 
         painel.setLayout(new java.awt.CardLayout());
         jScrollPane1.setViewportView(painel);
@@ -93,18 +93,19 @@ public class PetListar extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(252, 252, 252)
-                .addComponent(jLabel2)
-                .addContainerGap(289, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(259, 259, 259)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -142,21 +143,29 @@ public class PetListar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PetListar.class
+            java.util.logging.Logger.getLogger(GerenciarListarPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PetListar.class
+            java.util.logging.Logger.getLogger(GerenciarListarPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PetListar.class
+            java.util.logging.Logger.getLogger(GerenciarListarPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PetListar.class
+            java.util.logging.Logger.getLogger(GerenciarListarPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -169,7 +178,7 @@ public class PetListar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PetListar().setVisible(true);
+                new GerenciarListarPet().setVisible(true);
             }
         });
     }

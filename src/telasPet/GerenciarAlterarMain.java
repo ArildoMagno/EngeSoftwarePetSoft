@@ -9,12 +9,12 @@ package telasPet;
  *
  * @author Atlas
  */
-public class GerenciarAlterar extends javax.swing.JFrame {
+public class GerenciarAlterarMain extends javax.swing.JFrame {
 
     /**
      * Creates new form alterarUsuarios
      */
-    public GerenciarAlterar() {
+    public GerenciarAlterarMain() {
         initComponents();
     }
 
@@ -28,34 +28,42 @@ public class GerenciarAlterar extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botaoAlterarDadosFornecedor = new javax.swing.JButton();
+        botaoAlterarDadosUsuario = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        botaoAlterarDadosCliente = new javax.swing.JButton();
+        botaoAlterarDadosPet = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("Fornecedor");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoAlterarDadosFornecedor.setText("Fornecedor");
+        botaoAlterarDadosFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoAlterarDadosFornecedorActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Usuario");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botaoAlterarDadosUsuario.setText("Usuario");
+        botaoAlterarDadosUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botaoAlterarDadosUsuarioActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setText("Selecione qual deseja alterar os dados");
 
-        jButton3.setText("Cliente");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botaoAlterarDadosCliente.setText("Cliente");
+        botaoAlterarDadosCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botaoAlterarDadosClienteActionPerformed(evt);
+            }
+        });
+
+        botaoAlterarDadosPet.setText("Pet");
+        botaoAlterarDadosPet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlterarDadosPetActionPerformed(evt);
             }
         });
 
@@ -67,17 +75,15 @@ public class GerenciarAlterar extends javax.swing.JFrame {
                 .addContainerGap(157, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton2)
-                                    .addComponent(jButton3))))
-                        .addGap(286, 286, 286))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(101, 101, 101))))
+                        .addGap(101, 101, 101))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(botaoAlterarDadosCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoAlterarDadosFornecedor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoAlterarDadosUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoAlterarDadosPet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(286, 286, 286))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,12 +91,14 @@ public class GerenciarAlterar extends javax.swing.JFrame {
                 .addGap(87, 87, 87)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(botaoAlterarDadosFornecedor)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(botaoAlterarDadosUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addGap(61, 61, 61))
+                .addComponent(botaoAlterarDadosCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botaoAlterarDadosPet)
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -108,20 +116,25 @@ public class GerenciarAlterar extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoAlterarDadosFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDadosFornecedorActionPerformed
         // TODO add your handling code here:
         new GerenciarAlterarDadosFornecedor().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoAlterarDadosFornecedorActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botaoAlterarDadosUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDadosUsuarioActionPerformed
         // TODO add your handling code here:
         new GerenciarAlterarDadosUsuario().setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botaoAlterarDadosUsuarioActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void botaoAlterarDadosClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDadosClienteActionPerformed
         // TODO add your handling code here:
         new GerenciarAlterarDadosCliente().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_botaoAlterarDadosClienteActionPerformed
+
+    private void botaoAlterarDadosPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDadosPetActionPerformed
+        // TODO add your handling code here:
+        new GerenciarAlterarDadosPet().setVisible(true);
+    }//GEN-LAST:event_botaoAlterarDadosPetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,14 +153,18 @@ public class GerenciarAlterar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GerenciarAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerenciarAlterarMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GerenciarAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerenciarAlterarMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GerenciarAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerenciarAlterarMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GerenciarAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GerenciarAlterarMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -156,15 +173,16 @@ public class GerenciarAlterar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GerenciarAlterar().setVisible(true);
+                new GerenciarAlterarMain().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton botaoAlterarDadosCliente;
+    private javax.swing.JButton botaoAlterarDadosFornecedor;
+    private javax.swing.JButton botaoAlterarDadosPet;
+    private javax.swing.JButton botaoAlterarDadosUsuario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

@@ -29,33 +29,41 @@ public class GerenciarCadastrarMain extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botaoCadastroFornecedor = new javax.swing.JButton();
+        botaoCadastroUsuario = new javax.swing.JButton();
+        botaoCadastroCliente = new javax.swing.JButton();
+        botaoCadastroPet = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setText("Cadastro");
 
-        jButton1.setText("Fornecedor");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoCadastroFornecedor.setText("Fornecedor");
+        botaoCadastroFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoCadastroFornecedorActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Usuario");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botaoCadastroUsuario.setText("Usuario");
+        botaoCadastroUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botaoCadastroUsuarioActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Cliente");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botaoCadastroCliente.setText("Cliente");
+        botaoCadastroCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botaoCadastroClienteActionPerformed(evt);
+            }
+        });
+
+        botaoCadastroPet.setText("Pet");
+        botaoCadastroPet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCadastroPetActionPerformed(evt);
             }
         });
 
@@ -66,11 +74,12 @@ public class GerenciarCadastrarMain extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(252, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoCadastroPet, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoCadastroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)))
+                        .addComponent(botaoCadastroFornecedor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoCadastroUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(245, 245, 245))
         );
         jPanel1Layout.setVerticalGroup(
@@ -79,12 +88,14 @@ public class GerenciarCadastrarMain extends javax.swing.JFrame {
                 .addGap(80, 80, 80)
                 .addComponent(jLabel2)
                 .addGap(139, 139, 139)
-                .addComponent(jButton1)
+                .addComponent(botaoCadastroFornecedor)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(botaoCadastroUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addComponent(botaoCadastroCliente)
+                .addGap(18, 18, 18)
+                .addComponent(botaoCadastroPet)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -103,20 +114,24 @@ public class GerenciarCadastrarMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     //cadastrar Main Usuario
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botaoCadastroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastroUsuarioActionPerformed
         // TODO add your handling code here:
         new GerenciarCadastrarUsuario().setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botaoCadastroUsuarioActionPerformed
     //Cadastrar Fornecedor
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoCadastroFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastroFornecedorActionPerformed
         // TODO add your handling code here:
         new GerenciarCadastrarFornecedor().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoCadastroFornecedorActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void botaoCadastroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastroClienteActionPerformed
         // TODO add your handling code here:
         new GerenciarCadastrarCliente().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_botaoCadastroClienteActionPerformed
+
+    private void botaoCadastroPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastroPetActionPerformed
+        new GerenciarCadastrarPet().setVisible(true);
+    }//GEN-LAST:event_botaoCadastroPetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,9 +172,10 @@ public class GerenciarCadastrarMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton botaoCadastroCliente;
+    private javax.swing.JButton botaoCadastroFornecedor;
+    private javax.swing.JButton botaoCadastroPet;
+    private javax.swing.JButton botaoCadastroUsuario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

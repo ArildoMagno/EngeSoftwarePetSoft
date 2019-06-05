@@ -24,12 +24,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Atlas
  */
-public class PetAlterar extends javax.swing.JFrame {
+public class GerenciarAlterarDadosPet extends javax.swing.JFrame {
 
     /**
      * Creates new form agendamentosHorarios
      */
-    public PetAlterar() {
+    public GerenciarAlterarDadosPet() {
         initComponents();
         Conexao conexao = new Conexao();
         String nome = "";
@@ -79,7 +79,7 @@ public class PetAlterar extends javax.swing.JFrame {
                     boolean flag;
                     flag = opcao == JOptionPane.YES_OPTION;
                     if (flag) {
-                        new PetCadastro(listaPet.get(row - 1)).setVisible(true);
+                        new GerenciarCadastrarPet(listaPet.get(row - 1)).setVisible(true);
                         dispose();
                     }
                 }
@@ -105,7 +105,7 @@ public class PetAlterar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Agenda");
+        jLabel2.setText("Alterar Dados Pet");
 
         painel.setLayout(new java.awt.CardLayout());
         jScrollPane1.setViewportView(painel);
@@ -114,19 +114,21 @@ public class PetAlterar extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(252, 252, 252)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addGap(211, 211, 211))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -164,21 +166,37 @@ public class PetAlterar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PetAlterar.class
+            java.util.logging.Logger.getLogger(GerenciarAlterarDadosPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PetAlterar.class
+            java.util.logging.Logger.getLogger(GerenciarAlterarDadosPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PetAlterar.class
+            java.util.logging.Logger.getLogger(GerenciarAlterarDadosPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PetAlterar.class
+            java.util.logging.Logger.getLogger(GerenciarAlterarDadosPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -199,7 +217,7 @@ public class PetAlterar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PetAlterar().setVisible(true);
+                new GerenciarAlterarDadosPet().setVisible(true);
             }
         });
     }
