@@ -24,12 +24,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Atlas
  */
-public class PetInvativar extends javax.swing.JFrame {
+public class GerenciarRemoverPet extends javax.swing.JFrame {
 
     /**
      * Creates new form agendamentosHorarios
      */
-    public PetInvativar() {
+    public GerenciarRemoverPet() {
         initComponents();
         Conexao conexao = new Conexao();
         String nome = "";
@@ -65,8 +65,7 @@ public class PetInvativar extends javax.swing.JFrame {
         JTable table = new JTable(dtm);
 
         painel.add(table);
-        table.addMouseListener(
-                new java.awt.event.MouseAdapter() {
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt
             ) {
@@ -80,7 +79,7 @@ public class PetInvativar extends javax.swing.JFrame {
                     flag = opcao == JOptionPane.YES_OPTION;
                     if (flag) {
                         controle.InativaPet(listaPet.get(row-1).getId());
-                        new PetInvativar().setVisible(true);
+                        new GerenciarRemoverPet().setVisible(true);
                         dispose();
                     }
                 }
@@ -106,7 +105,7 @@ public class PetInvativar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Agenda");
+        jLabel2.setText("Remover Pet");
 
         painel.setLayout(new java.awt.CardLayout());
         jScrollPane1.setViewportView(painel);
@@ -116,18 +115,19 @@ public class PetInvativar extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(252, 252, 252)
-                .addComponent(jLabel2)
-                .addContainerGap(289, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(247, 247, 247)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -165,21 +165,53 @@ public class PetInvativar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PetInvativar.class
+            java.util.logging.Logger.getLogger(GerenciarRemoverPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PetInvativar.class
+            java.util.logging.Logger.getLogger(GerenciarRemoverPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PetInvativar.class
+            java.util.logging.Logger.getLogger(GerenciarRemoverPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PetInvativar.class
+            java.util.logging.Logger.getLogger(GerenciarRemoverPet.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -216,7 +248,7 @@ public class PetInvativar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PetInvativar().setVisible(true);
+                new GerenciarRemoverPet().setVisible(true);
             }
         });
     }
