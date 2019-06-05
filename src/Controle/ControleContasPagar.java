@@ -69,7 +69,7 @@ public class ControleContasPagar {
         Conexao conexao = new Conexao();
 
         try {
-            String query = "SELECT * FROM ContasPagar";
+            String query = "SELECT * FROM ContasPagar " + queryAux;
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {

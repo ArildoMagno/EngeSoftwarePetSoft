@@ -70,7 +70,7 @@ public class ControleContasReceber {
         Conexao conexao = new Conexao();
 
         try {
-            String query = "SELECT * FROM ContasReceber";
+            String query = "SELECT * FROM ContasReceber " + queryAux;
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {

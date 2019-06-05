@@ -5,11 +5,15 @@
  */
 package telasPet;
 
-import Controle.ControleAgenda;
+import Controle.Conexao;
 import Controle.ControleContasPagar;
-import Modelos.Agenda;
 import Modelos.ContasPagar;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,9 +28,13 @@ public class ContasRelatorioPagar extends javax.swing.JFrame {
      */
     public ContasRelatorioPagar() {
         initComponents();
+        Conexao conexao = new Conexao();
         ControleContasPagar controle = new ControleContasPagar();
         ArrayList<ContasPagar> listaContasPagar = controle.ListarContasPagar();
-        String[] tblHead = {"Fornecedor", "Valor"};
+        String nomeFornecedor = "";
+        String valor = "";
+
+        String[] tblHead = {"NomeFornecedor", "Valor"};
         DefaultTableModel dtm = new DefaultTableModel(tblHead, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;//This causes all cells to be not editable
@@ -34,9 +42,22 @@ public class ContasRelatorioPagar extends javax.swing.JFrame {
         };
         dtm.addRow(tblHead);
         for (int i = 0; i < listaContasPagar.size(); i++) {
+            String query = "select nomeFantasia from fornecedor where id=?";
+            try {
+                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                ps.setInt(1, listaContasPagar.get(i).getIdFornecedor());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    nomeFornecedor = rs.getString("nomeFantasia");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                conexao.closeConnection();
+            }
 
             dtm.addRow(new String[]{
-                String.valueOf(listaContasPagar.get(i).getIdFornecedor()),
+                String.valueOf(nomeFornecedor),
                 String.valueOf(listaContasPagar.get(i).getValor())});
         }
         JTable table = new JTable(dtm);

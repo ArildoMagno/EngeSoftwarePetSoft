@@ -6,10 +6,10 @@
 package telasPet;
 
 import Controle.Conexao;
+import Controle.ControleAgenda;
 import Controle.ControleContasPagar;
-import Controle.ControleContasReceber;
+import Modelos.Agenda;
 import Modelos.ContasPagar;
-import Modelos.ContasReceber;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,21 +24,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Atlas
  */
-public class ContasConcluirReceber extends javax.swing.JFrame {
+public class ContasRealizarPagamento extends javax.swing.JFrame {
 
     /**
-     * Creates new form contasReceber
+     * Creates new form contasPagar
      */
-    public ContasConcluirReceber() {
+    public ContasRealizarPagamento() {
         initComponents();
         Conexao conexao = new Conexao();
-
-        ControleContasReceber controle = new ControleContasReceber();
-        String nomeCliente = "";
+        ControleContasPagar controle = new ControleContasPagar();
+        String nomeFornecedor = "";
         String valor = "";
 
-        ArrayList<ContasReceber> listaContasReceber = controle.ListarContasReceber("where concluido = false");
-        String[] tblHead = {"NomeCliente", "Valor", "Concluído"};
+        ArrayList<ContasPagar> listaContasPagar = controle.ListarContasPagar("where concluido = false");
+        String[] tblHead = {"NomeFornecedor", "Valor", "Pago"};
         DefaultTableModel dtm = new DefaultTableModel(tblHead, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;//This causes all cells to be not editable
@@ -46,20 +45,20 @@ public class ContasConcluirReceber extends javax.swing.JFrame {
         };
         dtm.addRow(tblHead);
         String concluido = "", tipo = "";
-        for (int i = 0; i < listaContasReceber.size(); i++) {
-            if (listaContasReceber.get(i).isConcluido()) {
+        for (int i = 0; i < listaContasPagar.size(); i++) {
+            if (listaContasPagar.get(i).isConcluido()) {
                 concluido = "Sim";
             } else {
                 concluido = "Não";
             }
 
-            String query = "select nomeFantasia from cliente where id=?";
+            String query = "select nomeFantasia from fornecedor where id=?";
             try {
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-                ps.setInt(1, listaContasReceber.get(i).getIdCliente());
+                ps.setInt(1, listaContasPagar.get(i).getIdFornecedor());
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    nomeCliente = rs.getString("nomeFantasia");
+                    nomeFornecedor = rs.getString("nomeFantasia");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,8 +66,8 @@ public class ContasConcluirReceber extends javax.swing.JFrame {
                 conexao.closeConnection();
             }
 
-            dtm.addRow(new String[]{nomeCliente,
-                String.valueOf(listaContasReceber.get(i).getValor()), concluido});
+            dtm.addRow(new String[]{nomeFornecedor,
+                String.valueOf(listaContasPagar.get(i).getValor()), concluido});
         }
 
         JTable table = new JTable(dtm);
@@ -86,9 +85,9 @@ public class ContasConcluirReceber extends javax.swing.JFrame {
                     flag = opcao == JOptionPane.YES_OPTION;
                     if (flag) {
 
-                        controle.ConcluirContasReceber(listaContasReceber.get(row - 1).getId());
+                        controle.ConcluirContasPagar(listaContasPagar.get(row - 1).getId());
                         dispose();
-                        new ContasConcluirReceber().setVisible(true);
+                        new ContasRealizarPagamento().setVisible(true);
                     }
                 }
             }
@@ -105,18 +104,16 @@ public class ContasConcluirReceber extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         painel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Concluir Receber");
-
-        jPanel2.setLayout(new java.awt.CardLayout());
+        jLabel1.setText("Pagar Contas");
 
         painel.setLayout(new java.awt.CardLayout());
 
@@ -124,52 +121,60 @@ public class ContasConcluirReceber extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jPanel3, "card2");
+        jScrollPane2.setViewportView(jPanel3);
 
-        jScrollPane1.setViewportView(jPanel2);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(202, 202, 202))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(191, 191, 191))))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -193,14 +198,78 @@ public class ContasConcluirReceber extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ContasConcluirReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContasRealizarPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ContasConcluirReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContasRealizarPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ContasConcluirReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContasRealizarPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ContasConcluirReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContasRealizarPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -269,7 +338,7 @@ public class ContasConcluirReceber extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ContasConcluirReceber().setVisible(true);
+                new ContasRealizarPagamento().setVisible(true);
             }
         });
     }
@@ -279,7 +348,7 @@ public class ContasConcluirReceber extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }

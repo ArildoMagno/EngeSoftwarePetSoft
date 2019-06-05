@@ -37,14 +37,14 @@ public class ContasMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        concluirContasReceber.setText("Concluir ContasReceber");
+        concluirContasReceber.setText("Receber Pagamento");
         concluirContasReceber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 concluirContasReceberActionPerformed(evt);
             }
         });
 
-        concluirContasPagar.setText("Concluir ContasPagar");
+        concluirContasPagar.setText("Realizar Pagamento");
         concluirContasPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 concluirContasPagarActionPerformed(evt);
@@ -100,8 +100,8 @@ public class ContasMain extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(253, 253, 253)
-                    .addComponent(concluirContasReceber)
-                    .addContainerGap(248, Short.MAX_VALUE)))
+                    .addComponent(concluirContasReceber, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(249, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,12 +141,12 @@ public class ContasMain extends javax.swing.JFrame {
 
     private void concluirContasReceberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirContasReceberActionPerformed
         // TODO add your handling code here:
-        new ContasConcluirReceber().setVisible(true);
+        new ContasReceberPagamento().setVisible(true);
     }//GEN-LAST:event_concluirContasReceberActionPerformed
 
     private void concluirContasPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirContasPagarActionPerformed
         // TODO add your handling code here:
-        new ContasConcluirPagar().setVisible(true);
+        new ContasRealizarPagamento().setVisible(true);
     }//GEN-LAST:event_concluirContasPagarActionPerformed
 
     private void relatorioComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioComprasActionPerformed

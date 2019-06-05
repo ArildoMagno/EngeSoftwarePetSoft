@@ -5,9 +5,15 @@
  */
 package telasPet;
 
+import Controle.Conexao;
 import Controle.ControleContasReceber;
 import Modelos.ContasReceber;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,9 +28,12 @@ public class ContasRelatorioVendas extends javax.swing.JFrame {
      */
     public ContasRelatorioVendas() {
         initComponents();
+        Conexao conexao = new Conexao();
         ControleContasReceber controle = new ControleContasReceber();
+        String nomeCliente = "";
+        String valor = "";
         ArrayList<ContasReceber> listaContasReceber = controle.ListarContasReceber();
-        String[] tblHead = {"Cliente", "Valor"};
+        String[] tblHead = {"NomeCliente", "Valor"};
         DefaultTableModel dtm = new DefaultTableModel(tblHead, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;//This causes all cells to be not editable
@@ -33,12 +42,27 @@ public class ContasRelatorioVendas extends javax.swing.JFrame {
         dtm.addRow(tblHead);
         for (int i = 0; i < listaContasReceber.size(); i++) {
 
-            dtm.addRow(new String[]{
-                String.valueOf(listaContasReceber.get(i).getIdCliente()),
+            String query = "select nomeFantasia from cliente where id=?";
+            try {
+                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                ps.setInt(1, listaContasReceber.get(i).getIdCliente());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    nomeCliente = rs.getString("nomeFantasia");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                conexao.closeConnection();
+            }
+
+            dtm.addRow(new String[]{nomeCliente,
                 String.valueOf(listaContasReceber.get(i).getValor())});
         }
+
         JTable table = new JTable(dtm);
         painel.add(table);
+
     }
 
     /**
