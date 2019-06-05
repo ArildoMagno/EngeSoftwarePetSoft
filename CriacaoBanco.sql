@@ -329,3 +329,5 @@ ADD COLUMN `concluido` TINYINT(4) NOT NULL AFTER `valor`;
 ALTER TABLE `mydb`.`contasreceber` 
 ADD COLUMN `concluido` TINYINT(4) NOT NULL AFTER `valor`;
 
+ALTER TABLE `mydb`.`pet` 
+ADD COLUMN `ativo` TINYINT NULL DEFAULT 0 AFTER `idCliente`;

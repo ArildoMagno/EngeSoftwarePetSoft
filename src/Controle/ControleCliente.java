@@ -42,12 +42,13 @@ public class ControleCliente {
     public ArrayList<Cliente> ListaCliente() {
         Conexao conexao = new Conexao();
         ArrayList<Cliente> listaCliente = new ArrayList<>();
-        Cliente cliente = new Cliente();
         try {
             String query = "SELECT * FROM Cliente";
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id"));
                 cliente.setCpfCnpj(rs.getString("CPFCNPJ"));
                 cliente.setEndereco(rs.getString("endereco"));
                 cliente.setNomeFantasia(rs.getString("nomeFantasia"));
