@@ -114,7 +114,7 @@ public class ContasReceberPagamento extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Concluir Receber");
+        jLabel1.setText("Receber Pagamento");
 
         jPanel2.setLayout(new java.awt.CardLayout());
 
