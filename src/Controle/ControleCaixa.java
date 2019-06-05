@@ -7,7 +7,9 @@ package Controle;
 
 import Modelos.Caixa;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,6 +74,27 @@ public class ControleCaixa {
         } finally {
             conexao.closeConnection();
         }
+    }
+
+    public Caixa ListarCaixa() {
+        Conexao conexao = new Conexao();
+        Caixa caixa = new Caixa();
+        try {
+            String query = "SELECT * FROM caixa";
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                caixa.setSaldo(rs.getFloat("saldo"));
+                caixa.setContasReceber(rs.getFloat("contasReceber"));
+                caixa.setContasPagar(rs.getFloat("contasPagar"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleCaixa.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+        return caixa;
+
     }
 
 }

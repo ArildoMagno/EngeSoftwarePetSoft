@@ -15,7 +15,15 @@ public class Caixa {
     private float contasReceber;
     private float contasPagar;
 
-    
+    public Caixa(float saldo, float contasReceber, float contasPagar) {
+        this.saldo = saldo;
+        this.contasReceber = contasReceber;
+        this.contasPagar = contasPagar;
+    }
+
+    public Caixa() {
+    }
+
     public float getSaldo() {
         return saldo;
     }
