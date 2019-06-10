@@ -5,6 +5,18 @@
  */
 package telasPet;
 
+import Controle.Conexao;
+import Controle.ControlePedidoVenda;
+import Modelos.PedidoVenda;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Atlas
@@ -15,7 +27,42 @@ public class PedidosVendaListar extends javax.swing.JFrame {
      * Creates new form PedidosVendaListar
      */
     public PedidosVendaListar() {
-        initComponents();
+        initComponents();ControlePedidoVenda pedidoVenda = new ControlePedidoVenda();
+        ArrayList<PedidoVenda> listaPedido = pedidoVenda.ListaPedidos();
+        String[] cabecaTabela = {"idPedido", "nome cliente", "valor total", "data emissão", "status"};
+        DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
+            public boolean isCellEditable(int row, int column) {
+                return false;//This causes all cells to be not editable
+            }
+        };
+        dtm.addRow(cabecaTabela);
+        for (int i = 0; i < listaPedido.size(); i++) {
+            String status = "teste: ", nomeFantasia = "";
+            
+            if (listaPedido.get(i).getStatus() == 'P') {
+                status = "Pendente";
+            } else {
+                status = "Concluído";
+            }
+            Conexao conexao = new Conexao();
+            try {
+                String query = "SELECT nomeFantasia FROM Cliente where id =?";
+                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                ps.setInt(1, listaPedido.get(i).getCliente());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    nomeFantasia = rs.getString("nomeFantasia");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PedidosVendaListar.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+
+            dtm.addRow(new String[]{String.valueOf(listaPedido.get(i).getId()),
+                nomeFantasia, String.valueOf(listaPedido.get(i).getValorTotal()),
+                listaPedido.get(i).getDataEmissao(), status});
+        }
+        JTable table = new JTable(dtm);
+        painel.add(table);
     }
 
     /**
@@ -31,28 +78,25 @@ public class PedidosVendaListar extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
-        PainelPedidoCompraAlterar = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        painel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        PainelPedidoCompraAlterar.setLayout(new javax.swing.BoxLayout(PainelPedidoCompraAlterar, javax.swing.BoxLayout.LINE_AXIS));
+        painel.setLayout(new javax.swing.BoxLayout(painel, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PainelPedidoCompraAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+            .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PainelPedidoCompraAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanel3);
-
-        jButton2.setText("Ok");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Pedido Venda Listar");
@@ -68,10 +112,7 @@ public class PedidosVendaListar extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jButton2)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -81,9 +122,7 @@ public class PedidosVendaListar extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jButton2)
-                .addGap(25, 25, 25))
+                .addGap(84, 84, 84))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -148,12 +187,11 @@ public class PedidosVendaListar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PainelPedidoCompraAlterar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }

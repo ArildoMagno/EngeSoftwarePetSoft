@@ -38,12 +38,12 @@ public class ControlePedidoVenda {
         }
     }
 
-    public ArrayList<PedidoVenda> ListaPedidos(String queryAux) {
+    public ArrayList<PedidoVenda> ListaPedidos() {
         Conexao conexao = new Conexao();
         PedidoVenda pedido = new PedidoVenda();
         ArrayList<PedidoVenda> listaPedidos = new ArrayList<>();
         try {
-            String query = "SELECT * FROM PedidoVenda" + queryAux;
+            String query = "SELECT * FROM PedidoVenda";
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
@@ -52,6 +52,32 @@ public class ControlePedidoVenda {
                 pedido.setValorTotal(rs.getFloat("valorTotal"));
                 pedido.setCliente(rs.getInt("cliente"));
                 pedido.setQuantidade(rs.getInt("quantidade"));
+                listaPedidos.add(pedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+        return listaPedidos;
+    }
+
+    public ArrayList<PedidoVenda> ListaPedidos(String queryAux) {
+        Conexao conexao = new Conexao();
+
+        ArrayList<PedidoVenda> listaPedidos = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM PedidoVenda " + queryAux;
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                PedidoVenda pedido = new PedidoVenda();
+                pedido.setId(rs.getInt("id"));
+                pedido.setDataEmissao(rs.getString("dataEmissao"));
+                pedido.setValorTotal(rs.getFloat("valorTotal"));
+                pedido.setCliente(rs.getInt("cliente")); 
+                pedido.setQuantidade(rs.getFloat("quantidade"));
+                pedido.setStatus(rs.getString("status").charAt(0));
                 listaPedidos.add(pedido);
             }
         } catch (SQLException ex) {
@@ -113,5 +139,23 @@ public class ControlePedidoVenda {
         } finally{
             conexao.closeConnection();
         }
+    }
+    
+    public int ContadorPedido() {
+        int id = 0;
+        Conexao conexao = new Conexao();
+        try {
+            String query = "SELECT id FROM PedidoVenda ORDER BY id desc LIMIT 1";
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+        return id;
     }
 }
