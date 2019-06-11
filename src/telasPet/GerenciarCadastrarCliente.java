@@ -5,6 +5,15 @@
  */
 package telasPet;
 
+import Controle.ControleCliente;
+import Modelos.Cliente;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.text.MaskFormatter;
+
 /**
  *
  * @author Atlas
@@ -16,6 +25,58 @@ public class GerenciarCadastrarCliente extends javax.swing.JFrame {
      */
     public GerenciarCadastrarCliente() {
         initComponents();
+        MaskFormatter maskCPF;
+        try {
+            maskCPF = new MaskFormatter("###.###.###-##");
+            maskCPF.install(textCNPJ);
+        } catch (ParseException ex) {
+            Logger.getLogger(GerenciarCadastrarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        botaoCadastrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Cliente cliente = new Cliente();
+                cliente.setNomeFantasia(textNome.getText());
+                cliente.setCpfCnpj(textCNPJ.getText());
+                cliente.setRazaoSocial(textRazaoSocial.getText());
+                cliente.setTelefone(textTelefone.getText());
+                cliente.setEndereco(textEndereco.getText());
+                cliente.setTipoPessoa('F');
+                ControleCliente controle = new ControleCliente();
+                controle.InserirCliente(cliente);
+            }
+        });
+    }
+
+    public GerenciarCadastrarCliente(Cliente cliente) {
+        initComponents();
+        MaskFormatter maskCPF;
+        try {
+            maskCPF = new MaskFormatter("###.###.###-##");
+            maskCPF.install(textCNPJ);
+        } catch (ParseException ex) {
+            Logger.getLogger(GerenciarCadastrarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        textNome.setText(cliente.getNomeFantasia());
+        textCNPJ.setText(cliente.getCpfCnpj());
+        textRazaoSocial.setText(cliente.getRazaoSocial());
+        textTelefone.setText(cliente.getTelefone());
+        textEndereco.setText(cliente.getEndereco());
+        
+        botaoCadastrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                cliente.setNomeFantasia(textNome.getText());
+                cliente.setCpfCnpj(textCNPJ.getText());
+                cliente.setRazaoSocial(textRazaoSocial.getText());
+                cliente.setTelefone(textTelefone.getText());
+                cliente.setEndereco(textEndereco.getText());
+                cliente.setTipoPessoa('F');
+                ControleCliente controle = new ControleCliente();
+                controle.AlteraCliente(cliente);
+            }
+        });
     }
 
     /**
@@ -36,12 +97,12 @@ public class GerenciarCadastrarCliente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         textNome = new javax.swing.JTextField();
         textRazaoSocial = new javax.swing.JTextField();
-        textCNPJ = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         textTelefone = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         textEndereco = new javax.swing.JTextField();
+        textCNPJ = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -101,13 +162,13 @@ public class GerenciarCadastrarCliente extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(textRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(textNome, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                                    .addComponent(textCNPJ))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -127,11 +188,11 @@ public class GerenciarCadastrarCliente extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(32, 32, 32)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(textCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(textRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,7 +244,7 @@ public class GerenciarCadastrarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLimparActionPerformed
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-       
+
 
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
@@ -233,7 +294,7 @@ public class GerenciarCadastrarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField textCNPJ;
+    private javax.swing.JFormattedTextField textCNPJ;
     private javax.swing.JTextField textEndereco;
     private javax.swing.JTextField textNome;
     private javax.swing.JTextField textRazaoSocial;
