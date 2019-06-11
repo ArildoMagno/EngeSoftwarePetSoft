@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Lucas Oliveira
  */
+
 public class ControlePedidoCompra {
 
     public void InserirPedidoCompra(PedidoCompra pedido) {

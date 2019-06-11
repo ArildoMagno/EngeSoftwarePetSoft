@@ -81,6 +81,10 @@ public class PedidosVendaInserir extends javax.swing.JFrame {
                 comboCliente.setSelectedIndex(i);
             }
         }
+          listaProduto = controleP.ListaProduto("where ativo = 1");
+        for (int i = 0; i < listaProduto.size(); i++) {
+            comboItem.addItem(listaProduto.get(i).getDescricao());
+        }
         String[] cabecaTabela = {"id", "descricao", "quantidade", "valor unitário", "valor total"};
         dtm = new DefaultTableModel(cabecaTabela, 0) {
             public boolean isCellEditable(int row, int column) {
@@ -93,7 +97,8 @@ public class PedidosVendaInserir extends javax.swing.JFrame {
         for (int i = 0; i < lista.size(); i++) {
             Conexao conexao = new Conexao();
             try {
-                String query = "SELECT descricao FROM Produto where id = ?";
+                String query = "SELECT descricao FROM Produto where id = "
+                        + "(SELECT idProduto from PedidoVendaProduto where idPedidoVenda     = ?)";
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
                 ps.setInt(1, pedido.getId());
                 ResultSet rs = ps.executeQuery();

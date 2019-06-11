@@ -88,7 +88,8 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
         for (int i = 0; i < lista.size(); i++) {
             Conexao conexao = new Conexao();
             try {
-                String query = "SELECT descricao FROM Produto where id = ?";
+                String query = "SELECT descricao FROM Produto where id = "
+                        + "(SELECT idProduto from PedidoCompraProduto where idPedidoCompra = ?)";
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
                 ps.setInt(1, pedido.getId());
                 ResultSet rs = ps.executeQuery();
