@@ -48,12 +48,12 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
             }
             Conexao conexao = new Conexao();
             try {
-                String query = "SELECT nomeFantasia FROM Cliente where id =?";
+                String query = "SELECT descricao FROM Produto where id= ?";
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
                 ps.setInt(1, listaPedido.get(i).getIdCliente());
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    cliente = rs.getString("nomeFantasia");
+                    cliente = rs.getString("descricao");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(PedidosVendaAlterar.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,8 +82,7 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
                     if (flag) {
                         new PedidosVendaInserir(listaPedido.get(row - 1)).setVisible(true);
                         dispose();
-                        new PedidosVendaAlterar().setVisible(true);
-                       
+                             
                     }
                 }
             }

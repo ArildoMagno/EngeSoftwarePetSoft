@@ -33,6 +33,7 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
         ControlePedidoVenda controle = new ControlePedidoVenda();
         ControlePedidoVendaProduto controleP = new ControlePedidoVendaProduto();
         ArrayList<PedidoVenda> listaPedido = controle.ListaPedidos("WHERE status = 'P' ");
+
         String[] cabecaTabela = {"idPedido", "nome cliente", "valor total", "data emissão", "status"};
         DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
             public boolean isCellEditable(int row, int column) {
@@ -81,8 +82,7 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
                             flag = opcao == JOptionPane.YES_OPTION;
                             if (flag) {
                                 controleP.DeletarPedido(Integer.parseInt(dtm.getValueAt(row, 0).toString()));
-                                controle.ExcluiPedidoVenda(Integer.parseInt(dtm.getValueAt(row, 0).toString()));
-                                
+                                controle.ExcluiPedidoVenda(Integer.parseInt(dtm.getValueAt(row, 0).toString()));                                
                                 dispose();
                                 new PedidosVendaRemover().setVisible(true);
                                 
