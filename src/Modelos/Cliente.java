@@ -17,6 +17,8 @@ public class Cliente{
     private String cpfCnpj;
     private char tipoPessoa;
     private String endereco;
+    private String telefone;
+    private boolean ativo;
 
     public int getId() {
         return id;
@@ -73,6 +75,14 @@ public class Cliente{
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    private String telefone;
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+    
 }
 
