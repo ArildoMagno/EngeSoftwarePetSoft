@@ -7,7 +7,11 @@ package telasPet;
 
 import Controle.Conexao;
 import Controle.ControleAgenda;
+import Controle.ControleCliente;
+import Controle.ControlePet;
 import Modelos.Agenda;
+import Modelos.Cliente;
+import Modelos.Pet;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
@@ -15,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.DefaultFormatterFactory;
@@ -27,9 +32,8 @@ import javax.swing.text.NumberFormatter;
  */
 public class AgendamentoConsulta extends javax.swing.JFrame {
 
-    /**
-     * Creates new form agendamentoConsulta
-     */
+    ArrayList<Cliente> listaCliente;
+
     public AgendamentoConsulta() {
         initComponents();
         ControleAgenda controleAgenda = new ControleAgenda();
@@ -41,9 +45,6 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
             MaskFormatter maskHora = new MaskFormatter("##:##");
             maskHora.install(textHora);
 
-            MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
-            maskCPF.install(textCPF);
-
             DecimalFormat dFormat = new DecimalFormat("#,###,###.00");
             NumberFormatter formatter = new NumberFormatter(dFormat);
             formatter.setFormat(dFormat);
@@ -51,6 +52,11 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
             textValor.setFormatterFactory(new DefaultFormatterFactory(formatter));
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoBanho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ControleCliente controleCliente = new ControleCliente();
+        listaCliente = controleCliente.ListaCliente("WHERE ativo = 1");
+        for (int i = 0; i < listaCliente.size(); i++) {
+            comboCliente.addItem(listaCliente.get(i).getNomeFantasia() + " " + listaCliente.get(i).getCpfCnpj());
         }
         botaoOk.addActionListener(new ActionListener() {
             @Override
@@ -61,20 +67,7 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
                 valor = valor.replace(".", "");
                 valor = valor.replace(",", ".");
                 agenda.setValor(Float.parseFloat(valor));
-                Conexao conexao = new Conexao();
-                String query = "select id from cliente where cpfcnpj=?";
-                try {
-                    PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-                    ps.setString(1, textCPF.getText());
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        agenda.setIdCliente(rs.getInt("id"));
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    conexao.closeConnection();
-                }
+                agenda.setIdCliente(listaCliente.get(comboCliente.getSelectedIndex()).getId());
                 agenda.setConcluido(false);
                 agenda.setTipo('C');
                 agenda.setIdUsuario(1);
@@ -86,27 +79,21 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
 
     public AgendamentoConsulta(Agenda agenda, String nome, String nomePet, String cpf) {
         initComponents();
-        try {
-            MaskFormatter maskData = new MaskFormatter("##/##/####");
-            maskData.install(textData);
-
-            MaskFormatter maskHora = new MaskFormatter("##:##");
-            maskHora.install(textHora);
-
-            MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
-            maskCPF.install(textCPF);
-        } catch (ParseException ex) {
-            Logger.getLogger(AgendamentoBanho.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        textCliente.setText(nome);
-        textAnimal.setText(nomePet);
-        textCPF.setText(cpf);
         textData.setText(agenda.getData());
         textHora.setText(agenda.getHora());
         String aux = String.valueOf(agenda.getValor());
         aux = aux.replace(".", ",");
         textValor.setText(aux);
-
+        ControleCliente controleCliente = new ControleCliente();
+        listaCliente = controleCliente.ListaCliente("WHERE ativo = 1");
+        for (int i = 0; i < listaCliente.size(); i++) {
+            comboCliente.addItem(listaCliente.get(i).getNomeFantasia() + " " + listaCliente.get(i).getCpfCnpj());
+        }
+        for (int i = 0; i < listaCliente.size(); i++) {
+            if (listaCliente.get(i).getId() == agenda.getId()) {
+                comboCliente.setSelectedIndex(i);
+            }
+        }
         ControleAgenda controleAgenda = new ControleAgenda();
 
         botaoOk.addActionListener(new ActionListener() {
@@ -120,20 +107,7 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
                 agenda.setValor(Float.parseFloat(valor));
                 agenda.setConcluido(false);
                 agenda.setTipo('C');
-                Conexao conexao = new Conexao();
-                String query = "select id from cliente where cpfcnpj=?";
-                try {
-                    PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-                    ps.setString(1, textCPF.getText());
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        agenda.setIdCliente(rs.getInt("id"));
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    conexao.closeConnection();
-                }
+                agenda.setIdCliente(listaCliente.get(comboCliente.getSelectedIndex()).getId());
                 agenda.setIdUsuario(1);
                 controleAgenda.AlteraAgenda(agenda);
                 dispose();
@@ -167,19 +141,17 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        textCliente = new javax.swing.JTextField();
-        textAnimal = new javax.swing.JTextField();
         botaoOk = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        textCPF = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         textData = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
         textHora = new javax.swing.JFormattedTextField();
         textValor = new javax.swing.JFormattedTextField();
         Valor2 = new javax.swing.JLabel();
+        comboCliente = new javax.swing.JComboBox<>();
+        comboPet = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -231,16 +203,7 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
         jButton4.setText("Limpar");
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setText("Nome do Animal:");
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setText("CPF");
-
-        textCPF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textCPFActionPerformed(evt);
-            }
-        });
+        jLabel10.setText("Pet");
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel11.setText("Data:");
@@ -257,20 +220,25 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
         Valor2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         Valor2.setText("Valor:");
 
+        comboCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboClienteActionPerformed(evt);
+            }
+        });
+
+        comboPet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(261, 261, 261)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))))
+                .addGap(261, 261, 261)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -282,27 +250,6 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(80, 80, 80))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(textCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(textAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 77, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Valor))
-                        .addGap(63, 63, 63)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,7 +258,8 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
-                                    .addComponent(textHora, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(textHora, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(124, 124, 124))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -319,7 +267,8 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
                                 .addGap(38, 38, 38)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(99, 99, 99)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -337,7 +286,25 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
                                         .addComponent(botaoOk)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton4)))
-                                .addContainerGap(65, Short.MAX_VALUE))))))
+                                .addContainerGap(65, Short.MAX_VALUE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Valor))
+                        .addGap(63, 63, 63)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboPet, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,35 +315,32 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addGap(112, 112, 112)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Valor2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(11, 11, 11)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(comboPet, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Valor2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(textValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(120, 120, 120)
+                                    .addComponent(jLabel12)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(textHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(79, 112, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoOk)
                             .addComponent(jButton4))
@@ -456,13 +420,23 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoOkActionPerformed
 
-    private void textCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textCPFActionPerformed
-
     private void textValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textValorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textValorActionPerformed
+
+    private void comboClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboClienteActionPerformed
+        int id = listaCliente.get(comboCliente.getSelectedIndex()).getId();
+        ControlePet controlePet = new ControlePet();
+        ArrayList<Pet> listaPet = controlePet.ListaPet("where idCliente = " + id);
+        comboPet.removeAllItems();
+        for (int i = 0; i < listaPet.size(); i++) {
+            comboPet.addItem(listaPet.get(i).getNome());
+        }
+    }//GEN-LAST:event_comboClienteActionPerformed
+
+    private void comboPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPetActionPerformed
+
+    }//GEN-LAST:event_comboPetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,6 +478,8 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
     private javax.swing.JLabel Valor;
     private javax.swing.JLabel Valor2;
     private javax.swing.JButton botaoOk;
+    private javax.swing.JComboBox<String> comboCliente;
+    private javax.swing.JComboBox<String> comboPet;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
@@ -515,7 +491,6 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -524,9 +499,6 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField textAnimal;
-    private javax.swing.JFormattedTextField textCPF;
-    private javax.swing.JTextField textCliente;
     private javax.swing.JFormattedTextField textData;
     private javax.swing.JFormattedTextField textHora;
     private javax.swing.JFormattedTextField textValor;

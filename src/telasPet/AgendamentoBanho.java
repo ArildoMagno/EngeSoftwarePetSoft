@@ -7,7 +7,11 @@ package telasPet;
 
 import Controle.Conexao;
 import Controle.ControleAgenda;
+import Controle.ControleCliente;
+import Controle.ControlePet;
 import Modelos.Agenda;
+import Modelos.Cliente;
+import Modelos.Pet;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
@@ -15,8 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.DefaultFormatterFactory;
@@ -29,22 +32,24 @@ import javax.swing.text.NumberFormatter;
  */
 public class AgendamentoBanho extends javax.swing.JFrame {
 
-    /**
-     * Creates new form agendamentoBanho
-     */
+    ArrayList<Cliente> listaCliente;
+
     public AgendamentoBanho() {
         initComponents();
         ControleAgenda controleAgenda = new ControleAgenda();
         Agenda agenda = new Agenda();
+        ControleCliente controleCliente = new ControleCliente();
+        listaCliente = controleCliente.ListaCliente("WHERE ativo = 1");
+        for (int i = 0; i < listaCliente.size(); i++) {
+            comboCliente.addItem(listaCliente.get(i).getNomeFantasia() + " " + listaCliente.get(i).getCpfCnpj());
+        }
+
         try {
             MaskFormatter maskData = new MaskFormatter("##/##/####");
             maskData.install(textData);
 
             MaskFormatter maskHora = new MaskFormatter("##:##");
             maskHora.install(textHora);
-
-            MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
-            maskCPF.install(textCPF);
 
             DecimalFormat dFormat = new DecimalFormat("#,###,###.00");
             NumberFormatter formatter = new NumberFormatter(dFormat);
@@ -65,20 +70,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
                 agenda.setValor(Float.parseFloat(valor));
                 agenda.setConcluido(false);
                 agenda.setTipo('B');
-                Conexao conexao = new Conexao();
-                String query = "select id from cliente where cpfcnpj=?";
-                try {
-                    PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-                    ps.setString(1, textCPF.getText());
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        agenda.setIdCliente(rs.getInt("id"));
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    conexao.closeConnection();
-                }
+                agenda.setIdCliente(listaCliente.get(comboCliente.getSelectedIndex()).getId());
                 agenda.setIdUsuario(1);
                 controleAgenda.InsereAgenda(agenda);
                 dispose();
@@ -87,7 +79,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
 
     }
 
-    public AgendamentoBanho(Agenda agenda,String nome,String nomePet, String cpf) {
+    public AgendamentoBanho(Agenda agenda, String nome, String nomePet, String cpf) {
         initComponents();
         try {
             MaskFormatter maskData = new MaskFormatter("##/##/####");
@@ -96,14 +88,19 @@ public class AgendamentoBanho extends javax.swing.JFrame {
             MaskFormatter maskHora = new MaskFormatter("##:##");
             maskHora.install(textHora);
 
-            MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
-            maskCPF.install(textCPF);
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoBanho.class.getName()).log(Level.SEVERE, null, ex);
         }
-        textCliente.setText(nome);
-        textAnimal.setText(nomePet);
-        textCPF.setText(cpf);
+        ControleCliente controleCliente = new ControleCliente();
+        listaCliente = controleCliente.ListaCliente("WHERE ativo = 1");
+        for (int i = 0; i < listaCliente.size(); i++) {
+            comboCliente.addItem(listaCliente.get(i).getNomeFantasia() + " " + listaCliente.get(i).getCpfCnpj());
+        }
+        for (int i = 0; i < listaCliente.size(); i++) {
+            if (listaCliente.get(i).getId() == agenda.getId()) {
+                comboCliente.setSelectedIndex(i);
+            }
+        }
         textData.setText(agenda.getData());
         textHora.setText(agenda.getHora());
         String aux = String.valueOf(agenda.getValor());
@@ -123,20 +120,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
                 agenda.setValor(Float.parseFloat(valor));
                 agenda.setConcluido(false);
                 agenda.setTipo('B');
-                Conexao conexao = new Conexao();
-                String query = "select id from cliente where cpfcnpj=?";
-                try {
-                    PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-                    ps.setString(1, textCPF.getText());
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        agenda.setIdCliente(rs.getInt("id"));
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    conexao.closeConnection();
-                }
+                agenda.setIdCliente(listaCliente.get(comboCliente.getSelectedIndex()).getId());
                 agenda.setIdUsuario(1);
                 controleAgenda.AlteraAgenda(agenda);
                 dispose();
@@ -158,7 +142,6 @@ public class AgendamentoBanho extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        textCliente = new javax.swing.JTextField();
         Valor = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -166,12 +149,11 @@ public class AgendamentoBanho extends javax.swing.JFrame {
         botaoLimpar = new javax.swing.JButton();
         botaoOk = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        textAnimal = new javax.swing.JTextField();
         textData = new javax.swing.JFormattedTextField();
         textHora = new javax.swing.JFormattedTextField();
-        textCPF = new javax.swing.JFormattedTextField();
         textValor = new javax.swing.JFormattedTextField();
-        jLabel5 = new javax.swing.JLabel();
+        comboPet = new javax.swing.JComboBox<>();
+        comboCliente = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -200,13 +182,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setText("Nome do Animal:");
-
-        textCPF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textCPFActionPerformed(evt);
-            }
-        });
+        jLabel7.setText("Pet");
 
         textValor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,63 +190,69 @@ public class AgendamentoBanho extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setText("CPF");
+        comboPet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPetActionPerformed(evt);
+            }
+        });
+
+        comboCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(textCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 305, Short.MAX_VALUE)
                                 .addComponent(botaoOk)
                                 .addGap(24, 24, 24)
                                 .addComponent(botaoLimpar)
                                 .addGap(79, 79, 79))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7)
+                                .addGap(235, 235, 235))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addContainerGap(317, Short.MAX_VALUE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(textAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))
+                                .addGap(199, 199, 199)
+                                .addComponent(jLabel6)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(textData, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(textHora, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(50, 50, 50)
-                                .addComponent(Valor)))
+                            .addComponent(jLabel4)
+                            .addComponent(textData, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(textHora, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboPet, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Valor))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(260, 260, 260)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap(315, Short.MAX_VALUE)
                     .addComponent(textValor, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(178, 178, 178)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(36, 36, 36)
+                    .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(333, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,15 +269,9 @@ public class AgendamentoBanho extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
+                        .addGap(18, 18, 18)
+                        .addComponent(comboPet, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,6 +291,11 @@ public class AgendamentoBanho extends javax.swing.JFrame {
                     .addContainerGap(404, Short.MAX_VALUE)
                     .addComponent(textValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(45, 45, 45)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(266, Short.MAX_VALUE)
+                    .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(186, 186, 186)))
         );
 
         Valor.getAccessibleContext().setAccessibleName("Valor");
@@ -340,13 +321,23 @@ public class AgendamentoBanho extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoOkActionPerformed
 
-    private void textCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textCPFActionPerformed
-
     private void textValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textValorActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_textValorActionPerformed
+
+    private void comboPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPetActionPerformed
+
+    }//GEN-LAST:event_comboPetActionPerformed
+
+    private void comboClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboClienteActionPerformed
+        int id = listaCliente.get(comboCliente.getSelectedIndex()).getId();
+        ControlePet controlePet = new ControlePet();
+        ArrayList<Pet> listaPet = controlePet.ListaPet("where idCliente = " + id);
+        comboPet.removeAllItems();
+        for (int i = 0; i < listaPet.size(); i++) {
+            comboPet.addItem(listaPet.get(i).getNome());
+        }
+    }//GEN-LAST:event_comboClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,17 +379,15 @@ public class AgendamentoBanho extends javax.swing.JFrame {
     private javax.swing.JLabel Valor;
     private javax.swing.JButton botaoLimpar;
     private javax.swing.JButton botaoOk;
+    private javax.swing.JComboBox<String> comboCliente;
+    private javax.swing.JComboBox<String> comboPet;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField textAnimal;
-    private javax.swing.JFormattedTextField textCPF;
-    private javax.swing.JTextField textCliente;
     private javax.swing.JFormattedTextField textData;
     private javax.swing.JFormattedTextField textHora;
     private javax.swing.JFormattedTextField textValor;
