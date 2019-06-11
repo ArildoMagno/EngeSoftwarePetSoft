@@ -90,7 +90,7 @@ public class AgendamentoConsulta extends javax.swing.JFrame {
             comboCliente.addItem(listaCliente.get(i).getNomeFantasia() + " " + listaCliente.get(i).getCpfCnpj());
         }
         for (int i = 0; i < listaCliente.size(); i++) {
-            if (listaCliente.get(i).getId() == agenda.getId()) {
+            if (listaCliente.get(i).getId() == agenda.getIdCliente()) {
                 comboCliente.setSelectedIndex(i);
             }
         }
