@@ -7,6 +7,7 @@ package telasPet;
 
 import Controle.Conexao;
 import Controle.ControlePedidoCompra;
+import Controle.ControlePedidoCompraProduto;
 import Modelos.PedidoCompra;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +31,7 @@ public class PedidosCompraRemover extends javax.swing.JFrame {
     public PedidosCompraRemover() {
         initComponents();
         ControlePedidoCompra pedidoCompra = new ControlePedidoCompra();
+        ControlePedidoCompraProduto controleP = new ControlePedidoCompraProduto();
         ArrayList<PedidoCompra> listaPedido = pedidoCompra.ListaPedidos("WHERE status = 'P' ");
         String[] cabecaTabela = {"idPedido", "nome fornecedor", "valor total", "data emissão", "status"};
         DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
@@ -81,8 +83,8 @@ public class PedidosCompraRemover extends javax.swing.JFrame {
                             boolean flag;
                             flag = opcao == JOptionPane.YES_OPTION;
                             if (flag) {
+                                controleP.DeletarPedido(Integer.parseInt(dtm.getValueAt(row, 0).toString()));
                                 pedidoCompra.ExcluiPedidoCompra(Integer.parseInt(dtm.getValueAt(row, 0).toString()));
-                                
                                 dispose();
                                 new PedidosCompraRemover().setVisible(true);
                                 

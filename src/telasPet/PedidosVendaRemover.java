@@ -7,6 +7,7 @@ package telasPet;
 
 import Controle.Conexao;
 import Controle.ControlePedidoVenda;
+import Controle.ControlePedidoVendaProduto;
 import Modelos.PedidoVenda;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,8 +29,10 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
      * Creates new form PedidosVendaRemover
      */
     public PedidosVendaRemover() {
-        initComponents();ControlePedidoVenda pedidoCompra = new ControlePedidoVenda();
-        ArrayList<PedidoVenda> listaPedido = pedidoCompra.ListaPedidos("WHERE status = 'P' ");
+        initComponents();
+        ControlePedidoVenda controle = new ControlePedidoVenda();
+        ControlePedidoVendaProduto controleP = new ControlePedidoVendaProduto();
+        ArrayList<PedidoVenda> listaPedido = controle.ListaPedidos("WHERE status = 'P' ");
         String[] cabecaTabela = {"idPedido", "nome cliente", "valor total", "data emissão", "status"};
         DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
             public boolean isCellEditable(int row, int column) {
@@ -77,10 +80,11 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
                             boolean flag;
                             flag = opcao == JOptionPane.YES_OPTION;
                             if (flag) {
-                                pedidoCompra.ExcluiPedidoVenda(Integer.parseInt(dtm.getValueAt(row, 0).toString()));
+                                controleP.DeletarPedido(Integer.parseInt(dtm.getValueAt(row, 0).toString()));
+                                controle.ExcluiPedidoVenda(Integer.parseInt(dtm.getValueAt(row, 0).toString()));
                                 
                                 dispose();
-                                new PedidosCompraRemover().setVisible(true);
+                                new PedidosVendaRemover().setVisible(true);
                                 
 
                             }
@@ -111,20 +115,24 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Pedido Venda Remover");
 
+        painel.setLayout(new java.awt.GridLayout(1, 0));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jScrollPane1.setViewportView(jPanel3);
-
-        painel.setLayout(new java.awt.GridLayout(1, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -137,19 +145,15 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
-                .addGap(44, 44, 44))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55))
         );
 

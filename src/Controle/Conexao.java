@@ -8,6 +8,9 @@ package Controle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import com.mysql.jdbc.Driver;
 
 /**
  *
@@ -17,20 +20,20 @@ public class Conexao {
 
     /*public static Connection con = null;
 
-     public static void Conectar() {
-     System.out.println("Conectando ao banco...");
-     try {
-     Class.forName("com.mysql.jdbc.Driver");
-     con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/mydb", "root", "root");
-     } catch (ClassNotFoundException ex) {
-     System.out.println("Classe não encontrada, adicione o driver nas bibliotecas.");
-     Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
-     } catch (SQLException e) {
-     System.out.println(e);
-     throw new RuntimeException(e);
-     }
+    public static void Conectar() {
+        System.out.println("Conectando ao banco...");
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/mydb", "root", "root");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Classe não encontrada, adicione o driver nas bibliotecas.");
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
 
-     }*/
+    }*/
     private Connection con = null;
 
     private String hostName = null;
@@ -57,7 +60,8 @@ public class Conexao {
         dataBasePrefix = "jdbc:mysql://";
         dabaBasePort = "3306";
 
-        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName;
+        
+        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName+"?useTimezone=true&serverTimezone=UTC";
 
         /**
          * Exemplo de um URL completo para MySQL: a concatenação acima deve
@@ -73,13 +77,19 @@ public class Conexao {
     public Connection getConnection() {
         try {
             if (con == null) {
-                Class.forName(jdbcDriver);
+                Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection(url, userName, password);
             } else if (con.isClosed()) {
                 con = null;
                 return getConnection();
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException e) {
+
+            //TODO: use um sistema de log apropriado.
+            e.printStackTrace();
+        } catch (SQLException e) {
+
+            //TODO: use um sistema de log apropriado.
             e.printStackTrace();
         }
         return con;
