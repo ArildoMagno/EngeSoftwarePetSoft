@@ -22,12 +22,13 @@ public class ControlePedidoVendaProduto {
     public void InserirProduto(PedidoVendaProduto pedidoVendaProduto) {
         Conexao conexao = new Conexao();
         try {
-            String query = "INSERT INTO PedidoVendaProduto (idPedidoVenda, idProduto, quantidade"
-                    + "VALUES(?,?,?)";
+            String query = "INSERT INTO PedidoVendaProduto (idPedidoVenda, idProduto, quantidade, valorUnitario) "
+                    + "VALUES(?,?,?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setInt(1, pedidoVendaProduto.getIdPedidoVenda());
             ps.setInt(2, pedidoVendaProduto.getIdProduto());
-            ps.setFloat(3, pedidoVendaProduto.getQuantidade());
+            ps.setFloat(3, pedidoVendaProduto.getQuantidade());      
+            ps.setFloat(4, pedidoVendaProduto.getValorUnitario());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControlePedidoVendaProduto.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,7 +54,7 @@ public class ControlePedidoVendaProduto {
                 lista.add(pedido);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ControlePedidoCompraProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControlePedidoVendaProduto.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             conexao.closeConnection();
         }

@@ -10,9 +10,17 @@ public class PedidoVenda {
     private int id;
     private String dataEmissao;
     private float valorTotal;
-    private int cliente;
+    private int idCliente;
     private float quantidade;
     private char status;
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
 
     public int getId() {
         return id;
@@ -36,14 +44,6 @@ public class PedidoVenda {
 
     public void setValorTotal(float valorTotal) {
         this.valorTotal = valorTotal;
-    }
-
-    public int getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(int cliente) {
-        this.cliente = cliente;
     }
 
     public float getQuantidade() {
