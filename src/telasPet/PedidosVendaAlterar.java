@@ -31,7 +31,7 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
         initComponents();
         ControlePedidoVenda pedidoVenda = new ControlePedidoVenda();
         ArrayList<PedidoVenda> listaPedido = pedidoVenda.ListaPedidos();
-        String[] cabecaTabela = {"idPedido", "nome cliente", "valor total", "data emissão", "quantidade", "status"};
+        String[] cabecaTabela = {"idPedido", "nome cliente", "valor total", "data emissão","status"};
         DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;//This causes all cells to be not editable
@@ -50,10 +50,10 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
             try {
                 String query = "SELECT nomeFantasia FROM Cliente where id =?";
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-                ps.setInt(1, listaPedido.get(i).getCliente());
+                ps.setInt(1, listaPedido.get(i).getIdCliente());
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    cliente = rs.getString("cliente");
+                    cliente = rs.getString("nomeFantasia");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(PedidosVendaAlterar.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,7 +63,7 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
 
             dtm.addRow(new String[]{String.valueOf(listaPedido.get(i).getId()),
                 cliente, String.valueOf(listaPedido.get(i).getValorTotal()),
-                listaPedido.get(i).getDataEmissao(), String.valueOf(listaPedido.get(i).getQuantidade()), status});
+                listaPedido.get(i).getDataEmissao(), status});
         }
         JTable table = new JTable(dtm);
         painel.add(table);
@@ -102,9 +102,8 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jpanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         painel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -122,33 +121,8 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Pedido Venda Alterar");
 
-        javax.swing.GroupLayout painelLayout = new javax.swing.GroupLayout(painel);
-        painel.setLayout(painelLayout);
-        painelLayout.setHorizontalGroup(
-            painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
-        );
-        painelLayout.setVerticalGroup(
-            painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jpanelLayout = new javax.swing.GroupLayout(jpanel);
-        jpanel.setLayout(jpanelLayout);
-        jpanelLayout.setHorizontalGroup(
-            jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jpanelLayout.setVerticalGroup(
-            jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        painel.setLayout(new java.awt.CardLayout());
+        jScrollPane2.setViewportView(painel);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -159,8 +133,8 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(188, 188, 188))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -168,9 +142,9 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109))
+                .addGap(47, 47, 47)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,8 +201,7 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel jpanel;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }

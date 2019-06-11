@@ -48,7 +48,7 @@ public class PedidosVendaListar extends javax.swing.JFrame {
             try {
                 String query = "SELECT nomeFantasia FROM Cliente where id =?";
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-                ps.setInt(1, listaPedido.get(i).getCliente());
+                ps.setInt(1, listaPedido.get(i).getIdCliente());
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     nomeFantasia = rs.getString("nomeFantasia");
