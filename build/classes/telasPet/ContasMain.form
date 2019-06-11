@@ -58,15 +58,11 @@
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="concluirContasPagar" min="-2" pref="174" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
-                      <Component id="concluirContasReceber" min="-2" pref="167" max="-2" attributes="0"/>
-                      <EmptySpace pref="249" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="concluirContasPagar" min="-2" max="-2" attributes="0"/>
+                      <Component id="concluirContasReceber" min="-2" pref="207" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -75,7 +71,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="80" max="32767" attributes="0"/>
+                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                  <Component id="concluirContasReceber" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="concluirContasPagar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="saldo" min="-2" max="-2" attributes="0"/>
@@ -85,20 +83,13 @@
                   <Component id="relatorioVendas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
-                      <Component id="concluirContasReceber" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="275" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JButton" name="concluirContasReceber">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Receber Pagamento"/>
+            <Property name="text" type="java.lang.String" value="Receber Pagamento Clientes"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="concluirContasReceberActionPerformed"/>
@@ -106,7 +97,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="concluirContasPagar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Realizar Pagamento"/>
+            <Property name="text" type="java.lang.String" value="Realizar Pagamento Fornecedor"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="concluirContasPagarActionPerformed"/>
