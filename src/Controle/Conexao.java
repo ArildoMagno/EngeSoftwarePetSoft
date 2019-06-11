@@ -8,8 +8,6 @@ package Controle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -54,12 +52,12 @@ public class Conexao {
         hostName = "127.0.0.1";
         userName = "root";
         password = "root";
-        jdbcDriver = "com.mysql.cj.jdbc.Driver";
+        jdbcDriver = "com.mysql.jdbc.Driver";
         dataBaseName = "mydb";
         dataBasePrefix = "jdbc:mysql://";
         dabaBasePort = "3306";
 
-        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName + "?useTimezone=true&serverTimezone=UTC";
+        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName;
 
         /**
          * Exemplo de um URL completo para MySQL: a concatenação acima deve
@@ -81,13 +79,7 @@ public class Conexao {
                 con = null;
                 return getConnection();
             }
-        } catch (ClassNotFoundException e) {
-
-            //TODO: use um sistema de log apropriado.
-            e.printStackTrace();
-        } catch (SQLException e) {
-
-            //TODO: use um sistema de log apropriado.
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return con;

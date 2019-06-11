@@ -29,7 +29,6 @@ public class GerenciarAlterarMain extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         botaoAlterarDadosFornecedor = new javax.swing.JButton();
-        botaoAlterarDadosUsuario = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         botaoAlterarDadosCliente = new javax.swing.JButton();
         botaoAlterarDadosPet = new javax.swing.JButton();
@@ -40,13 +39,6 @@ public class GerenciarAlterarMain extends javax.swing.JFrame {
         botaoAlterarDadosFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAlterarDadosFornecedorActionPerformed(evt);
-            }
-        });
-
-        botaoAlterarDadosUsuario.setText("Usuario");
-        botaoAlterarDadosUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAlterarDadosUsuarioActionPerformed(evt);
             }
         });
 
@@ -72,33 +64,29 @@ public class GerenciarAlterarMain extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(157, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(101, 101, 101))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(botaoAlterarDadosCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botaoAlterarDadosFornecedor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botaoAlterarDadosUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botaoAlterarDadosPet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(286, 286, 286))))
+                .addContainerGap(245, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(botaoAlterarDadosCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botaoAlterarDadosFornecedor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botaoAlterarDadosPet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(268, 268, 268))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(105, 105, 105)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
-                .addComponent(botaoAlterarDadosFornecedor)
-                .addGap(18, 18, 18)
-                .addComponent(botaoAlterarDadosUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(95, 95, 95)
                 .addComponent(botaoAlterarDadosCliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(botaoAlterarDadosPet)
-                .addGap(17, 17, 17))
+                .addGap(18, 18, 18)
+                .addComponent(botaoAlterarDadosFornecedor)
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -120,11 +108,6 @@ public class GerenciarAlterarMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         new GerenciarAlterarDadosFornecedor().setVisible(true);
     }//GEN-LAST:event_botaoAlterarDadosFornecedorActionPerformed
-
-    private void botaoAlterarDadosUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDadosUsuarioActionPerformed
-        // TODO add your handling code here:
-        new GerenciarAlterarDadosUsuario().setVisible(true);
-    }//GEN-LAST:event_botaoAlterarDadosUsuarioActionPerformed
 
     private void botaoAlterarDadosClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDadosClienteActionPerformed
         // TODO add your handling code here:
@@ -182,7 +165,6 @@ public class GerenciarAlterarMain extends javax.swing.JFrame {
     private javax.swing.JButton botaoAlterarDadosCliente;
     private javax.swing.JButton botaoAlterarDadosFornecedor;
     private javax.swing.JButton botaoAlterarDadosPet;
-    private javax.swing.JButton botaoAlterarDadosUsuario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

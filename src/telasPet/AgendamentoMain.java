@@ -77,7 +77,7 @@ public class AgendamentoMain extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Remover Agenda");
+        jButton4.setText("Cancelar Agenda");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -180,6 +180,7 @@ public class AgendamentoMain extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        new AgendaCancela().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

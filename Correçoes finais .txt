@@ -1,0 +1,8 @@
+Gerenciar Listar - OK
+Gerenciar Remover - OK
+Gerenciar Alterar Dados - OK
+Gerenciar Cadastros - OK
+
+Agendamentos (all) - OK
+Estoque (all) - OK
+Pedidos (all) - 

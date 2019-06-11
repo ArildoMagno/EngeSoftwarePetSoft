@@ -114,7 +114,7 @@ public class PedidosCompraAlterar extends javax.swing.JFrame {
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
-        painel.setLayout(new java.awt.CardLayout());
+        painel.setLayout(new java.awt.GridLayout());
         jScrollPane2.setViewportView(painel);
 
         javax.swing.GroupLayout PainelTabelaLayout = new javax.swing.GroupLayout(PainelTabela);
@@ -122,17 +122,17 @@ public class PedidosCompraAlterar extends javax.swing.JFrame {
         PainelTabelaLayout.setHorizontalGroup(
             PainelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelTabelaLayout.createSequentialGroup()
-                .addContainerGap(208, Short.MAX_VALUE)
-                .addGroup(PainelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelTabelaLayout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(322, 322, 322))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelTabelaLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(187, 187, 187))))
+                .addContainerGap(272, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(322, 322, 322))
             .addGroup(PainelTabelaLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane2))
+                .addGap(190, 190, 190)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(PainelTabelaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         PainelTabelaLayout.setVerticalGroup(
             PainelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

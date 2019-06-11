@@ -57,7 +57,6 @@
                       <EmptySpace min="-2" pref="241" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="botaoListarClientes" alignment="0" pref="119" max="32767" attributes="0"/>
-                          <Component id="botaoListarUsuarios" alignment="0" max="32767" attributes="0"/>
                           <Component id="botaoListarFornecedores" alignment="0" max="32767" attributes="0"/>
                           <Component id="botoaoListarPets" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -78,12 +77,10 @@
                       <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
                       <Component id="botaoListarClientes" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="botaoListarUsuarios" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="botaoListarFornecedores" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="botoaoListarPets" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="50" max="32767" attributes="0"/>
+                      <EmptySpace pref="84" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -96,14 +93,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Listar"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="botaoListarUsuarios">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Usuarios"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoListarUsuariosActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="botaoListarFornecedores">
               <Properties>

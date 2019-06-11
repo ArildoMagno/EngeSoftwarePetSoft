@@ -60,7 +60,7 @@ public class EstoqueMain extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Remover Produtos");
+        jButton5.setText("Inativar Produtos");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
