@@ -315,8 +315,8 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
         ControlePedidoCompraProduto controlePedidoProduto = new ControlePedidoCompraProduto();
         for (int i = 1; i < table.getRowCount(); i++) {
             pedidoProduto.setIdProduto(Integer.parseInt(dtm.getValueAt(i, 0).toString()));
-            pedidoProduto.setQuantidade(Float.parseFloat(dtm.getValueAt(i, 1).toString()));
-            pedidoProduto.setValorUnitario(Float.parseFloat(dtm.getValueAt(i, 2).toString()));
+            pedidoProduto.setQuantidade(Float.parseFloat(dtm.getValueAt(i, 2).toString()));
+            pedidoProduto.setValorUnitario(Float.parseFloat(dtm.getValueAt(i, 3).toString()));
             controlePedidoProduto.InserirProduto(pedidoProduto);
         }
 

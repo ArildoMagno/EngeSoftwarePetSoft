@@ -5,6 +5,7 @@
  */
 package Controle;
 
+import Modelos.Caixa;
 import Modelos.ContasPagar;
 import Modelos.ContasReceber;
 import java.sql.PreparedStatement;
@@ -36,6 +37,13 @@ public class ControleContasReceber {
         } finally {
             conexao.closeConnection();
         }
+
+        ControleCaixa controleCaixa = new ControleCaixa();
+        Caixa caixa = controleCaixa.ListarCaixa();
+        caixa.setSaldo(caixa.getSaldo() + contasReceber.getValor());
+        caixa.setContasReceber(contasReceber.getValor() + caixa.getContasReceber());
+
+        controleCaixa.UpdateContasReceber(caixa);
 
     }
 

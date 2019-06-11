@@ -5,6 +5,7 @@
  */
 package Controle;
 
+import Modelos.Caixa;
 import Modelos.ContasPagar;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,10 +20,10 @@ import java.util.logging.Logger;
  * @author Atlas
  */
 public class ControleContasPagar {
-
+    
     public void InserirContasPagar(ContasPagar contasPagar) {
         Conexao conexao = new Conexao();
-
+        
         try {
             String query = "INSERT INTO ContasPagar  (idFornecedor,valor)"
                     + "VALUES(?,?)";
@@ -35,13 +36,20 @@ public class ControleContasPagar {
         } finally {
             conexao.closeConnection();
         }
-
+        
+        ControleCaixa controleCaixa = new ControleCaixa();
+        Caixa caixa = controleCaixa.ListarCaixa();
+        caixa.setSaldo(caixa.getSaldo() - contasPagar.getValor());
+        caixa.setContasPagar(contasPagar.getValor() + caixa.getContasPagar());
+        
+        controleCaixa.UpdateContasPagar(caixa);
+        
     }
-
+    
     public ArrayList<ContasPagar> ListarContasPagar() {
         ArrayList<ContasPagar> listaConta = new ArrayList<>();
         Conexao conexao = new Conexao();
-
+        
         try {
             String query = "SELECT * FROM ContasPagar";
             Statement st = conexao.getConnection().createStatement();
@@ -54,20 +62,20 @@ public class ControleContasPagar {
                 ContasPagar contas = new ContasPagar(idFornecedor, id, valor, concluido);
                 listaConta.add(contas);
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ControleContasPagar.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             conexao.closeConnection();
         }
-
+        
         return listaConta;
     }
-
+    
     public ArrayList<ContasPagar> ListarContasPagar(String queryAux) {
         ArrayList<ContasPagar> listaConta = new ArrayList<>();
         Conexao conexao = new Conexao();
-
+        
         try {
             String query = "SELECT * FROM ContasPagar " + queryAux;
             Statement st = conexao.getConnection().createStatement();
@@ -80,16 +88,16 @@ public class ControleContasPagar {
                 ContasPagar contas = new ContasPagar(idFornecedor, id, valor, concluido);
                 listaConta.add(contas);
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ControleContasPagar.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             conexao.closeConnection();
         }
-
+        
         return listaConta;
     }
-
+    
     public void ConcluirContasPagar(int id) {
         Conexao conexao = new Conexao();
         try {
@@ -105,5 +113,5 @@ public class ControleContasPagar {
             conexao.closeConnection();
         }
     }
-
+    
 }
