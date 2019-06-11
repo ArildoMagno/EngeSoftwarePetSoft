@@ -13,6 +13,15 @@ public class PedidoVendaProduto {
     private int idPedidoVenda;
     private int idProduto;
     private float quantidade;
+    private float valorUnitario;
+
+    public float getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public void setValorUnitario(float valorUnitario) {
+        this.valorUnitario = valorUnitario;
+    }
 
     public int getIdPedidoVenda() {
         return idPedidoVenda;

@@ -19,20 +19,20 @@ public class Conexao {
 
     /*public static Connection con = null;
 
-    public static void Conectar() {
-        System.out.println("Conectando ao banco...");
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/mydb", "root", "root");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Classe não encontrada, adicione o driver nas bibliotecas.");
-            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
-        }
+     public static void Conectar() {
+     System.out.println("Conectando ao banco...");
+     try {
+     Class.forName("com.mysql.jdbc.Driver");
+     con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/mydb", "root", "root");
+     } catch (ClassNotFoundException ex) {
+     System.out.println("Classe não encontrada, adicione o driver nas bibliotecas.");
+     Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+     } catch (SQLException e) {
+     System.out.println(e);
+     throw new RuntimeException(e);
+     }
 
-    }*/
+     }*/
     private Connection con = null;
 
     private String hostName = null;
@@ -54,13 +54,12 @@ public class Conexao {
         hostName = "127.0.0.1";
         userName = "root";
         password = "root";
-        jdbcDriver = "com.mysql.jdbc.Driver";
+        jdbcDriver = "com.mysql.cj.jdbc.Driver";
         dataBaseName = "mydb";
         dataBasePrefix = "jdbc:mysql://";
         dabaBasePort = "3306";
 
-        
-        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName;
+        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName + "?useTimezone=true&serverTimezone=UTC";
 
         /**
          * Exemplo de um URL completo para MySQL: a concatenação acima deve

@@ -23,15 +23,18 @@ public class ControleCliente {
     public void InserirCliente(Cliente cliente) {
         Conexao conexao = new Conexao();
         try {
-            String query = "INSERT INTO Cliente (nomeFantasia, razaoSocial,CPFCNPJ, tipoPessoa, endereco)"
-                    + "VALUES(?,?,?,?,?)";
+            String query = "INSERT INTO Cliente (NomeFantasia, RazaoSocial,"
+                    + " CpfCnpj, TipoPessoa, Endereco, Telefone)"
+                    + "VALUES(?,?,?,?,?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, cliente.getNomeFantasia());
             ps.setString(2, cliente.getRazaoSocial());
             ps.setString(3, cliente.getCpfCnpj());
             ps.setString(4, String.valueOf(cliente.getTipoPessoa()));
             ps.setString(5, cliente.getEndereco());
+            ps.setString(6, cliente.getTelefone());
 
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleCliente.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -49,11 +52,39 @@ public class ControleCliente {
             while (rs.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("id"));
-                cliente.setCpfCnpj(rs.getString("CPFCNPJ"));
-                cliente.setEndereco(rs.getString("endereco"));
-                cliente.setNomeFantasia(rs.getString("nomeFantasia"));
-                cliente.setRazaoSocial(rs.getString("razaoSocial"));
-                String aux = rs.getString("tipoPessoa");
+                cliente.setCpfCnpj(rs.getString("CpfCnpj"));
+                cliente.setEndereco(rs.getString("Endereco"));
+                cliente.setNomeFantasia(rs.getString("NomeFantasia"));
+                cliente.setRazaoSocial(rs.getString("RazaoSocial"));
+                String aux = rs.getString("TipoPessoa");
+                cliente.setTipoPessoa(aux.charAt(0));
+                listaCliente.add(cliente);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleCliente.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexao.closeConnection();
+        }
+        return listaCliente;
+    }
+
+    public ArrayList<Cliente> ListaCliente(String queryAux) {
+        Conexao conexao = new Conexao();
+        ArrayList<Cliente> listaCliente = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Cliente " + queryAux;
+            Statement st = conexao.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id"));
+                cliente.setCpfCnpj(rs.getString("CpfCnpj"));
+                cliente.setEndereco(rs.getString("Endereco"));
+                cliente.setNomeFantasia(rs.getString("NomeFantasia"));
+                cliente.setRazaoSocial(rs.getString("RazaoSocial"));
+                String aux = rs.getString("TipoPessoa");
                 cliente.setTipoPessoa(aux.charAt(0));
                 listaCliente.add(cliente);
 
@@ -89,8 +120,8 @@ public class ControleCliente {
 
         try {
             String query = "update cliente "
-                    + "set nomeFantasia = ?, razaoSocial = ?, endereco = ?, "
-                    + "telefone = ? where id = ?";
+                    + "set NomeFantasia = ?, RazaoSocial = ?, Endereco = ?, "
+                    + "Telefone = ? where id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, cliente.getNomeFantasia());
             ps.setString(2, cliente.getRazaoSocial());

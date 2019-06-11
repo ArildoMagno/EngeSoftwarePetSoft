@@ -124,7 +124,6 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
         txtQuantidade = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         botaoOk = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         botaoInserir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         botaoRemover = new javax.swing.JButton();
@@ -150,6 +149,12 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Selecione o Item");
 
+        comboItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboItemActionPerformed(evt);
+            }
+        });
+
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Quantidade:");
 
@@ -159,8 +164,6 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
                 botaoOkActionPerformed(evt);
             }
         });
-
-        jButton1.setText("Limpar");
 
         botaoInserir.setText("Inserir");
         botaoInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -200,8 +203,6 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PainelTabelaLayout.createSequentialGroup()
                         .addComponent(botaoOk)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(PainelTabelaLayout.createSequentialGroup()
                         .addGroup(PainelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,9 +267,7 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(PainelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(botaoOk))
+                .addComponent(botaoOk)
                 .addContainerGap())
         );
 
@@ -344,6 +343,10 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
         listaProduto.remove(table.getSelectedRow());
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
+    private void comboItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -401,7 +404,6 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
     private javax.swing.JButton botaoRemover;
     private javax.swing.JComboBox<String> comboFornecedor;
     private javax.swing.JComboBox<String> comboItem;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

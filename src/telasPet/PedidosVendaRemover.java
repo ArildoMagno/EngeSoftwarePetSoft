@@ -5,6 +5,19 @@
  */
 package telasPet;
 
+import Controle.Conexao;
+import Controle.ControlePedidoVenda;
+import Modelos.PedidoVenda;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Atlas
@@ -15,7 +28,66 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
      * Creates new form PedidosVendaRemover
      */
     public PedidosVendaRemover() {
-        initComponents();
+        initComponents();ControlePedidoVenda pedidoCompra = new ControlePedidoVenda();
+        ArrayList<PedidoVenda> listaPedido = pedidoCompra.ListaPedidos("WHERE status = 'P' ");
+        String[] cabecaTabela = {"idPedido", "nome cliente", "valor total", "data emissão", "status"};
+        DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
+            public boolean isCellEditable(int row, int column) {
+                return false;//This causes all cells to be not editable
+            }
+        };
+        dtm.addRow(cabecaTabela);
+        for (int i = 0; i < listaPedido.size(); i++) {
+            String status = "teste: ", nomeFantasia = "";
+
+            if (listaPedido.get(i).getStatus() == 'P') {
+                status = "Pendente";
+            } else {
+                status = "Concluído";
+            }
+            Conexao conexao = new Conexao();
+            try {
+                String query = "SELECT nomeFantasia FROM Cliente where id =?";
+                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
+                ps.setInt(1, listaPedido.get(i).getCliente());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    nomeFantasia = rs.getString("nomeFantasia");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PedidosVendaRemover.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            dtm.addRow(new String[]{String.valueOf(listaPedido.get(i).getId()),
+                nomeFantasia, String.valueOf(listaPedido.get(i).getValorTotal()),
+                listaPedido.get(i).getDataEmissao(), status});
+        }
+        JTable table = new JTable(dtm);
+        painel.add(table);
+        table.addMouseListener(
+                new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt
+                    ) {
+                        int row = table.rowAtPoint(evt.getPoint());
+                        int col = table.columnAtPoint(evt.getPoint());
+                        if (row >= 0 && col >= 0) {
+                            int opcao = JOptionPane.showConfirmDialog(painel,
+                                    "Deseja excluir o pedido?",
+                                    "Sim ou não?", JOptionPane.YES_NO_OPTION);
+                            boolean flag;
+                            flag = opcao == JOptionPane.YES_OPTION;
+                            if (flag) {
+                                pedidoCompra.ExcluiPedidoVenda(Integer.parseInt(dtm.getValueAt(row, 0).toString()));
+                                
+                                dispose();
+                                new PedidosCompraRemover().setVisible(true);
+                                
+
+                            }
+                        }
+                    }
+                }
+        );
     }
 
     /**
@@ -30,43 +102,26 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
-        PainelPedidoCompraAlterar = new javax.swing.JPanel();
+        painel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Pedido Venda Remover");
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setText("ID para remover:");
-
-        jButton4.setText("Remover");
-
-        jButton2.setText("Ok");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        PainelPedidoCompraAlterar.setLayout(new javax.swing.BoxLayout(PainelPedidoCompraAlterar, javax.swing.BoxLayout.LINE_AXIS));
+        painel.setLayout(new javax.swing.BoxLayout(painel, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PainelPedidoCompraAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+            .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PainelPedidoCompraAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanel3);
@@ -80,23 +135,8 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(0, 203, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jButton2)
-                        .addGap(121, 121, 121)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
-                                        .addComponent(jButton4)))
-                                .addGap(29, 29, 29))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -106,15 +146,7 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton2))
-                .addGap(26, 26, 26))
+                .addGap(143, 143, 143))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -142,10 +174,6 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,15 +211,11 @@ public class PedidosVendaRemover extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PainelPedidoCompraAlterar;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }
