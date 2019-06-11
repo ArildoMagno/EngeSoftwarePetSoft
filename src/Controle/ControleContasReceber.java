@@ -103,7 +103,7 @@ public class ControleContasReceber {
     public void ConcluirContasReceber(int id) {
         Conexao conexao = new Conexao();
         try {
-            String query = "UPDATE contasreceber SET"
+            String query = "UPDATE ContasReceber SET"
                     + " concluido = ? WHERE id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setBoolean(1, true);

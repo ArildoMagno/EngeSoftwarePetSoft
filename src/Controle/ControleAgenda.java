@@ -95,7 +95,7 @@ public class ControleAgenda {
     public void ConcluiAgenda(int id) {
         Conexao conexao = new Conexao();
         try {
-            String query = "UPDATE agenda SET"
+            String query = "UPDATE Agenda SET"
                     + " concluido = ? WHERE id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setBoolean(1, true);

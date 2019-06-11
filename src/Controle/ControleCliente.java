@@ -33,7 +33,6 @@ public class ControleCliente {
             ps.setString(4, String.valueOf(cliente.getTipoPessoa()));
             ps.setString(5, cliente.getEndereco());
             ps.setString(6, cliente.getTelefone());
-
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleCliente.class.getName()).log(Level.SEVERE, null, ex);

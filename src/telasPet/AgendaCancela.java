@@ -54,7 +54,7 @@ public class AgendaCancela extends javax.swing.JFrame {
             } else {
                 tipo = "Consulta";
             }
-            String query = "select nomeFantasia,cpfcnpj from cliente where id=?";
+            String query = "select nomeFantasia,cpfcnpj from Cliente where id=?";
             try {
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
                 ps.setInt(1, listaAgenda.get(i).getIdCliente());
@@ -68,7 +68,7 @@ public class AgendaCancela extends javax.swing.JFrame {
             } finally {
                 conexao.closeConnection();
             }
-            query = "select nome from pet where idCliente = ?";
+            query = "select nome from Pet where idCliente = ?";
             try {
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
                 ps.setInt(1, listaAgenda.get(i).getIdCliente());

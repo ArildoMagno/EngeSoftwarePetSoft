@@ -80,7 +80,7 @@ public class ControleCaixa {
         Conexao conexao = new Conexao();
         Caixa caixa = new Caixa();
         try {
-            String query = "SELECT * FROM caixa";
+            String query = "SELECT * FROM Caixa";
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {

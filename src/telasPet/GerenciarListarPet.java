@@ -44,7 +44,7 @@ public class GerenciarListarPet extends javax.swing.JFrame {
 
         for (int i = 0; i < listaPet.size(); i++) {
 
-            String query = "select nomeFantasia from cliente where id=?";
+            String query = "select nomeFantasia from Cliente where id=?";
             try {
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
                 ps.setInt(1, listaPet.get(i).getIdCliente());
