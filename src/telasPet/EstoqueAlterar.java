@@ -6,8 +6,8 @@
 package telasPet;
 
 import Controle.Conexao;
-import Controle.ControleFornecedor;
-import Modelos.Fornecedor;
+import Controle.ControleProduto;
+import Modelos.Produto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,55 +16,59 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Atlas
  */
-public class GerenciarAlterarDadosFornecedor extends javax.swing.JFrame {
+public class EstoqueAlterar extends javax.swing.JFrame {
 
     /**
-     * Creates new form alterarFornecedor
+     * Creates new form estoqueBaixa
      */
-    public GerenciarAlterarDadosFornecedor() {
+    public EstoqueAlterar() {
         initComponents();
-        Conexao conexao = new Conexao();
+          Conexao conexao = new Conexao();
         String nome = "";
-        ControleFornecedor controle = new ControleFornecedor();
-        ArrayList<Fornecedor> listaFornecedor = controle.ListaFornecedor("WHERE ativo = 1");
-        String[] tblHead = {"ID", "Nome", "CNPJ", "Razao Social", "Telefone","Endereco"};
-        DefaultTableModel dtm = new DefaultTableModel(tblHead, 0) {
-            public boolean isCellEditable(int row, int column) {
-                return false;//This causes all cells to be not editable
+        ControleProduto controle = new ControleProduto();
+        ArrayList<Produto> listaProduto = controle.ListaProduto("where ativo = true");
+        String[] tblHead = {"id","Fornecedor","Descrição",
+            "Estoque","Estoque Minimo", "Preço Venda","Preço Compra",
+            "Modelo","Data Cadastramento","Aliquota","Unidade"};
+        javax.swing.table.DefaultTableModel dtm = new javax.swing.table.DefaultTableModel(tblHead, 0){
+            public boolean isCellEditable(int row, int column){
+                return false;
             }
         };
         dtm.addRow(tblHead);
-        for (int i = 0; i < listaFornecedor.size(); i++) {
-
-            String query = "select nomeFantasia from fornecedor where id=?";
+        for(int i = 0;i < listaProduto.size(); i++){
+            
+            String querry = "select nomeFantasia from Fornecedor where id=?";
             try {
-                PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-                ps.setInt(1, listaFornecedor.get(i).getId());
+                PreparedStatement ps = conexao.getConnection().prepareStatement(querry);
+                ps.setInt(1, listaProduto.get(i).getIdFornecedor());
                 ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
+                while(rs.next()){
                     nome = rs.getString("nomeFantasia");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(AgendamentoConsulta.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
+                Logger.getLogger(EstoqueListarProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally{
                 conexao.closeConnection();
             }
-            dtm.addRow(new String[]{String.valueOf(listaFornecedor.get(i).getId()),
-                listaFornecedor.get(i).getNomeFantasia(), listaFornecedor.get(i).getCNPJ(),
-                listaFornecedor.get(i).getRazaoSocial(),listaFornecedor.get(i).getTelefone(),
-                listaFornecedor.get(i).getEndereco(),nome});
-        }
-        JTable table = new JTable(dtm);
-
-        painel.add(table);
-        table.addMouseListener(
-                new java.awt.event.MouseAdapter() {
+            dtm.addRow(new String[]{String.valueOf(listaProduto.get(i).getId()),
+                    nome,
+                    listaProduto.get(i).getDescricao(), String.valueOf(listaProduto.get(i).getEstoque()),
+                    String.valueOf(listaProduto.get(i).getEstoqueMinimo()), String.valueOf(listaProduto.get(i).getPrecoVenda()),
+                    String.valueOf(listaProduto.get(i).getPrecoCompra()), listaProduto.get(i).getModelo(),
+                    listaProduto.get(i).getDataCadastramento(),String.valueOf(listaProduto.get(i).getAliquota()),
+                    listaProduto.get(i).getUnidade()});
+            }
+            JTable table = new JTable(dtm);
+            
+            painel.add(table);
+            table.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt
             ) {
@@ -72,12 +76,12 @@ public class GerenciarAlterarDadosFornecedor extends javax.swing.JFrame {
                 int col = table.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
                     int opcao = JOptionPane.showConfirmDialog(painel,
-                            "Deseja alterar os dados do fornecedor?",
+                            "Deseja alterar o produto?",
                             "Sim ou não?", JOptionPane.YES_NO_OPTION);
                     boolean flag;
                     flag = opcao == JOptionPane.YES_OPTION;
                     if (flag) {
-                        new GerenciarCadastrarFornecedor(listaFornecedor.get(row - 1)).setVisible(true);
+                        new EstoqueInserir(listaProduto.get(row-1)).setVisible(true);
                         dispose();
                     }
                 }
@@ -96,50 +100,51 @@ public class GerenciarAlterarDadosFornecedor extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         painel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setText("Alterar Fornecedor");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setText("Alterar Produto");
 
-        painel.setLayout(new java.awt.GridLayout());
+        painel.setLayout(new java.awt.GridLayout(1, 0));
         jScrollPane1.setViewportView(painel);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(169, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(166, 166, 166))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(212, 212, 212)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jLabel2)
+                .addGap(45, 45, 45)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -163,13 +168,13 @@ public class GerenciarAlterarDadosFornecedor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GerenciarAlterarDadosFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EstoqueAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GerenciarAlterarDadosFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EstoqueAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GerenciarAlterarDadosFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EstoqueAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GerenciarAlterarDadosFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EstoqueAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -179,22 +184,15 @@ public class GerenciarAlterarDadosFornecedor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GerenciarAlterarDadosFornecedor().setVisible(true);
+                new EstoqueAlterar().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
-
-
-    private static class tblHead {
-
-        public tblHead() {
-        }
-    }
 }

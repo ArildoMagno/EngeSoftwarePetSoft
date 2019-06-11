@@ -15,13 +15,22 @@ public class ControleProduto {
         Conexao conexao = new Conexao();
 
         try {
-            String query = "INSERT INTO Produton (descricao, estoque, estoqueMinimo,"
+            String query = "INSERT INTO Produto (descricao, estoque, estoqueMinimo,"
                     + " precoVenda, modelo, precoCompra, dataCadastramento, aliquota, unidade, idFornecedor)"
                     + "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, produto.getDescricao());
-
+            ps.setInt(2,produto.getEstoque());
+            ps.setInt(3,produto.getEstoqueMinimo());
+            ps.setFloat(4,produto.getPrecoVenda());
+            ps.setString(5,produto.getModelo());
+            ps.setFloat(6,produto.getPrecoCompra());
+            ps.setString(7,produto.getDataCadastramento());
+            ps.setFloat(8,produto.getAliquota());
+            ps.setString(9,produto.getUnidade());
+            ps.setInt(10,produto.getIdFornecedor());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleProduto.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -112,9 +121,9 @@ public class ControleProduto {
         Conexao conexao = new Conexao();
 
         try {
-            String query = "update Produto"
+            String query = "update Produto "
                     + "set descricao = ?, estoque = ?, estoqueMinimo = ?, precoVenda = ?, precoCompra = ?,"
-                    + "modelo = ?, aliquota = ?, unidade = ?";
+                    + "modelo = ?, aliquota = ?, unidade = ? where id=?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, produto.getDescricao());
             ps.setInt(2, produto.getEstoque());
@@ -124,7 +133,8 @@ public class ControleProduto {
             ps.setString(6, produto.getModelo());
             ps.setFloat(7, produto.getAliquota());
             ps.setString(8, produto.getUnidade());
-
+            ps.setInt(9,produto.getId());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleProduto.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

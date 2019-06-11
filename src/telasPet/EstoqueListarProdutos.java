@@ -5,6 +5,18 @@
  */
 package telasPet;
 
+import Controle.Conexao;
+import Controle.ControleProduto;
+import Modelos.Produto;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Atlas
@@ -16,7 +28,48 @@ public class EstoqueListarProdutos extends javax.swing.JFrame {
      */
     public EstoqueListarProdutos() {
         initComponents();
-    }
+        Conexao conexao = new Conexao();
+        String nome = "";
+        ControleProduto controle = new ControleProduto();
+        ArrayList<Produto> listaProduto = controle.ListaProduto();
+        String[] tblHead = {"id","Fornecedor","Descrição",
+            "Estoque","Estoque Minimo", "Preço Venda","Preço Compra",
+            "Modelo","Data Cadastramento","Aliquota","Unidade"};
+        DefaultTableModel dtm = new DefaultTableModel(tblHead, 0){
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        dtm.addRow(tblHead);
+        for(int i = 0;i < listaProduto.size(); i++){
+            
+            String querry = "select nomeFantasia from Fornecedor where id=?";
+            try {
+                PreparedStatement ps = conexao.getConnection().prepareStatement(querry);
+                ps.setInt(1, listaProduto.get(i).getIdFornecedor());
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    nome = rs.getString("nomeFantasia");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(EstoqueListarProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally{
+                conexao.closeConnection();
+            }
+            dtm.addRow(new String[]{String.valueOf(listaProduto.get(i).getId()),
+                    nome,
+                    listaProduto.get(i).getDescricao(), String.valueOf(listaProduto.get(i).getEstoque()),
+                    String.valueOf(listaProduto.get(i).getEstoqueMinimo()), String.valueOf(listaProduto.get(i).getPrecoVenda()),
+                    String.valueOf(listaProduto.get(i).getPrecoCompra()), listaProduto.get(i).getModelo(),
+                    listaProduto.get(i).getDataCadastramento(),String.valueOf(listaProduto.get(i).getAliquota()),
+                    listaProduto.get(i).getUnidade()});
+            }
+            JTable table = new JTable(dtm);
+            
+            painel.add(table);
+        }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,40 +83,37 @@ public class EstoqueListarProdutos extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        painel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Lista de Produtos");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Fornecedor: Pet & CIA\nItem: Ração Dog\nQuantidade: 5");
-        jScrollPane1.setViewportView(jTextArea1);
+        painel.setLayout(new java.awt.GridBagLayout());
+        jScrollPane1.setViewportView(painel);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(196, 196, 196)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addGap(196, 196, 196)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(75, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -121,6 +171,6 @@ public class EstoqueListarProdutos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }

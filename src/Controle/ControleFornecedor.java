@@ -23,16 +23,14 @@ public class ControleFornecedor {
     public void InserirFornecedor(Fornecedor fornecedor) {
         Conexao conexao = new Conexao();
         try {
-            String query = "INSERT INTO Fornecedor  (razaoSocial, CNPJ, nomeFantasia,endereco,telefone,"
-                    + "ativo)"
-                    + "VALUES(?,?,?,?,?,?)";
+            String query = "INSERT INTO Fornecedor  (razaoSocial, CNPJ, nomeFantasia,endereco,telefone)"
+                    + "VALUES(?,?,?,?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, fornecedor.getRazaoSocial());
             ps.setString(2, fornecedor.getCNPJ());
             ps.setString(3, fornecedor.getNomeFantasia());
             ps.setString(4, fornecedor.getEndereco());
             ps.setString(5, fornecedor.getTelefone());
-            ps.setInt(6, fornecedor.getAtivo());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,6 +56,7 @@ public class ControleFornecedor {
                 fornecedor.setRazaoSocial(rs.getString("razaoSocial"));
                 fornecedor.setTelefone(rs.getString("telefone"));
                 listaFornecedor.add(fornecedor);
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(ControleFornecedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,12 +69,13 @@ public class ControleFornecedor {
     public ArrayList<Fornecedor> ListaFornecedor(String queryAux) {
         Conexao conexao = new Conexao();
         ArrayList<Fornecedor> listaFornecedor = new ArrayList<>();
-        Fornecedor fornecedor = new Fornecedor();
+        
         try {
             String query = "SELECT * FROM Fornecedor " + queryAux;
             Statement st = conexao.getConnection().createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
+                Fornecedor fornecedor = new Fornecedor();
                 fornecedor.setId(rs.getInt("id"));
                 fornecedor.setCNPJ(rs.getString("CNPJ"));
                 fornecedor.setEndereco(rs.getString("endereco"));

@@ -5,6 +5,18 @@
  */
 package telasPet;
 
+import Controle.Conexao;
+import Controle.ControleProduto;
+import Modelos.Produto;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
 /**
  *
  * @author Atlas
@@ -16,6 +28,67 @@ public class EstoqueRemover extends javax.swing.JFrame {
      */
     public EstoqueRemover() {
         initComponents();
+          Conexao conexao = new Conexao();
+        String nome = "";
+        ControleProduto controle = new ControleProduto();
+        ArrayList<Produto> listaProduto = controle.ListaProduto("where ativo = true");
+        String[] tblHead = {"id","Fornecedor","Descrição",
+            "Estoque","Estoque Minimo", "Preço Venda","Preço Compra",
+            "Modelo","Data Cadastramento","Aliquota","Unidade"};
+        javax.swing.table.DefaultTableModel dtm = new javax.swing.table.DefaultTableModel(tblHead, 0){
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        dtm.addRow(tblHead);
+        for(int i = 0;i < listaProduto.size(); i++){
+            
+            String querry = "select nomeFantasia from Fornecedor where id=?";
+            try {
+                PreparedStatement ps = conexao.getConnection().prepareStatement(querry);
+                ps.setInt(1, listaProduto.get(i).getIdFornecedor());
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    nome = rs.getString("nomeFantasia");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(EstoqueListarProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally{
+                conexao.closeConnection();
+            }
+            dtm.addRow(new String[]{String.valueOf(listaProduto.get(i).getId()),
+                    nome,
+                    listaProduto.get(i).getDescricao(), String.valueOf(listaProduto.get(i).getEstoque()),
+                    String.valueOf(listaProduto.get(i).getEstoqueMinimo()), String.valueOf(listaProduto.get(i).getPrecoVenda()),
+                    String.valueOf(listaProduto.get(i).getPrecoCompra()), listaProduto.get(i).getModelo(),
+                    listaProduto.get(i).getDataCadastramento(),String.valueOf(listaProduto.get(i).getAliquota()),
+                    listaProduto.get(i).getUnidade()});
+            }
+            JTable table = new JTable(dtm);
+            
+            painel.add(table);
+            table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt
+            ) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                    int opcao = JOptionPane.showConfirmDialog(painel,
+                            "Deseja inativar o produto?",
+                            "Sim ou não?", JOptionPane.YES_NO_OPTION);
+                    boolean flag;
+                    flag = opcao == JOptionPane.YES_OPTION;
+                    if (flag) {
+                        controle.InativaProduto(listaProduto.get(row-1).getId());
+                        new EstoqueRemover().setVisible(true);
+                        dispose();
+                    }
+                }
+            }
+        }
+        );
     }
 
     /**
@@ -29,66 +102,39 @@ public class EstoqueRemover extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        painel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Remover");
+        jLabel1.setText("Inativar Produto");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Selecione a categoria e o produto para remover:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fornecedor 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton2.setText("Confirmar");
+        painel.setLayout(new java.awt.GridLayout());
+        jScrollPane1.setViewportView(painel);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(146, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(132, 132, 132)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(119, 119, 119))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(248, 248, 248))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(243, 243, 243))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(212, 212, 212)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(45, 45, 45)
                 .addComponent(jLabel1)
-                .addGap(149, 149, 149)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(37, 37, 37))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,10 +151,6 @@ public class EstoqueRemover extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,11 +189,9 @@ public class EstoqueRemover extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }
