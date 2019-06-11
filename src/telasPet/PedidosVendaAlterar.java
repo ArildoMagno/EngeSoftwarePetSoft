@@ -82,6 +82,7 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
                     if (flag) {
                         new PedidosVendaInserir(listaPedido.get(row - 1)).setVisible(true);
                         dispose();
+                        new PedidosVendaAlterar().setVisible(true);
                        
                     }
                 }

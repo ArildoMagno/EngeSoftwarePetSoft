@@ -326,6 +326,7 @@ public class PedidosCompraInserir extends javax.swing.JFrame {
         contas.setIdFornecedor(pedido.getIdFornecedor());
         contas.setValor(valor);
         controle.InserirContasPagar(contas);
+        dispose();
     }//GEN-LAST:event_botaoOkActionPerformed
 
     private void comboFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFornecedorActionPerformed

@@ -500,7 +500,7 @@ public class PedidosVendaInserir extends javax.swing.JFrame {
         contas.setValor(valor);
         contas.setIdPedidoVenda(controlePedido.ContadorPedido());
         controle.InserirContasReceber(contas);
-        
+        dispose();
     }//GEN-LAST:event_botaoOkActionPerformed
 
     
