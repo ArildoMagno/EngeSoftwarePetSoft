@@ -59,7 +59,6 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="botaoRemoverClientes" alignment="0" pref="119" max="32767" attributes="0"/>
-                              <Component id="botaoRemoverUsuarios" alignment="0" max="32767" attributes="0"/>
                               <Component id="botaoRemoverFornecedores" alignment="0" max="32767" attributes="0"/>
                               <Component id="botaoRemoverPet" alignment="0" max="32767" attributes="0"/>
                           </Group>
@@ -76,12 +75,10 @@
                       <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
                       <Component id="botaoRemoverClientes" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="botaoRemoverUsuarios" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="botaoRemoverFornecedores" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="botaoRemoverPet" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="50" max="32767" attributes="0"/>
+                      <EmptySpace pref="94" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -95,18 +92,13 @@
                 <Property name="text" type="java.lang.String" value="Remover"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="botaoRemoverUsuarios">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Usuarios"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRemoverUsuariosActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="botaoRemoverFornecedores">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fornecedores"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRemoverFornecedoresActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="botaoRemoverClientes">
               <Properties>

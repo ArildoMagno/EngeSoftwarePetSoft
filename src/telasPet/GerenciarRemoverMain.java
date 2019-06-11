@@ -30,7 +30,6 @@ public class GerenciarRemoverMain extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        botaoRemoverUsuarios = new javax.swing.JButton();
         botaoRemoverFornecedores = new javax.swing.JButton();
         botaoRemoverClientes = new javax.swing.JButton();
         botaoRemoverPet = new javax.swing.JButton();
@@ -40,14 +39,12 @@ public class GerenciarRemoverMain extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setText("Remover");
 
-        botaoRemoverUsuarios.setText("Usuarios");
-        botaoRemoverUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        botaoRemoverFornecedores.setText("Fornecedores");
+        botaoRemoverFornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRemoverUsuariosActionPerformed(evt);
+                botaoRemoverFornecedoresActionPerformed(evt);
             }
         });
-
-        botaoRemoverFornecedores.setText("Fornecedores");
 
         botaoRemoverClientes.setText("Clientes");
         botaoRemoverClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +70,6 @@ public class GerenciarRemoverMain extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(botaoRemoverClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                        .addComponent(botaoRemoverUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoRemoverFornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoRemoverPet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(240, Short.MAX_VALUE))
@@ -86,12 +82,10 @@ public class GerenciarRemoverMain extends javax.swing.JFrame {
                 .addGap(129, 129, 129)
                 .addComponent(botaoRemoverClientes)
                 .addGap(18, 18, 18)
-                .addComponent(botaoRemoverUsuarios)
-                .addGap(18, 18, 18)
                 .addComponent(botaoRemoverFornecedores)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(botaoRemoverPet)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -120,20 +114,20 @@ public class GerenciarRemoverMain extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoRemoverUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverUsuariosActionPerformed
-        // TODO add your handling code here:
-        new GerenciarCadastrarMain().setVisible(true);
-    }//GEN-LAST:event_botaoRemoverUsuariosActionPerformed
-
     private void botaoRemoverClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverClientesActionPerformed
-        new GerenciarAlterarMain().setVisible(true);
+        new ClienteInativar().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoRemoverClientesActionPerformed
 
     private void botaoRemoverPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverPetActionPerformed
         // TODO add your handling code here:
-        new GerenciarListarPet().setVisible(true);
+        new GerenciarRemoverPet().setVisible(true);
     }//GEN-LAST:event_botaoRemoverPetActionPerformed
+
+    private void botaoRemoverFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverFornecedoresActionPerformed
+        // TODO add your handling code here:
+        new GerenciarRemoverFornecedores().setVisible(true);
+    }//GEN-LAST:event_botaoRemoverFornecedoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,7 +168,6 @@ public class GerenciarRemoverMain extends javax.swing.JFrame {
     private javax.swing.JButton botaoRemoverClientes;
     private javax.swing.JButton botaoRemoverFornecedores;
     private javax.swing.JButton botaoRemoverPet;
-    private javax.swing.JButton botaoRemoverUsuarios;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

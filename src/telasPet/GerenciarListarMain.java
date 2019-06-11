@@ -48,6 +48,11 @@ public class GerenciarListarMain extends javax.swing.JFrame {
         });
 
         botaoListarFornecedores.setText("Fornecedores");
+        botaoListarFornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoListarFornecedoresActionPerformed(evt);
+            }
+        });
 
         botaoListarClientes.setText("Clientes");
         botaoListarClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -124,11 +129,11 @@ public class GerenciarListarMain extends javax.swing.JFrame {
 
     private void botaoListarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarUsuariosActionPerformed
         // TODO add your handling code here:
-        new GerenciarCadastrarMain().setVisible(true);
+        new GerenciarMain().setVisible(true);
     }//GEN-LAST:event_botaoListarUsuariosActionPerformed
 
     private void botaoListarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarClientesActionPerformed
-        new GerenciarAlterarMain().setVisible(true);
+        new ClienteListar().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoListarClientesActionPerformed
 
@@ -136,6 +141,11 @@ public class GerenciarListarMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         new GerenciarListarPet().setVisible(true);
     }//GEN-LAST:event_botoaoListarPetsActionPerformed
+
+    private void botaoListarFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarFornecedoresActionPerformed
+        // TODO add your handling code here:
+        new GerenciarListarFornecedores().setVisible(true);
+    }//GEN-LAST:event_botaoListarFornecedoresActionPerformed
 
     /**
      * @param args the command line arguments

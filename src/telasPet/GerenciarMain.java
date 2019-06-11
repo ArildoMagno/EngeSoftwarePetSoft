@@ -131,6 +131,7 @@ public class GerenciarMain extends javax.swing.JFrame {
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
         // TODO add your handling code here:
+        new GerenciarRemoverMain().setVisible(true);
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     /**
