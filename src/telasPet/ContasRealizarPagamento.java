@@ -7,8 +7,10 @@ package telasPet;
 
 import Controle.Conexao;
 import Controle.ControleAgenda;
+import Controle.ControleCaixa;
 import Controle.ControleContasPagar;
 import Modelos.Agenda;
+import Modelos.Caixa;
 import Modelos.ContasPagar;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,13 +46,8 @@ public class ContasRealizarPagamento extends javax.swing.JFrame {
             }
         };
         dtm.addRow(tblHead);
-        String concluido = "", tipo = "";
+        String concluido = "Não", tipo = "";
         for (int i = 0; i < listaContasPagar.size(); i++) {
-            if (listaContasPagar.get(i).isConcluido()) {
-                concluido = "Sim";
-            } else {
-                concluido = "Não";
-            }
 
             String query = "select nomeFantasia from fornecedor where id=?";
             try {
@@ -79,13 +76,19 @@ public class ContasRealizarPagamento extends javax.swing.JFrame {
                 int col = table.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
                     int opcao = JOptionPane.showConfirmDialog(painel,
-                            "Deseja concluir a agenda ?",
+                            "Deseja concluir a conta ?",
                             "Sim ou não?", JOptionPane.YES_NO_OPTION);
                     boolean flag;
                     flag = opcao == JOptionPane.YES_OPTION;
                     if (flag) {
 
                         controle.ConcluirContasPagar(listaContasPagar.get(row - 1).getId());
+                        ControleCaixa controleCaixa = new ControleCaixa();
+                        Caixa caixa = controleCaixa.ListarCaixa();
+                        caixa.setSaldo(caixa.getSaldo() - listaContasPagar.get(row - 1).getValor());
+                        caixa.setContasPagar(caixa.getContasPagar() - listaContasPagar.get(row - 1).getValor());
+                        controleCaixa.UpdateContasPagar(caixa);
+
                         dispose();
                         new ContasRealizarPagamento().setVisible(true);
                     }

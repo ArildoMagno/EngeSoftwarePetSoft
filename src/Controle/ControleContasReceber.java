@@ -26,11 +26,12 @@ public class ControleContasReceber {
         Conexao conexao = new Conexao();
 
         try {
-            String query = "INSERT INTO ContasReceber  (idCliente,valor)"
-                    + "VALUES(?,?)";
+            String query = "INSERT INTO ContasReceber  (idCliente,valor,idPedidoVenda)"
+                    + "VALUES(?,?,?)";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setInt(1, contasReceber.getIdCliente());
             ps.setFloat(2, contasReceber.getValor());
+            ps.setInt(3, contasReceber.getIdPedidoVenda());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControleContasReceber.class.getName()).log(Level.SEVERE, null, ex);
@@ -40,9 +41,7 @@ public class ControleContasReceber {
 
         ControleCaixa controleCaixa = new ControleCaixa();
         Caixa caixa = controleCaixa.ListarCaixa();
-        caixa.setSaldo(caixa.getSaldo() + contasReceber.getValor());
         caixa.setContasReceber(contasReceber.getValor() + caixa.getContasReceber());
-
         controleCaixa.UpdateContasReceber(caixa);
 
     }
@@ -59,8 +58,9 @@ public class ControleContasReceber {
                 int id = rs.getInt("id");
                 int idCliente = rs.getInt("idCliente");
                 float valor = rs.getFloat("valor");
+                int idPedidoVenda = rs.getInt("idPedidoVenda");
                 boolean concluido = (rs.getBoolean("concluido"));
-                ContasReceber contas = new ContasReceber(idCliente, id, valor, concluido);
+                ContasReceber contas = new ContasReceber(idCliente, id, valor, concluido, idPedidoVenda);
                 listaConta.add(contas);
             }
 
@@ -85,8 +85,9 @@ public class ControleContasReceber {
                 int id = rs.getInt("id");
                 int idCliente = rs.getInt("idCliente");
                 float valor = rs.getFloat("valor");
+                int idPedidoVenda = rs.getInt("idPedidoVenda");
                 boolean concluido = (rs.getBoolean("concluido"));
-                ContasReceber contas = new ContasReceber(idCliente, id, valor, concluido);
+                ContasReceber contas = new ContasReceber(idCliente, id, valor, concluido, idPedidoVenda);
                 listaConta.add(contas);
             }
 
@@ -113,6 +114,6 @@ public class ControleContasReceber {
         } finally {
             conexao.closeConnection();
         }
-
+        
     }
 }
