@@ -79,7 +79,7 @@ public class ClienteListar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Listar Pet");
+        jLabel2.setText("Listar Cliente");
 
         painel.setLayout(new java.awt.CardLayout());
         jScrollPane1.setViewportView(painel);

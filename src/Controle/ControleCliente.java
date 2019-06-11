@@ -57,6 +57,8 @@ public class ControleCliente {
                 cliente.setNomeFantasia(rs.getString("NomeFantasia"));
                 cliente.setRazaoSocial(rs.getString("RazaoSocial"));
                 String aux = rs.getString("TipoPessoa");
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setAtivo(rs.getBoolean("ativo"));
                 cliente.setTipoPessoa(aux.charAt(0));
                 listaCliente.add(cliente);
 
@@ -84,8 +86,10 @@ public class ControleCliente {
                 cliente.setEndereco(rs.getString("Endereco"));
                 cliente.setNomeFantasia(rs.getString("NomeFantasia"));
                 cliente.setRazaoSocial(rs.getString("RazaoSocial"));
+                cliente.setTelefone(rs.getString("telefone"));
                 String aux = rs.getString("TipoPessoa");
                 cliente.setTipoPessoa(aux.charAt(0));
+                cliente.setAtivo(rs.getBoolean("ativo"));
                 listaCliente.add(cliente);
 
             }
@@ -119,7 +123,7 @@ public class ControleCliente {
         Conexao conexao = new Conexao();
 
         try {
-            String query = "update cliente "
+            String query = "update Cliente "
                     + "set NomeFantasia = ?, RazaoSocial = ?, Endereco = ?, "
                     + "Telefone = ? where id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);

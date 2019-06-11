@@ -75,6 +75,7 @@ public class ClienteInativar extends javax.swing.JFrame {
                     if (flag) {
                        controle.InativaCliente(listaCliente.get(row-1).getId());
                         dispose();
+                        new ClienteInativar().setVisible(true);
                     }
                 }
             }

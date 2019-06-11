@@ -128,7 +128,7 @@ public class GerenciarAlterarMain extends javax.swing.JFrame {
 
     private void botaoAlterarDadosClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDadosClienteActionPerformed
         // TODO add your handling code here:
-        new GerenciarAlterarDadosCliente().setVisible(true);
+        new ClienteAltera().setVisible(true);
     }//GEN-LAST:event_botaoAlterarDadosClienteActionPerformed
 
     private void botaoAlterarDadosPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDadosPetActionPerformed

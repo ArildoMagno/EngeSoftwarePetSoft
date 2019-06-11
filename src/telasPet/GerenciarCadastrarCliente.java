@@ -45,6 +45,7 @@ public class GerenciarCadastrarCliente extends javax.swing.JFrame {
                 cliente.setTipoPessoa('F');
                 ControleCliente controle = new ControleCliente();
                 controle.InserirCliente(cliente);
+                dispose();
             }
         });
     }
@@ -75,6 +76,8 @@ public class GerenciarCadastrarCliente extends javax.swing.JFrame {
                 cliente.setTipoPessoa('F');
                 ControleCliente controle = new ControleCliente();
                 controle.AlteraCliente(cliente);
+                new ClienteAltera().setVisible(true);
+                dispose();
             }
         });
     }
