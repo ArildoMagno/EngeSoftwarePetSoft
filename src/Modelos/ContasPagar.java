@@ -15,23 +15,17 @@ public class ContasPagar {
     private int id;
     private float valor;
     private boolean concluido;
+    private int idPedidoCompra;
 
-    public ContasPagar(int idFornecedor, int id, float valor, boolean concluido) {
+    public ContasPagar(int idFornecedor, int id, float valor, boolean concluido, int idPedidoCompra) {
         this.idFornecedor = idFornecedor;
         this.id = id;
         this.valor = valor;
         this.concluido = concluido;
+        this.idPedidoCompra = idPedidoCompra;
     }
 
     public ContasPagar() {
-    }
-
-    public boolean isConcluido() {
-        return concluido;
-    }
-
-    public void setConcluido(boolean concluido) {
-        this.concluido = concluido;
     }
 
     public int getIdFornecedor() {
@@ -56,6 +50,22 @@ public class ContasPagar {
 
     public void setValor(float valor) {
         this.valor = valor;
+    }
+
+    public boolean isConcluido() {
+        return concluido;
+    }
+
+    public void setConcluido(boolean concluido) {
+        this.concluido = concluido;
+    }
+
+    public int getIdPedidoCompra() {
+        return idPedidoCompra;
+    }
+
+    public void setIdPedidoCompra(int idPedidoCompra) {
+        this.idPedidoCompra = idPedidoCompra;
     }
 
 }

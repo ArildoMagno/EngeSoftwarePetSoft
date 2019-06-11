@@ -498,12 +498,15 @@ public class PedidosVendaInserir extends javax.swing.JFrame {
 
         contas.setIdCliente(pedido.getIdCliente());
         contas.setValor(valor);
+        contas.setIdPedidoVenda(controlePedido.ContadorPedido());
         controle.InserirContasReceber(contas);
+        
     }//GEN-LAST:event_botaoOkActionPerformed
 
+    
     private void comboClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboClienteActionPerformed
-        
-        
+
+
     }//GEN-LAST:event_comboClienteActionPerformed
 
     private void comboItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboItemActionPerformed

@@ -15,12 +15,22 @@ public class ContasReceber {
     private int id;
     private float valor;
     private boolean concluido;
+    private int idPedidoVenda;
 
-    public ContasReceber(int idCliente, int id, float valor, boolean concluido) {
+    public int getIdPedidoVenda() {
+        return idPedidoVenda;
+    }
+
+    public void setIdPedidoVenda(int idPedidoVenda) {
+        this.idPedidoVenda = idPedidoVenda;
+    }
+
+    public ContasReceber(int idCliente, int id, float valor, boolean concluido, int idPedidoVenda) {
         this.idCliente = idCliente;
         this.id = id;
         this.valor = valor;
         this.concluido = concluido;
+        this.idPedidoVenda = idPedidoVenda;
     }
 
     public ContasReceber() {
