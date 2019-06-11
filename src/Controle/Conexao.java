@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.mysql.jdbc.Driver;
+
 
 /**
  *
@@ -61,7 +61,7 @@ public class Conexao {
         dabaBasePort = "3306";
 
         
-        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName+"?useTimezone=true&serverTimezone=UTC";
+        url = dataBasePrefix + hostName + ":" + dabaBasePort + "/" + dataBaseName;
 
         /**
          * Exemplo de um URL completo para MySQL: a concatenação acima deve
@@ -77,7 +77,7 @@ public class Conexao {
     public Connection getConnection() {
         try {
             if (con == null) {
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName(jdbcDriver);
                 con = DriverManager.getConnection(url, userName, password);
             } else if (con.isClosed()) {
                 con = null;

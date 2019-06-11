@@ -96,7 +96,7 @@ public class ControlePedidoCompra {
 
         try {
             String query = "update PedidoCompra "
-                    + "set dataEmissao = ?, valorTotal = ?, idFornecedor = ?"
+                    + "set dataEmissao = ?, valorTotal = ?, idFornecedor = ? "
                     + "where id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setString(1, pedido.getDataEmissao());
@@ -119,7 +119,7 @@ public class ControlePedidoCompra {
                     + "set status = ?"
                     + "where id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-            ps.setString(1, String.valueOf(pedido.getStatus()));
+            ps.setString(1, "C");
             ps.setInt(2, pedido.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {

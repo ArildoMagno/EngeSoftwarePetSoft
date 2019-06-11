@@ -51,7 +51,8 @@ public class ControlePet {
                 String raca = rs.getString("raca");
                 String tipo = rs.getString("tipo");
                 int idCliente = rs.getInt("idCliente");
-                Pet pet = new Pet(id, nome, raca, tipo, idCliente);
+                boolean ativo = rs.getBoolean("ativo");
+                Pet pet = new Pet(id, nome, raca, tipo, idCliente, ativo);
                 listaPet.add(pet);
             }
         } catch (SQLException ex) {
@@ -75,7 +76,8 @@ public class ControlePet {
                 String raca = rs.getString("raca");
                 String tipo = rs.getString("tipo");
                 int idCliente = rs.getInt("idCliente");
-                Pet pet = new Pet(id, nome, raca, tipo, idCliente);
+                boolean ativo = rs.getBoolean("ativo");
+                Pet pet = new Pet(id, nome, raca, tipo, idCliente, ativo);
                 listaPet.add(pet);
             }
         } catch (SQLException ex) {
@@ -99,7 +101,8 @@ public class ControlePet {
                 String nome = rs.getString("nome");
                 String raca = rs.getString("raca");
                 String tipo = rs.getString("tipo");
-                Pet pet = new Pet(id, nome, raca, tipo, idCliente);
+                boolean ativo = rs.getBoolean("ativo");
+                Pet pet = new Pet(id, nome, raca, tipo, idCliente, ativo);
                 listaPet.add(pet);
             }
         } catch (SQLException ex) {

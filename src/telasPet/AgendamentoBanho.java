@@ -332,7 +332,7 @@ public class AgendamentoBanho extends javax.swing.JFrame {
     private void comboClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboClienteActionPerformed
         int id = listaCliente.get(comboCliente.getSelectedIndex()).getId();
         ControlePet controlePet = new ControlePet();
-        ArrayList<Pet> listaPet = controlePet.ListaPet("where idCliente = " + id);
+        ArrayList<Pet> listaPet = controlePet.ListaPet("where idCliente = " + id + " and ativo = 1");
         comboPet.removeAllItems();
         for (int i = 0; i < listaPet.size(); i++) {
             comboPet.addItem(listaPet.get(i).getNome());

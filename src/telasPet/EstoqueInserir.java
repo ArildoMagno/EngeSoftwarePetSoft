@@ -53,7 +53,7 @@ public class EstoqueInserir extends javax.swing.JFrame {
                 produto.setPrecoCompra(Float.parseFloat(textPrecoCompra.getText()));
                 produto.setPrecoVenda(Float.parseFloat(textPrecoVenda.getText()));
                 produto.setDataCadastramento(textDataCadastramento.getText());
-                produto.setIdFornecedor(comboFornecedor.getSelectedIndex() + 1);
+                produto.setIdFornecedor(listaFornecedor.get(comboFornecedor.getSelectedIndex()).getId());
 
                 ControleProduto controle = new ControleProduto();
                 controle.InserirProduto(produto);
@@ -71,6 +71,12 @@ public class EstoqueInserir extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(EstoqueInserir.class.getName()).log(Level.SEVERE, null, ex);
         }
+        ControleFornecedor controleF = new ControleFornecedor();
+
+        ArrayList<Fornecedor> listaFornecedor = controleF.ListaFornecedor("where ativo = true");
+        for (int i = 0; i < listaFornecedor.size(); i++) {
+            comboFornecedor.addItem(listaFornecedor.get(i).getNomeFantasia());
+        }
         textDescricao.setText(produto.getDescricao());
         textValorUnitario.setText(produto.getUnidade());
         textEstoque.setText(String.valueOf(produto.getEstoque()));
@@ -80,14 +86,12 @@ public class EstoqueInserir extends javax.swing.JFrame {
         textPrecoCompra.setText(String.valueOf(produto.getPrecoCompra()));
         textPrecoVenda.setText(String.valueOf(produto.getPrecoVenda()));
         textDataCadastramento.setText(produto.getDataCadastramento());
-        
-        ControleFornecedor controleF = new ControleFornecedor();
-
-        ArrayList<Fornecedor> listaFornecedor = controleF.ListaFornecedor("where ativo = true");
         for (int i = 0; i < listaFornecedor.size(); i++) {
-            comboFornecedor.addItem(listaFornecedor.get(i).getNomeFantasia());
+            if (listaFornecedor.get(i).getId() == produto.getIdFornecedor()) {
+                comboFornecedor.setSelectedIndex(i);
+            }
         }
-        comboFornecedor.setSelectedIndex(produto.getIdFornecedor() - 1);
+
         botaoConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -100,11 +104,11 @@ public class EstoqueInserir extends javax.swing.JFrame {
                 produto.setPrecoCompra(Float.parseFloat(textPrecoCompra.getText()));
                 produto.setPrecoVenda(Float.parseFloat(textPrecoVenda.getText()));
                 produto.setDataCadastramento(textDataCadastramento.getText());
-                produto.setIdFornecedor(comboFornecedor.getSelectedIndex() + 1);
+                produto.setIdFornecedor(listaFornecedor.get(comboFornecedor.getSelectedIndex()).getId());
 
                 ControleProduto controle = new ControleProduto();
                 controle.AlteraProduto(produto);
-                
+
                 new EstoqueAlterar().setVisible(true);
                 dispose();
             }

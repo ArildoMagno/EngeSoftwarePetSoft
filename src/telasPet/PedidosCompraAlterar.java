@@ -30,7 +30,7 @@ public class PedidosCompraAlterar extends javax.swing.JFrame {
     public PedidosCompraAlterar() {
         initComponents();
         ControlePedidoCompra pedidoCompra = new ControlePedidoCompra();
-        ArrayList<PedidoCompra> listaPedido = pedidoCompra.ListaPedidos();
+        ArrayList<PedidoCompra> listaPedido = pedidoCompra.ListaPedidos("WHERE status = 'P'");
         String[] cabecaTabela = {"idPedido", "nome fornecedor", "valor total", "data emissão", "status"};
         DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
             public boolean isCellEditable(int row, int column) {

@@ -19,6 +19,8 @@ import Modelos.ContasReceber;
 import Modelos.PedidoVenda;
 import Modelos.PedidoVendaProduto;
 import Modelos.Produto;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,6 +67,44 @@ public class PedidosVendaInserir extends javax.swing.JFrame {
         dtm.addRow(cabecaTabela);
         table = new JTable(dtm);
         painel.add(table);
+         botaoOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                ControlePedidoVenda controlePedido = new ControlePedidoVenda();
+                PedidoVenda pedido = new PedidoVenda();
+                pedido.setIdCliente(listaCliente.get(comboCliente.getSelectedIndex()).getId());
+                pedido.setStatus('P');
+                float valor = 0;
+                for (int i = 1; i < table.getRowCount(); i++) {
+                    valor += Float.parseFloat(dtm.getValueAt(i, 4).toString());
+                }
+                pedido.setValorTotal(valor);
+                Date data = new Date(System.currentTimeMillis());
+                SimpleDateFormat formatarDate = new SimpleDateFormat("dd-MM-yyyy");
+                pedido.setDataEmissao(formatarDate.format(data).toString());
+                controlePedido.InserirPedidoVenda(pedido);
+                pedido.setId(controlePedido.ContadorPedido());
+
+                PedidoVendaProduto pedidoProduto = new PedidoVendaProduto();
+                pedidoProduto.setIdPedidoVenda(pedido.getId());
+                ControlePedidoVendaProduto controlePedidoProduto = new ControlePedidoVendaProduto();
+                for (int i = 1; i < table.getRowCount(); i++) {
+                    pedidoProduto.setIdProduto(Integer.parseInt(dtm.getValueAt(i, 0).toString()));
+                    pedidoProduto.setQuantidade(Float.parseFloat(dtm.getValueAt(i, 2).toString()));
+                    pedidoProduto.setValorUnitario(Float.parseFloat(dtm.getValueAt(i, 3).toString()));
+                    controlePedidoProduto.InserirProduto(pedidoProduto);
+                }
+
+                ContasReceber contas = new ContasReceber();
+                ControleContasReceber controle = new ControleContasReceber();
+
+                contas.setIdCliente(pedido.getIdCliente());
+                contas.setValor(valor);
+                contas.setIdPedidoVenda(controlePedido.ContadorPedido());
+                controle.InserirContasReceber(contas);
+                dispose();
+            }
+        });
 
     }
 
@@ -81,7 +121,7 @@ public class PedidosVendaInserir extends javax.swing.JFrame {
                 comboCliente.setSelectedIndex(i);
             }
         }
-          listaProduto = controleP.ListaProduto("where ativo = 1");
+        listaProduto = controleP.ListaProduto("where ativo = 1");
         for (int i = 0; i < listaProduto.size(); i++) {
             comboItem.addItem(listaProduto.get(i).getDescricao());
         }
@@ -117,6 +157,38 @@ public class PedidosVendaInserir extends javax.swing.JFrame {
         }
         table = new JTable(dtm);
         painel.add(table);
+        botaoOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                ControlePedidoVenda controlePedido = new ControlePedidoVenda();
+                pedido.setIdCliente(listaCliente.get(comboCliente.getSelectedIndex()).getId());
+                pedido.setStatus('P');
+                float valor = 0;
+                for (int i = 1; i < table.getRowCount(); i++) {
+                    valor += Float.parseFloat(dtm.getValueAt(i, 4).toString());
+                }
+                pedido.setValorTotal(valor);
+                Date data = new Date(System.currentTimeMillis());
+                SimpleDateFormat formatarDate = new SimpleDateFormat("dd-MM-yyyy");
+                pedido.setDataEmissao(formatarDate.format(data).toString());
+                controlePedido.AlteraPedidoVenda(pedido);
+                pedido.setId(controlePedido.ContadorPedido());
+
+                PedidoVendaProduto pedidoProduto = new PedidoVendaProduto();
+                pedidoProduto.setIdPedidoVenda(pedido.getId());
+                ControlePedidoVendaProduto controlePedidoProduto = new ControlePedidoVendaProduto();
+                controlePedidoProduto.DeletarPedido(pedido.getId());
+                for (int i = 1; i < table.getRowCount(); i++) {
+                    pedidoProduto.setIdProduto(Integer.parseInt(dtm.getValueAt(i, 0).toString()));
+                    pedidoProduto.setQuantidade(Float.parseFloat(dtm.getValueAt(i, 2).toString()));
+                    pedidoProduto.setValorUnitario(Float.parseFloat(dtm.getValueAt(i, 3).toString()));
+                    controlePedidoProduto.InserirProduto(pedidoProduto);
+                }
+
+               
+                dispose();
+            }
+        });
     }
 
     /**
@@ -473,42 +545,10 @@ public class PedidosVendaInserir extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void botaoOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOkActionPerformed
-        ControlePedidoVenda controlePedido = new ControlePedidoVenda();
-        PedidoVenda pedido = new PedidoVenda();
-        pedido.setIdCliente(listaCliente.get(comboCliente.getSelectedIndex()).getId());
-        pedido.setStatus('P');
-        float valor = 0;
-        for (int i = 1; i < table.getRowCount(); i++) {
-            valor += Float.parseFloat(dtm.getValueAt(i, 4).toString());
-        }
-        pedido.setValorTotal(valor);
-        Date data = new Date(System.currentTimeMillis());
-        SimpleDateFormat formatarDate = new SimpleDateFormat("dd-MM-yyyy");
-        pedido.setDataEmissao(formatarDate.format(data).toString());
-        controlePedido.InserirPedidoVenda(pedido);
-        pedido.setId(controlePedido.ContadorPedido());
 
-        PedidoVendaProduto pedidoProduto = new PedidoVendaProduto();
-        pedidoProduto.setIdPedidoVenda(pedido.getId());
-        ControlePedidoVendaProduto controlePedidoProduto = new ControlePedidoVendaProduto();
-        for (int i = 1; i < table.getRowCount(); i++) {
-            pedidoProduto.setIdProduto(Integer.parseInt(dtm.getValueAt(i, 0).toString()));
-            pedidoProduto.setQuantidade(Float.parseFloat(dtm.getValueAt(i, 2).toString()));
-            pedidoProduto.setValorUnitario(Float.parseFloat(dtm.getValueAt(i, 3).toString()));
-            controlePedidoProduto.InserirProduto(pedidoProduto);
-        }
-
-        ContasReceber contas = new ContasReceber();
-        ControleContasReceber controle = new ControleContasReceber();
-
-        contas.setIdCliente(pedido.getIdCliente());
-        contas.setValor(valor);
-        contas.setIdPedidoVenda(controlePedido.ContadorPedido());
-        controle.InserirContasReceber(contas);
-        dispose();
     }//GEN-LAST:event_botaoOkActionPerformed
 
-    
+
     private void comboClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboClienteActionPerformed
 
 

@@ -93,13 +93,12 @@ public class ControlePedidoVenda {
         
         try {
             String query = "update PedidoVenda "
-                    + "set valorTotal = ?, idCliente = ?, quantidade = ?, "
+                    + "set valorTotal = ?, idCliente = ? "
                     + "where id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
             ps.setFloat(1, pedido.getValorTotal());
             ps.setInt(2, pedido.getIdCliente());
-            ps.setFloat(3, pedido.getQuantidade());
-            ps.setInt(4, pedido.getId());
+            ps.setInt(3, pedido.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControlePedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,7 +115,7 @@ public class ControlePedidoVenda {
                     + "set status = ?"
                     + "where id = ?";
             PreparedStatement ps = conexao.getConnection().prepareStatement(query);
-            ps.setString(1, String.valueOf(pedido.getStatus()));
+            ps.setString(1, "C");
             ps.setInt(2, pedido.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {

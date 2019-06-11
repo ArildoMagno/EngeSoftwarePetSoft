@@ -16,16 +16,26 @@ public class Pet {
     private String raca;
     private String tipo;
     private int idCliente;
+    private boolean ativo;
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 
     public Pet() {
     }
 
-    public Pet(int id, String nome, String raca, String tipo, int idCliente) {
+    public Pet(int id, String nome, String raca, String tipo, int idCliente, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.raca = raca;
         this.tipo = tipo;
         this.idCliente = idCliente;
+        this.ativo = ativo;
     }
 
     public int getId() {

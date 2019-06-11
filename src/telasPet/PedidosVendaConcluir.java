@@ -22,16 +22,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Atlas
  */
-public class PedidosVendaAlterar extends javax.swing.JFrame {
+public class PedidosVendaConcluir extends javax.swing.JFrame {
 
     /**
      * Creates new form PedidosVendaAlterar
      */
-    public PedidosVendaAlterar() {
+    public PedidosVendaConcluir() {
         initComponents();
         ControlePedidoVenda pedidoVenda = new ControlePedidoVenda();
         ArrayList<PedidoVenda> listaPedido = pedidoVenda.ListaPedidos("WHERE status = 'P'");
-        String[] cabecaTabela = {"idPedido", "nome cliente", "valor total", "data emissão", "status"};
+        String[] cabecaTabela = {"idPedido", "nome cliente", "valor total", "data emissão","status"};
         DefaultTableModel dtm = new DefaultTableModel(cabecaTabela, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;//This causes all cells to be not editable
@@ -48,18 +48,19 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
             }
             Conexao conexao = new Conexao();
             try {
-                String query = "SELECT nomeFantasia FROM cliente where id= ?";
+                String query = "SELECT descricao FROM Produto where id= ?";
                 PreparedStatement ps = conexao.getConnection().prepareStatement(query);
                 ps.setInt(1, listaPedido.get(i).getIdCliente());
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    cliente = rs.getString("nomeFantasia");
+                    cliente = rs.getString("descricao");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(PedidosVendaAlterar.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PedidosVendaConcluir.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 conexao.closeConnection();
             }
+
             dtm.addRow(new String[]{String.valueOf(listaPedido.get(i).getId()),
                 cliente, String.valueOf(listaPedido.get(i).getValorTotal()),
                 listaPedido.get(i).getDataEmissao(), status});
@@ -74,14 +75,15 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
                 int col = table.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
                     int opcao = JOptionPane.showConfirmDialog(painel,
-                            "Deseja alterar o pedido?",
+                            "Deseja concluir o pedido?",
                             "Sim ou não?", JOptionPane.YES_NO_OPTION);
                     boolean flag;
                     flag = opcao == JOptionPane.YES_OPTION;
                     if (flag) {
-                        new PedidosVendaInserir(listaPedido.get(row - 1)).setVisible(true);
+                      pedidoVenda.ConcluiPedidoVenda(listaPedido.get(row-1));
                         dispose();
-
+                        new PedidosVendaConcluir().setVisible(true);
+                             
                     }
                 }
             }
@@ -118,9 +120,9 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Pedido Venda Alterar");
+        jLabel2.setText("Concluir Pedido Venda");
 
-        painel.setLayout(new java.awt.GridLayout());
+        painel.setLayout(new java.awt.GridLayout(1, 0));
         jScrollPane2.setViewportView(painel);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -179,20 +181,21 @@ public class PedidosVendaAlterar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PedidosVendaAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidosVendaConcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PedidosVendaAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidosVendaConcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PedidosVendaAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidosVendaConcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PedidosVendaAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidosVendaConcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PedidosVendaAlterar().setVisible(true);
+                new PedidosVendaConcluir().setVisible(true);
             }
         });
     }
